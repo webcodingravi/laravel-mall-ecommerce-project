@@ -1,0 +1,110 @@
+@extends('backend.layouts.app')
+@section('content')
+<main id="main" class="main" style="height: 100vh">
+    <div class="pagetitle d-flex justify-content-between">
+      <h1>Edit Sub Category</h1>
+      <a class="btn btn-primary btn-sm" href="{{route('sub-category.list')}}"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
+    </div>
+    <!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="pt-4 card">
+            <div class="card-body">
+              <form class="row g-3" action="{{route('sub-category.update',$getSubCategory->id)}}" method="post">
+                @csrf
+                @method('put')
+                <div class="col-6">
+                  <label class="form-label">Name</label>
+                  <input type="text" name="name" value="{{old('name',$getSubCategory->name)}}" id="name" placeholder="Please Enter Name..." class="form-control @error('name') is-invalid @enderror">
+                  @error('name')
+                      <span class="invalid-feedback">{{$message}}</span>
+                  @enderror
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Slug</label>
+                  <input type="text" value="{{old('slug',$getSubCategory->slug)}}" name="slug" readonly id="slug" class="form-control @error('slug') is-invalid @enderror" placeholder="Please Enter Slug...">
+                  @error('slug')
+                  <span class="invalid-feedback">{{$message}}</span>
+                 @enderror
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Category</label>
+                    <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                         <option value="">Please Select..</option>
+                         @if (!empty($getCategory))
+                          @foreach ($getCategory as $category)
+                          <option {{($category->id == $getSubCategory->category_id) ? 'selected' : ''}} value="{{$category->id}}">{{$category->name}}</option>
+                          @endforeach
+                         @endif
+                    </select>
+                    @error('category_id')
+                    <span class="invalid-feedback">{{$message}}</span>
+                   @enderror
+                  </div>
+
+                <div class="col-6">
+                  <label class="form-label">Status</label>
+                  <select name="status" class="form-select">
+                   <option {{($getSubCategory->status == 1) ? 'selected' : ''}} value="1">Active</option>
+                   <option {{($getSubCategory->status == 0) ? 'selected' : ''}} value="0">Deactive</option>
+                  </select>
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Meta Title</label>
+                    <input type="text" value="{{old('meta_title',$getSubCategory->meta_title)}}" name="meta_title" class="form-control" placeholder="Please Enter Meta_title...">
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label">Meta Description</label>
+                    <textarea name="meta_description" id="" cols="4" rows="2" class="form-control" placeholder="Please Enter Meta Description...">{{old('meta_description',$getSubCategory->meta_description)}}</textarea>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label">Meta Keywords</label>
+                    <input type="text" value="{{old('meta_keywords',$getSubCategory->meta_keywords)}}" name="meta_keywords" class="form-control" placeholder="Please Enter Meta Keywords...">
+                  </div>
+
+
+                <div class="">
+                  <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+@endsection
+
+
+@section('script')
+<script>
+    $(document).ready(function() {
+      $("#name").keyup(function() {
+        element = $(this).val();
+        $.ajax({
+           url : '{{route("slug")}}',
+           type: 'get',
+           data : {title : element},
+           dataType : 'json',
+           success : function(response) {
+            if(response['status'] == true) {
+                $("#slug").val(response['slug']);
+            }
+
+           }
+        });
+      })
+    });
+
+</script>
+
+
+@endsection
