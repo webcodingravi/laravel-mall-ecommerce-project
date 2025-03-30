@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderInvoiceMail;
 use Stripe\Stripe;
 use App\Models\User;
 use App\Models\Color;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Models\ShippingCharge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
@@ -196,6 +198,7 @@ class AddToCartController extends Controller
                    if(!empty($user_id)) {
                     $order->user_id = trim($user_id);
                    }
+                   $order->order_number = mt_rand(1000000000,99999999);
                    $order->first_name = trim($request->first_name);
                    $order->last_name = trim($request->last_name);
                    $order->company_name = trim($request->company_name);
@@ -264,6 +267,9 @@ class AddToCartController extends Controller
                    if($getOrder->payment_method == 'cash') {
                         $getOrder->is_payment = 1;
                         $getOrder->save();
+
+                        Mail::to($getOrder->name)->send(new OrderInvoiceMail($getOrder));
+
                         Cart::destroy();
                         return redirect()->route('cart')->with('success','Order Successfully placed');
 
@@ -334,6 +340,7 @@ class AddToCartController extends Controller
                     $getOrder->payment_data = json_encode($request->all());
                     $getOrder->transaction_id = $request->tx;
                         $getOrder->save();
+                        Mail::to($getOrder->name)->send(new OrderInvoiceMail($getOrder));
                         Cart::destroy();
                         return redirect()->route('cart')->with('success','Order Successfully placed');
                 }else{

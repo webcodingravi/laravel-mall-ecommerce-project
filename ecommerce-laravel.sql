@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 10:10 AM
+-- Generation Time: Mar 30, 2025 at 10:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -238,7 +238,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2025_03_11_123732_create_shipping_charges_table', 11),
 (27, '2025_03_13_101124_create_orders_table', 12),
 (28, '2025_03_13_101216_create_order_items_table', 12),
-(32, '2025_03_18_122535_update_orders_table', 13);
+(32, '2025_03_18_122535_update_orders_table', 13),
+(33, '2025_03_25_070644_update_orders_table', 14);
 
 -- --------------------------------------------------------
 
@@ -249,6 +250,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `orders` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `order_number` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `company_name` varchar(255) DEFAULT NULL,
@@ -267,7 +269,7 @@ CREATE TABLE `orders` (
   `shipping_amount` varchar(255) NOT NULL DEFAULT '0',
   `total_amount` varchar(255) NOT NULL DEFAULT '0',
   `payment_method` varchar(255) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `status` int(11) DEFAULT 0 COMMENT '0:pending, 1:Inprogress, 2:Delivered, 3:Completed, 4:Cancelled',
   `is_payment` varchar(255) NOT NULL DEFAULT '0',
   `payment_data` text DEFAULT NULL,
   `transaction_id` varchar(255) DEFAULT NULL,
@@ -280,11 +282,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `first_name`, `last_name`, `company_name`, `country`, `address_one`, `address_two`, `city`, `state`, `postcode`, `phone`, `email`, `note`, `discount_code`, `discount_amount`, `shipping_id`, `shipping_amount`, `total_amount`, `payment_method`, `status`, `is_payment`, `payment_data`, `transaction_id`, `stripe_session_id`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '9821345742', 'ravi395950@gmail.com', 'notes', '', '0', 2, '0', '0', 'cash', 1, '0', NULL, NULL, NULL, '2025-03-13 06:59:56', '2025-03-13 06:59:56'),
-(22, 1, 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi6975@gmail.com', 'note', '', '0', 2, '0', '410', 'cash', 1, '1', NULL, NULL, NULL, '2025-03-16 05:22:04', '2025-03-16 05:22:04'),
-(62, NULL, 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi395950@gmail.com', '', '', '0', 2, '0', '970', 'paypal', 1, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"6GM72249F33749354\",\"cc\":\"USD\",\"amt\":\"970.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"6GM72249F33749354\",\"mc_currency\":\"USD\",\"mc_fee\":\"38.13\",\"mc_gross\":\"970.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"38.13\",\"payment_gross\":\"970.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"62\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-03-18T13:13:29Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"AWwTEt6LtOi-FdZplEQG6QlYxrt5AyGqKeoswgMB8h4tdnDnTwhASTk1\"}', NULL, NULL, '2025-03-18 07:43:24', '2025-03-18 07:46:52'),
-(63, NULL, 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi395950@gmail.com', '', '', '0', 2, '0', '260', 'stripe', 1, '1', '{\"id\":\"cs_test_a1vq4lDZ9hS3Qe56KyMiXrHrHESJ1b0qAcPUlQVviuf5qjJqArgavgRW9A\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":false},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":26000,\"amount_total\":26000,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"status\":null},\"billing_address_collection\":null,\"cancel_url\":\"http:\\/\\/127.0.0.1:8000\\/checkout\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":{\"shipping_details\":null},\"consent\":null,\"consent_collection\":null,\"created\":1742307715,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"IN\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"email\":\"ravi395950@gmail.com\",\"name\":\"Ravi kumar\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":\"ravi395950@gmail.com\",\"discounts\":[],\"expires_at\":1742394115,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":[],\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":[],\"mode\":\"payment\",\"payment_intent\":\"pi_3R418zGpCfSeQGNi0s0G4Ze3\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"payment_status\":\"paid\",\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_details\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http:\\/\\/127.0.0.1:8000\\/stripe\\/payment-success\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null}', 'cs_test_a1vq4lDZ9hS3Qe56KyMiXrHrHESJ1b0qAcPUlQVviuf5qjJqArgavgRW9A', 'cs_test_a1vq4lDZ9hS3Qe56KyMiXrHrHESJ1b0qAcPUlQVviuf5qjJqArgavgRW9A', '2025-03-18 08:31:23', '2025-03-18 09:00:06');
+INSERT INTO `orders` (`id`, `user_id`, `order_number`, `first_name`, `last_name`, `company_name`, `country`, `address_one`, `address_two`, `city`, `state`, `postcode`, `phone`, `email`, `note`, `discount_code`, `discount_amount`, `shipping_id`, `shipping_amount`, `total_amount`, `payment_method`, `status`, `is_payment`, `payment_data`, `transaction_id`, `stripe_session_id`, `created_at`, `updated_at`) VALUES
+(22, 1, NULL, 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi6975@gmail.com', 'note', '', '0', 2, '0', '410', 'cash', 0, '1', NULL, NULL, NULL, '2025-03-16 05:22:04', '2025-03-25 02:54:09'),
+(62, NULL, NULL, 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi395950@gmail.com', '', '', '0', 2, '0', '970', 'paypal', 0, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"6GM72249F33749354\",\"cc\":\"USD\",\"amt\":\"970.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"6GM72249F33749354\",\"mc_currency\":\"USD\",\"mc_fee\":\"38.13\",\"mc_gross\":\"970.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"38.13\",\"payment_gross\":\"970.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"62\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-03-18T13:13:29Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"AWwTEt6LtOi-FdZplEQG6QlYxrt5AyGqKeoswgMB8h4tdnDnTwhASTk1\"}', NULL, NULL, '2025-03-18 07:43:24', '2025-03-25 02:54:06'),
+(63, NULL, '123456789', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', '', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi395950@gmail.com', '', '', '0', 2, '0', '260', 'stripe', 0, '1', '{\"id\":\"cs_test_a1vq4lDZ9hS3Qe56KyMiXrHrHESJ1b0qAcPUlQVviuf5qjJqArgavgRW9A\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":false},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":26000,\"amount_total\":26000,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"status\":null},\"billing_address_collection\":null,\"cancel_url\":\"http:\\/\\/127.0.0.1:8000\\/checkout\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":{\"shipping_details\":null},\"consent\":null,\"consent_collection\":null,\"created\":1742307715,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"IN\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"email\":\"ravi395950@gmail.com\",\"name\":\"Ravi kumar\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":\"ravi395950@gmail.com\",\"discounts\":[],\"expires_at\":1742394115,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":[],\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":[],\"mode\":\"payment\",\"payment_intent\":\"pi_3R418zGpCfSeQGNi0s0G4Ze3\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"payment_status\":\"paid\",\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_details\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http:\\/\\/127.0.0.1:8000\\/stripe\\/payment-success\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null}', 'cs_test_a1vq4lDZ9hS3Qe56KyMiXrHrHESJ1b0qAcPUlQVviuf5qjJqArgavgRW9A', 'cs_test_a1vq4lDZ9hS3Qe56KyMiXrHrHESJ1b0qAcPUlQVviuf5qjJqArgavgRW9A', '2025-03-18 08:31:23', '2025-03-25 02:54:03');
 
 -- --------------------------------------------------------
 
@@ -537,12 +538,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `image`, `email`, `email_verified_at`, `password`, `is_admin`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Ravi Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-03-13 05:27:11', '$2y$12$sKHKUuYDrjPd41tyg4fzk.SsOwtVEkAYihKXOZm6BACNenniW8cSu', 1, 1, 'jGKJ6my4agw3v37wJUGzaXYJUGqrJrglAkNSP4CdZ7q4Avs0VmlSp1FyOHbe', '2025-02-07 04:50:25', '2025-03-13 05:27:11'),
+(1, 'Ravi Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-03-13 05:27:11', '$2y$12$sKHKUuYDrjPd41tyg4fzk.SsOwtVEkAYihKXOZm6BACNenniW8cSu', 1, 1, 'ThxL69TxdCIN5g2wcieebsAW2UVaZHiGrxS8ZUqlBqz5J88OAvxqFEfbTaIR', '2025-02-07 04:50:25', '2025-03-13 05:27:11'),
 (3, 'Krish', '1738932108.jpg', 'krish@gmail.com', NULL, '$2y$12$phvGWXYCBROh03L6g7FP0u6AEQxtRi6QaFJBSRypiRIZN0/XJ2BP2', 1, 1, '7oPAAR5BOvW2LeXrhTjztOuCXq5AuEUwYjXT09lkVV3oKlKGQQ81lITce2Sl', '2025-02-07 07:08:48', '2025-02-07 07:13:22'),
 (4, 'thakur', '1738932250.jpg', 'thakur@gmail.com', NULL, '$2y$12$JuFPgVYDaLl.x8guxe7BWOnuQ.xgdOMMtoVDbwmPI8MhKcrA2IyVi', 1, 1, 'SWZLkSD8thabxibsTuzsbt2E1vDINTVIKYe1HtMOtnuyOObAH89EmaCAoeni', '2025-02-07 07:14:10', '2025-02-07 07:14:10'),
-(5, 'Kartik', NULL, 'kartik@gmail.com', NULL, '$2y$12$a6.K1JJwryroXIwb/6qfku7qPmbbU8iDgf0TbeZ9jpSs34gzlm1eq', 0, 1, NULL, '2025-03-12 10:30:53', '2025-03-12 10:30:53'),
 (6, 'pooja', NULL, 'pooja@gmail.com', '2025-03-13 05:16:44', '$2y$12$dIRG2xwTg/6m0Dsw2bpz4eYZdQbh.Io./TJnxkWSmSii0YdpUtJDC', 0, 1, 'iHlq69VFE3L2CNBKAkpdixCu75mDbeEvpv7ArvdVa4wxB7yoIMkO33sJ0cFI', '2025-03-12 10:47:39', '2025-03-13 05:16:44'),
-(7, 'tarun', NULL, 'tarun@gmail.com', '2025-03-13 05:24:41', '$2y$12$Iw4zsQyRID.T69KF8UlNqeqnQj9xK1.qv6T9iofPvDCFQC7pg.wQy', 0, 1, NULL, '2025-03-13 05:22:35', '2025-03-13 05:24:41'),
 (8, 'chandan Kumar', NULL, 'chandan@gmail.com', '2025-03-13 05:37:43', '$2y$12$Z6x9gi15wUfX6FXWfTa5u./0RgLXDqTkYZVOme4iUffwPZ295ymqC', 0, 1, 'PrBb0Ujnxre3iCymXPGTClVIbUdbsQKn1eZTMiSmnYsWc96UVVRTxpnLy02T', '2025-03-13 05:24:03', '2025-03-13 05:37:43');
 
 --
@@ -740,7 +739,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `orders`

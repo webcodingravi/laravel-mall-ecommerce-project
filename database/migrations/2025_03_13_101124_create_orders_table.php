@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('shipping_amount')->default(0);
             $table->string('total_amount')->default(0);
             $table->string('payment_method')->nullable();
-            $table->integer('status')->default(1);
+            $table->integer('status')->default(0);
             $table->string('is_payment')->default(0);
             $table->text('payment_data')->nullable();
             $table->timestamps();

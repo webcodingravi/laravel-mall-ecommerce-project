@@ -17,7 +17,7 @@ class AdminController extends Controller
         $getAdmins = $getAdmins->where('name','like','%'.$request->get('query').'%');
         $getAdmins = $getAdmins->orWhere('email','like','%'.$request->get('query').'%');
        }
-
+       $getAdmins = $getAdmins->where('is_admin',1);
        $getAdmins = $getAdmins->orderBy('id','desc');
        $getAdmins = $getAdmins->paginate(10);
        $data['getAdmins'] = $getAdmins;
@@ -105,4 +105,33 @@ class AdminController extends Controller
         return redirect()->back()->with('success','Admin Deleted Successfully.');
 
     }
-}
+
+
+
+    // customer list controller
+
+    public function customer_list(Request $request) {
+        $data['header_title'] = 'Customer List';
+        $getCustomer = User::query();
+        if(!empty($request->get('query'))) {
+         $getCustomer = $getCustomer->where('name','like','%'.$request->get('query').'%');
+         $getCustomer = $getCustomer->orWhere('email','like','%'.$request->get('query').'%');
+        }
+
+        $getCustomer = $getCustomer->where('is_admin',0);
+        $getCustomer = $getCustomer->orderBy('id','desc');
+        $getCustomer = $getCustomer->paginate(10);
+        $data['getCustomer'] = $getCustomer;
+        return view('backend.customer.list',$data);
+     }
+
+
+     public function customer_delete(string $id) {
+        $customer = User::findOrFail($id);
+        $customer->delete();
+        // old Image Deleted
+        File::delete(public_path('uploads/profile_pic/'.$customer->image));
+        return redirect()->back()->with('success','Customer Successfully Deleted .');
+
+    }
+    }

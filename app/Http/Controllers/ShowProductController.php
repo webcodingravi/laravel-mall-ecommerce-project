@@ -149,8 +149,6 @@ class ShowProductController extends Controller
     }
 
 
-    public function ProductDetail($slug) {
 
-    }
 
 }

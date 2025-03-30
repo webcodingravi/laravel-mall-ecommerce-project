@@ -12,6 +12,7 @@ use App\Http\Controllers\ShowProductController;
 use App\Http\Controllers\backend\AdminController;
 use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\ColorController;
+use App\Http\Controllers\backend\OrdersController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\DashboardController;
@@ -35,6 +36,11 @@ Route::post('/admin/store',[AdminController::class,'store'])->name('admin.store'
 Route::get('/admin/edit/{id}',[AdminController::class,'edit'])->name('admin.edit');
 Route::put('/admin/update/{id}',[AdminController::class,'update'])->name('admin.update');
 Route::get('/admin/delete/{id}',[AdminController::class,'destroy'])->name('admin.delete');
+
+
+// customer route
+Route::get('/customer/list',[AdminController::class,'customer_list'])->name('customer.list');
+Route::get('/customer/delete/{id}',[AdminController::class,'customer_delete'])->name('customer.delete');
 
 
 // category route
@@ -101,6 +107,12 @@ Route::post('/shipping/store',[ShippingChargeController::class,'store'])->name('
 Route::get('/shipping/edit/{id}',[ShippingChargeController::class,'edit'])->name('shipping.edit');
 Route::put('/shipping/update/{id}',[ShippingChargeController::class,'update'])->name('shipping.update');
 Route::get('/shipping/delete/{id}',[ShippingChargeController::class,'destroy'])->name('shipping.delete');
+
+// Orders route
+Route::get('/orders/list',[OrdersController::class,'index'])->name('orders.list');
+Route::get('/orders/details/{id}',[OrdersController::class,'details'])->name('orders.details');
+Route::get('/orders/status',[OrdersController::class,'order_status'])->name('orders.order_status');
+
 
 
 });

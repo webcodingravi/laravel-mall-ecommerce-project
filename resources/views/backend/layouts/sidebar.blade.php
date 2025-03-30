@@ -17,6 +17,13 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link {{Request::segment(2) != 'customer' ? 'collapsed' : ''}}" href="{{route('customer.list')}}">
+          <i class="bi bi-person"></i>
+          <span>Customer</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link {{Request::segment(2) != 'category' ? 'collapsed' : ''}}" href="{{route('category.list')}}">
             <i class="bx bxs-spreadsheet"></i>
           <span>Category</span>
@@ -65,6 +72,13 @@
         <a class="nav-link {{Request::segment(2) != 'shipping' ? 'collapsed' : ''}}" href="{{route('shipping.list')}}">
             <i class="bx bxs-spreadsheet"></i>
           <span>Shipping Charge</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {{Request::segment(2) != 'orders' ? 'collapsed' : ''}}" href="{{route('orders.list')}}">
+            <i class="bx bxs-spreadsheet"></i>
+          <span>Orders</span>
         </a>
       </li>
 
