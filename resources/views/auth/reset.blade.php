@@ -17,12 +17,12 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="password">New Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter New Password...">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="*****************">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Please Enter Confirm Password...">
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="*****************">
                                 </div>
 
                                 <div class="form-footer">

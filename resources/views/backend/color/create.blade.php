@@ -2,8 +2,8 @@
 @section('content')
 <main id="main" class="main" style="height: 100vh">
     <div class="pagetitle d-flex justify-content-between">
-      <h1>Create Color</h1>
-      <a class="btn btn-primary btn-sm" href="{{route('color.list')}}"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
+      <h1 style="color: #cc9966;">Create Color</h1>
+      <a class="btn btn-primary btn-sm" href="{{route('color.list')}}" style="background: #cc9966; border:none"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
     </div>
     <!-- End Page Title -->
     <section class="section">
@@ -36,7 +36,7 @@
 
 
                 <div class="">
-                  <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                  <button type="submit" class="btn btn-primary btn-sm" style="background: #cc9966; border:none">Submit</button>
                 </div>
               </form>
 

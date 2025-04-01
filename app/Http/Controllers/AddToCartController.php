@@ -198,7 +198,7 @@ class AddToCartController extends Controller
                    if(!empty($user_id)) {
                     $order->user_id = trim($user_id);
                    }
-                   $order->order_number = mt_rand(1000000000,99999999);
+                   $order->order_number = mt_rand(99999,100000000);
                    $order->first_name = trim($request->first_name);
                    $order->last_name = trim($request->last_name);
                    $order->company_name = trim($request->company_name);
@@ -238,7 +238,7 @@ class AddToCartController extends Controller
                            $order_item->size_amount = $getSize->price;
                        }
 
-                       $order_item->total_price = $cart->price;
+                       $order_item->total_price = $cart->price * $cart->qty;
                        $order_item->save();
                    }
                    return response()->json([
@@ -268,7 +268,7 @@ class AddToCartController extends Controller
                         $getOrder->is_payment = 1;
                         $getOrder->save();
 
-                        Mail::to($getOrder->name)->send(new OrderInvoiceMail($getOrder));
+                        Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
 
                         Cart::destroy();
                         return redirect()->route('cart')->with('success','Order Successfully placed');
@@ -340,7 +340,7 @@ class AddToCartController extends Controller
                     $getOrder->payment_data = json_encode($request->all());
                     $getOrder->transaction_id = $request->tx;
                         $getOrder->save();
-                        Mail::to($getOrder->name)->send(new OrderInvoiceMail($getOrder));
+                        Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
                         Cart::destroy();
                         return redirect()->route('cart')->with('success','Order Successfully placed');
                 }else{

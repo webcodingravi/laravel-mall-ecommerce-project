@@ -24,7 +24,7 @@
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
                             @if (!empty(Auth::check()))
-                            <li><a href="{{route('MyAccount')}}"><i class="icon-user"></i>{{Auth::user()->name}}</a></li>
+                            <li><a href="{{route('user_dashboard')}}"><i class="icon-user"></i>{{Auth::user()->name}}</a></li>
                                 @else
                                 <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
                             @endif
@@ -44,7 +44,7 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="index.html" class="logo">
+                <a href="{{route('home')}}" class="logo">
                     <img src="{{asset('assets/images/logo.png')}}" alt="logo" width="105" height="25">
                 </a>
 

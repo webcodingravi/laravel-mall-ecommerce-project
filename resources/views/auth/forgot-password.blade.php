@@ -7,7 +7,7 @@
                 <div class="form-tab">
                     <ul class="nav nav-pills nav-fill" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link">Forgot Password</a>
+                            <a class="nav-link" style="color: #cc9966;">Forgot Password</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -17,12 +17,12 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="email">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Please Enter Email Address..." required>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Username@example.com" required>
                                 </div>
 
                                 <div class="form-footer">
-                                    <button type="submit" class="btn btn-outline-primary-2">
-                                        <span>Forgot</span>
+                                    <button type="submit" class="btn btn-outline-primary-2" style="background: #cc9966;">
+                                        <span class="text-white">Forgot</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </button>
 

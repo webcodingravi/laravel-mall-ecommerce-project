@@ -1,12 +1,14 @@
 <?php
 
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ShippingCharge;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddToCartController;
 use App\Http\Controllers\ShowProductController;
 use App\Http\Controllers\backend\AdminController;
@@ -19,6 +21,14 @@ use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\DiscountCodeController;
 use App\Http\Controllers\backend\ShippingChargeController;
+
+
+
+
+
+
+
+
 
 // Backend route
 Route::prefix('/admin')->group(function() {
@@ -112,8 +122,7 @@ Route::get('/shipping/delete/{id}',[ShippingChargeController::class,'destroy'])-
 Route::get('/orders/list',[OrdersController::class,'index'])->name('orders.list');
 Route::get('/orders/details/{id}',[OrdersController::class,'details'])->name('orders.details');
 Route::get('/orders/status',[OrdersController::class,'order_status'])->name('orders.order_status');
-
-
+Route::get('/orders/delete/{id}',[OrdersController::class,'destory'])->name('orders.delete');
 
 });
 
@@ -138,14 +147,32 @@ Route::get('/getSlug',function(Request $request) {
 });
 
 
+// User Account Route
+Route::group(['middleware' => 'user'],function() {
+Route::prefix('/user')->group(function() {
+Route::get('/dashboard',[UserController::class,'dashboard'])->name('user_dashboard');
+Route::get('/orders',[UserController::class,'orders'])->name('user_orders');
+Route::get('/orders/{id}',[UserController::class,'user_order_details'])->name('user_order_details');
+
+Route::get('/edit-profile',[UserController::class,'EditProfile'])->name('edit-profile');
+Route::post('/update-profile',[UserController::class,'UpdateProfile'])->name('UserUpdateProfile');
+Route::get('/change-password',[UserController::class,'ChangePassword'])->name('change-password');
+Route::post('/update-password',[UserController::class,'UpdatePassword'])->name('update-password');
+
+
+});
+
+// Add to wishlisht
+Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
+
+});
+
+
+
 
 // frontend Route
 
 Route::get('/',[HomeController::class,'home'])->name('home');
-
-Route::get('/dashboard',function() {
-    return view('User-account.dashboard');
-})->name('MyAccount');
 
 Route::post('/user-login',[AuthController::class,'user_login'])->name('UserLogin');
 Route::post('/user-register',[AuthController::class,'user_register'])->name('UserRegister');

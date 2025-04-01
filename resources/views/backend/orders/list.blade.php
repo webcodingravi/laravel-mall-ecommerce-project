@@ -3,11 +3,11 @@
 <main id="main" class="main" style="height: 100vh">
 
     <div class="pagetitle d-flex justify-content-between">
-      <h1>Orders List (Total: {{$orders->total()}})</h1>
+      <h1 style="color: #cc9966;">Orders List (Total: {{$orders->total()}})</h1>
       <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="get" action="{{route('orders.list')}}">
           <input type="text" name="query" value="{{Request::get('query')}}" placeholder="Search" class="form-control" title="Enter search keyword" style="border-radius:0">
-          <button type="submit" class="btn btn-primary" title="Search" style="border-radius:0"><i class="bi bi-search"></i></button>
+          <button type="submit" class="btn btn-primary" title="Search" style="border-radius:0; background: #cc9966; border:none"><i class="bi bi-search"></i></button>
         </form>
       </div>
     </div>
@@ -26,7 +26,7 @@
                      <input type="date" value="{{Request::get('to')}}"  name="to" class="form-control" style="border-radius: 0">
 
                 </div>
-                <button type="submit" class="mt-4 btn btn-primary" style="border-radius: 0">Search</button>
+                <button type="submit" class="mt-4 btn btn-primary" style="border-radius: 0; background: #cc9966; border:none">Search</button>
 
             </div>
         </form>
@@ -44,13 +44,13 @@
 
             <div class="card-body" style="overflow: auto">
             <div class="d-flex align-items-center justify-content-between">
-              <h5 class="card-title">Orders List <a class="btn btn-primary btn-sm"  href="{{route('orders.list')}}"><i class="bi bi-arrow-clockwise"></i> Reset</a></h5>
+              <h5 class="card-title"> <a class="btn btn-primary btn-sm"  href="{{route('orders.list')}}" style="background: #cc9966; border:none"><i class="bi bi-arrow-clockwise"></i> Reset</a></h5>
             </div>
               <!-- Table with stripped rows -->
               <table class="table table-striped table-bordered">
                 <thead class="table-dark">
                   <tr>
-                    <th>Order Number</th>
+                    <th>Order Number(#)</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
@@ -101,7 +101,10 @@
                        </td>
                     <td>{{\Carbon\Carbon::parse($order->created_at)->format('d M,Y')}}</td>
 
-                    <td><a href="{{route('orders.details',$order->id)}}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i> </a>
+
+                    <td class="gap-2 d-flex"><a href="{{route('orders.details',$order->id)}}" class="btn btn-primary btn-sm" style="background: #cc9966; border:none"><i class="bi bi-eye"></i> </a>
+                        <a href="{{route('orders.delete',$order->id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want delete record.')"> <i class="bi bi-trash3-fill"></i></a>
+
                     </td>
 
                   </tr>

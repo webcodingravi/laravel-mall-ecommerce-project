@@ -24,6 +24,11 @@
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}">
+    <style>
+       .btn-wishlist-add::before {
+          content: '\f233'
+       }
+    </style>
     @yield('style')
 </head>
 
@@ -72,13 +77,13 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="s_email">Email address <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="s_email" name="email" placeholder="Please Enter Email Address..">
+                                            <input type="text" class="form-control" id="s_email" name="email" placeholder="Username@example.com">
                                             <p></p>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="password">Password <span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="s_password" name="password" placeholder="Please Enter Password..">
+                                            <input type="password" class="form-control" id="s_password" name="password" placeholder="*****************..">
                                             <p></p>
                                         </div>
 
@@ -109,19 +114,19 @@
 
                                         <div class="form-group">
                                             <label for="s_email">Your email address <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Please Enter Your Email Address..">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Username@example.com">
                                             <p></p>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="s_password">Password <span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter Your Password..">
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="*****************..">
                                             <p></p>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Please Enter Confirm Password..">
+                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="*****************..">
                                             <p></p>
                                         </div>
                                         <div class="form-footer">

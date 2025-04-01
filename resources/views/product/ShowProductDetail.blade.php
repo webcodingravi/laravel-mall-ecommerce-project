@@ -18,7 +18,6 @@
         <div class="container">
             <div class="product-details-top">
                 <div class="row">
-
                     <div class="col-md-6">
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
@@ -111,7 +110,13 @@
                             <div class="mt-3 product-details-action">
                                 <button type="submit" class="btn-product btn-cart" style="background: white; color:#c96">Add to cart</button>
                                 <div class="details-action-wrapper">
-                                    <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                    @if (!empty(Auth::check()))
+                                    <a href="javascript:void(0);" class="btn-product btn-wishlist add_to_wishlist add_to_wishlist{{$getProductSingle->id}}
+                                         {{!empty(CheckWishlist($getProductSingle->id)) ? 'btn-wishlist-add' : ''}}" id="{{$getProductSingle->id}}" title="Wishlist"><span>Add to Wishlist</span></a>
+                                    @else
+                                    <a href="#signin-modal" class="btn-product btn-wishlist" data-toggle="modal"><span>Add to Wishlist</span></a>
+                                    @endif
+
                                 </div>
                             </div>
                         </form>
@@ -264,7 +269,13 @@
                                 </a>
                                 @endif
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    @if (!empty(Auth::check()))
+                                    <a href="javascript:void(0);" class="btn-product-icon btn-wishlist btn-expandable add_to_wishlist add_to_wishlist{{$product->id}}
+                                         {{!empty(CheckWishlist($product->id)) ? 'btn-wishlist-add' : ''}}" id="{{$product->id}}" title="Wishlist"><span>Add to Wishlist</span></a>
+                                    @else
+                                    <a href="#signin-modal" class="btn-product-icon btn-wishlist btn-expandable" data-toggle="modal"><span>Add to Wishlist</span></a>
+                                    @endif
+
 
                                 </div>
 
@@ -307,6 +318,29 @@
          $("#getTotalPrice").html(total.toFixed(2));
 
     });
+
+    $('body').delegate('.add_to_wishlist','click',function() {
+         var product_id = $(this).attr('id');
+         $.ajax({
+           type: 'post',
+           url: '{{route("AddToWishlist")}}',
+           data: {
+                 "_token" : "{{csrf_token()}}",
+                 product_id : product_id
+           },
+           dataType:'json',
+           success:function(data){
+               if(data.is_wishlist == 0) {
+                    $('.add_to_wishlist'+product_id).removeClass('btn-wishlist-add');
+               }else{
+                    $('.add_to_wishlist'+product_id).addClass('btn-wishlist-add');
+               }
+           }
+
+         });
+    });
+
+
 
 </script>
 @endsection

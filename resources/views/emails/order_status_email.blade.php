@@ -1,30 +1,29 @@
 @component('mail::message')
 <div class="email-container">
     <div class="header">
-        <h2>Order Invoice</h2>
+        <h1 style="text-align: center">Order Invoice</h1>
     </div>
     <p>Dear {{$order->first_name}},</p>
     <p>Order Status :
     @if($order->status == 0){
-        Pending
+        <strong style="color:orange">Pending</strong>
     }@elseif ($order->status == 1){
-          In Progress
+          <strong style="color:orange">In Progress</strong>
     }@elseif ($order->status == 2){
-       Delivered
+       <strong style="color:green">Delivered</strong>
     }@elseif ($order->status == 3){
-        Completed
+        <strong style="color:green">Completed</strong>
     }@elseif ($order->status == 4){
-        Cancelled
+       <strong style="color:green"> Cancelled</strong>
     }
+    @endif
 </p>
-
     <div class="order-details">
     <h3>Order Details:</h3>
     <ul>
         <li>Order Number: {{$order->order_number}}</li>
-        <li>Date of Purchase: {{date('d-m-y',strtotime($order->created_at))}}</li>
+        <li>Date of Purchase: {{date('d M, Y',strtotime($order->created_at))}}</li>
     </ul>
-
         <table>
             <tr>
                 <th style="padding: 8px; border-bottom:1px solid #ddd; text-align:left;">Item</th>
@@ -34,15 +33,15 @@
             <tr>
                 @foreach ($order->getItem as $item)
                 <td style="padding: 8px; border-bottom:1px solid #ddd;">
-                    {{$item->getProduct->title}}
+                    <strong>{{$item->getProduct->title}}</strong>
                     <br/>
-                    Color : {{$item->color_name}}
+                    Color : <strong>{{$item->color_name}}</strong>
                     @if (!empty($item->size_name))
                     <br/>
-                    Size : {{$item->size_name}}
+                    Size : <strong>{{$item->size_name}}</strong>
                     @endif
                     <br/>
-                    Size Amount : ${{number_format($item->size_amount,2)}}
+                    Size Amount : <strong>${{number_format($item->size_amount,2)}}</strong>
 
                 </td>
                 <td style="padding: 8px; border-bottom:1px solid #ddd;">{{$item->quantity}}</td>
@@ -50,15 +49,13 @@
                 @endforeach
             </tr>
             <!-- Repeat rows as needed -->
-        </table>
+        </table><br>
         <p>Shipping Name: <strong>{{$order->getShipping->name}}</strong></p>
         <p>Shipping Amount: <strong>${{number_format($order->shipping_amount,2)}}</strong></p>
-
         @if (!empty($order->discount_code))
         <p>Discount Code: <strong>{{$order->discount_code}}</strong></p>
         <p>Discount Amount: <strong>${{number_format($order->discount_amount,2)}}</strong></p>
         @endif
-
         <p>Total Amount: <strong>${{number_format($order->total_amount,2)}}</strong></p>
         <p style="text-transform: capitalize">Payment Method: <strong>{{$order->payment_method}}</strong></p>
     </div>

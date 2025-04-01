@@ -2,8 +2,8 @@
 @section('content')
 <main id="main" class="main" style="height: 100vh">
     <div class="pagetitle d-flex justify-content-between">
-      <h1>Edit Sub Category</h1>
-      <a class="btn btn-primary btn-sm" href="{{route('sub-category.list')}}"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
+      <h1 style="color: #cc9966;"> Edit Sub Category</h1>
+      <a class="btn btn-primary btn-sm" href="{{route('sub-category.list')}}" style="background: #cc9966; border:none"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
     </div>
     <!-- End Page Title -->
     <section class="section">
@@ -69,7 +69,7 @@
 
 
                 <div class="">
-                  <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                  <button type="submit" class="btn btn-primary btn-sm" style="background: #cc9966; border:none">Update</button>
                 </div>
               </form>
 

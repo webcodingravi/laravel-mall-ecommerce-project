@@ -15,7 +15,7 @@
               <!-- Table with stripped rows -->
               <table class="table">
                 <tr>
-                    <td><strong>Id : </strong>{{$orders->id}} </td>
+                    <td><strong>Order Number(#) : </strong>{{$orders->order_number}} </td>
                 </tr>
                         <tr>
                             <td><strong>Transaction Id : </strong>{{$orders->transaction_id}} </td>
@@ -54,27 +54,36 @@
                         </tr>
 
                         <tr>
-                            <td><strong>Discount Amount($) :</strong> {{number_format($orders->discount_amount,2)}}</td>
+                            <td><strong>Discount Amount($) :</strong> ${{number_format($orders->discount_amount,2)}}</td>
                         </tr>
                         <tr>
                             <td><strong>Shipping Name :</strong> {{$orders->getShipping->name}}</td>
                         </tr>
 
                         <tr>
-                            <td><strong>Shipping Amount($) :</strong> {{number_format($orders->shipping_amount,2)}}</td>
+                            <td><strong>Shipping Amount($) :</strong> ${{number_format($orders->shipping_amount,2)}}</td>
                         </tr>
 
                         <tr>
-                            <td><strong>Total Amount($) :</strong> {{number_format($orders->total_amount,2)}}</td>
+                            <td><strong>Total Amount($) :</strong> ${{number_format($orders->total_amount,2)}}</td>
                         </tr>
                         <tr>
                             <td><strong>Payment Method :</strong> <span style="text-transform: capitalize">{{$orders->payment_method}}</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Status :</strong> @if (!empty($orders->status == 1))
-                                <span class="badge bg-success">Active</span>
-                                @else
-                                <span class="badge bg-danger">Deactive</span>
+                            <td><strong>Status :</strong> @if ($orders->status == 0)
+                                <span class="badge bg-secondary">Pending</span>
+                                @elseif ($orders->status == 1)
+                                <span class="badge bg-warning">In Progress</span>
+
+                                @elseif ($orders->status == 2)
+                                <span class="badge bg-success">Delivered</span>
+
+                                @elseif ($orders->status == 3)
+                                <span class="badge bg-success">Completed</span>
+
+                                @elseif ($orders->status == 4)
+                                <span class="badge bg-danger">Cancelled</span>
                                 @endif
                         </td>
                         </tr>
@@ -129,11 +138,11 @@
                             </td>
                             <td><a href="{{url($item->getProduct->slug)}}" target="_blank">{{$item->getProduct->title}}</a></td>
                             <td>{{$item->quantity}}</td>
-                            <td>{{number_format($item->price,2)}}</td>
+                            <td>${{number_format($item->price,2)}}</td>
                             <td>{{$item->size_name}}</td>
                             <td>{{$item->color_name}}</td>
-                            <td>{{number_format($item->size_amount,2)}}</td>
-                            <td>{{number_format($item->total_price,2)}}</td>
+                            <td>${{number_format($item->size_amount,2)}}</td>
+                            <td>${{number_format($item->total_price,2)}}</td>
                         </tr>
                     @endforeach
 

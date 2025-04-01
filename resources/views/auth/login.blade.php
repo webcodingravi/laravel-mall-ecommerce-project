@@ -10,8 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{asset('assets/img/favicon.png')}}" rel="icon">
-  <link href="{{asset('assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+  <link href="{{asset('front/assets/images/logo-icon.png')}}" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -34,7 +33,7 @@
 
 </head>
 
-<body>
+<body style="height: 100vh; background-image:url('front/assets/images/backgrounds/login-bg.jpg')">
 
   <main>
     <div class="container">
@@ -45,16 +44,15 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="py-4 d-flex justify-content-center">
-                <a href="index.html" class="w-auto logo d-flex align-items-center">
-                  <img src="{{asset('assets/img/logo.png')}}" alt="">
-                  <span class="d-none d-lg-block">Ecommerce</span>
+                <a href="{{route('home')}}" class="w-auto logo d-flex align-items-center">
+                  <img src="{{asset('front/assets/images/logo-footer.png')}}" alt="">
                 </a>
               </div><!-- End Logo -->
 
               <div class="mb-3 card">
                 <div class="card-body">
                   <div class="pt-4 pb-2">
-                    <h5 class="pb-0 text-center card-title fs-4">Login to Your Account</h5>
+                    <h5 class="pb-0 text-center card-title fs-4" style="color: #cc9966; ">Login to Your Account</h5>
                     <p class="text-center small">Enter your Email & password to login</p>
                   </div>
                    @include('alertMessage.alertMessage')
@@ -63,7 +61,7 @@
                     <div class="col-12">
                       <label class="form-label">Email</label>
                       <div class="input-group">
-                        <input type="text" name="email" value="{{old('email')}}" class="form-control @error('email') is-invalid @enderror"  placeholder="Please Enter Email">
+                        <input type="text" name="email" value="{{old('email')}}" class="form-control @error('email') is-invalid @enderror"  placeholder="Username@example.com">
                          @error('email')
                           <span class="invalid-feedback">{{$message}}</span>
                          @enderror
@@ -72,7 +70,7 @@
 
                     <div class="col-12">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Please Enter Password...">
+                      <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="*****************">
                       @error('password')
                           <span class="invalid-feedback">{{$message}}</span>
                       @enderror
@@ -85,10 +83,10 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                      <button class="btn btn-primary w-100" type="submit" style="background: #cc9966; border:none">Login</button>
                     </div>
                     <div class="col-12">
-                      <p class="mb-0 small"> <a href="">Forgot Password</a></p>
+                      <p class="mb-0"> <a href="{{route('forgotPassword')}}" style="color: #cc9966;">Forgot Password</a></p>
                     </div>
                   </form>
 

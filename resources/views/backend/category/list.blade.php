@@ -2,11 +2,11 @@
 @section('content')
 <main id="main" class="main" style="height: 100vh">
     <div class="pagetitle d-flex justify-content-between">
-      <h1>Category List (Total: {{$categories->total()}})</h1>
+      <h1 style="color: #cc9966;">Category List (Total: {{$categories->total()}})</h1>
       <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="get" action="{{route('category.list')}}">
           <input type="text" name="query" value="{{Request::get('query')}}" placeholder="Search" class="form-control" title="Enter search keyword" style="border-radius:0">
-          <button type="submit" class="btn btn-primary" title="Search" style="border-radius:0"><i class="bi bi-search"></i></button>
+          <button type="submit" class="btn btn-primary" title="Search" style="background: #cc9966; border:none; border-radius:0"><i class="bi bi-search"></i></button>
         </form>
       </div>
     </div>
@@ -18,8 +18,8 @@
           <div class="card">
             <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
-              <h5 class="card-title">Category List <a class="btn btn-primary btn-sm"  href="{{route('category.list')}}"><i class="bi bi-arrow-clockwise"></i> Reset</a></h5>
-              <a class="btn btn-primary btn-sm" href="{{route('category.create')}}">+ Add Category</a>
+              <h5 class="card-title"><a class="btn btn-primary btn-sm"  href="{{route('category.list')}}" style="background: #cc9966; border:none"><i class="bi bi-arrow-clockwise"></i> Reset</a></h5>
+              <a class="btn btn-primary btn-sm" href="{{route('category.create')}}" style="background: #cc9966; border:none">+ Add Category</a>
             </div>
               <!-- Table with stripped rows -->
               <table class="table table-striped table-bordered">
@@ -49,7 +49,7 @@
                        </td>
                     <td>{{\Carbon\Carbon::parse($category->created_at)->format('d M,Y')}}</td>
 
-                    <td><a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                    <td><a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-sm" style="background: #cc9966; border:none"><i class="bi bi-pencil-square"></i> Edit</a>
                         <a href="{{route('category.delete',$category->id)}}" onclick="return confirm('Are you sure you want delete record.')" class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i> Delete</a>
                     </td>
 

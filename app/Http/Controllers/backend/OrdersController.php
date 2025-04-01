@@ -52,6 +52,8 @@ class OrdersController extends Controller
 
 
 
+
+
    public function order_status(Request $request) {
     $getOrder = Order::findOrfail($request->order_id);
     $getOrder->status = $request->status;
@@ -63,4 +65,11 @@ class OrdersController extends Controller
             'message' => 'Status Successfully Updated',
     ]);
    }
+
+
+   public function destory(string $id) {
+    $order = Order::findOrFail($id);
+   $order->delete();
+   return redirect()->back()->with('success','Order Successfully Deleted');
+}
 }

@@ -13,7 +13,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>First Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="first_name" value="{{old('first_name')}}" id="first_name" class="form-control" placeholder="Please Enter Your First Name..">
+                                        <input type="text" name="first_name" value="{{old('first_name',!empty(Auth::user()->name) ? Auth::user()->name : '')}}" id="first_name" class="form-control" placeholder="Please Enter Your First Name..">
                                         <p></p>
 
 
@@ -21,32 +21,32 @@
 
                                     <div class="col-sm-6">
                                         <label>Last Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="last_name" value="{{old('last_name')}}" id="last_name" class="form-control" placeholder="Please Enter Your Last Name..">
+                                        <input type="text" name="last_name" value="{{old('last_name', !empty(Auth::user()->last_name) ? Auth::user()->last_name : '')}}" id="last_name" class="form-control" placeholder="Please Enter Your Last Name..">
                                         <p></p>
                                     </div>
                                 </div>
 
                                 <label>Company Name (Optional)</label>
-                                <input type="text" name="company_name" value="{{old('company_name')}}" class="form-control" placeholder="Please Enter Your Company Name..">
+                                <input type="text" name="company_name" value="{{old('company_name', !empty(Auth::user()->company_name) ? Auth::user()->company_name : '')}}" class="form-control" placeholder="Please Enter Your Company Name..">
 
                                 <label>Country <span class="text-danger">*</span></label>
-                                <input type="text" value="{{old('country')}}" name="country" id="country" class="form-control" placeholder="Please Enter Your Country..">
+                                <input type="text" value="{{old('country',!empty(Auth::user()->country) ? Auth::user()->country : '')}}" name="country" id="country" class="form-control" placeholder="Please Enter Your Country..">
                                 <p></p>
 
                                 <label>Street address</label>
-                                <input type="text" name="address_one" value="{{old('address_one')}}"  class="form-control" placeholder="House number and Street name">
-                                <input type="text" name="address_two" value="{{old('address_two')}}" class="form-control" placeholder="Appartments, suite, unit etc ...">
+                                <input type="text" name="address_one" value="{{old('address_one',!empty(Auth::user()->address_one) ? Auth::user()->address_one : '')}}"  class="form-control" placeholder="House number and Street name">
+                                <input type="text" name="address_two" value="{{old('address_two',!empty(Auth::user()->address_two) ? Auth::user()->address_two : '')}}" class="form-control" placeholder="Appartments, suite, unit etc ...">
 
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>City <span class="text-danger">*</span></label>
-                                        <input type="text" value="{{old('city')}}" id="city" name="city" class="form-control" placeholder="Please Enter Your City..">
+                                        <input type="text" value="{{old('city',!empty(Auth::user()->city) ? Auth::user()->city : '')}}" id="city" name="city" class="form-control" placeholder="Please Enter Your City..">
                                         <p></p>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <label>State <span class="text-danger">*</span></label>
-                                        <input type="text" name="state" id="state" value="{{old('state')}}" class="form-control" placeholder="Please Enter Your State..">
+                                        <input type="text" name="state" id="state" value="{{old('state',!empty(Auth::user()->city) ? Auth::user()->city : '')}}" class="form-control" placeholder="Please Enter Your State..">
                                       <p></p>
                                     </div>
                                 </div>
@@ -54,20 +54,20 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>Postcode / ZIP <span class="text-danger">*</span></label>
-                                        <input type="text" name="postcode" id="postcode" value="{{old('postcode')}}" class="form-control" placeholder="Please Enter Your Postcode / Zip..">
+                                        <input type="text" name="postcode" id="postcode" value="{{old('postcode',!empty(Auth::user()->postcode) ? Auth::user()->postcode : '')}}" class="form-control" placeholder="Please Enter Your Postcode / Zip..">
                                         <p></p>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <label>Phone <span class="text-danger">*</span></label>
-                                        <input type="text" name="phone" id="phone" value="{{old('phone')}}" class="form-control" placeholder="Please Enter Your Phone Number..">
+                                        <input type="text" name="phone" id="phone" value="{{old('phone',!empty(Auth::user()->phone) ? Auth::user()->phone : '')}}" class="form-control" placeholder="Please Enter Your Phone Number..">
                                         <p></p>
                                     </div>
                                 </div>
 
 
                                 <label>Email address <span class="text-danger">*</span></label>
-                                <input type="text" name="email" id="email_address" value="{{old('email')}}" class="form-control" placeholder="Please Enter Your Email Address..">
+                                <input type="text" name="email" id="email_address" value="{{old('email',!empty(Auth::user()->email) ? Auth::user()->email : '')}}" class="form-control" placeholder="Please Enter Your Email Address..">
                                 <p></p>
 
 

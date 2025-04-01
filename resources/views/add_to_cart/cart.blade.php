@@ -53,7 +53,6 @@
                                         <input type="hidden" name="cart[{{$key}}][id]" class="form-control" value="{{$item->id}}">
                                         <input type="hidden" name="cart[{{$key}}][rowId]]" class="form-control" value="{{$item->rowId}}">
 
-
                                     </td>
                                     <td class="total-col">${{number_format($item->price * $item->qty,2)}}</td>
                                     <td class="remove-col"><a href="{{route('CartDelete',$item->rowId)}}" class="btn-remove"><i class="icon-close"></i></a></td>

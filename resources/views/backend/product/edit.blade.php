@@ -2,8 +2,8 @@
 @section('content')
 <main id="main" class="main" style="height: 100vh">
     <div class="pagetitle d-flex justify-content-between">
-      <h1>Edit Product</h1>
-      <a class="btn btn-primary btn-sm" href="{{route('product.list')}}"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
+      <h1 style="color: #cc9966;">Edit Product</h1>
+      <a class="btn btn-primary btn-sm" href="{{route('product.list')}}" style="background: #cc9966; border:none"><i class="bi bi-arrow-right-circle-fill"></i> Back</a>
     </div>
     <!-- End Page Title -->
     <section class="section">
@@ -129,7 +129,7 @@
                                 <td><input type="text" name="size[100][size]" class="form-control" placeholder="Please Enter Size...."></td>
                                 <td><input type="text" name="size[100][price]" class="form-control" placeholder="Please Enter Price...."></td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm addSize">+Add</button>
+                                    <button class="btn btn-primary btn-sm addSize" style="background: #cc9966; border:none">+Add</button>
 
                                 </td>
 
@@ -185,7 +185,7 @@
                   </div>
 
                 <div class="">
-                  <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                  <button type="submit" class="btn btn-primary btn-sm" style="background: #cc9966; border:none">Update</button>
                 </div>
               </form>
 
