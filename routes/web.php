@@ -165,6 +165,11 @@ Route::post('/update-password',[UserController::class,'UpdatePassword'])->name('
 // Add to wishlisht
 Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
 
+Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
+
+Route::get('my-wishlist',[ProductController::class,'MyWishlist'])->name('MyWishlist');
+
+
 });
 
 
