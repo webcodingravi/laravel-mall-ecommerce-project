@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 class ShowProductController extends Controller
 {
 
+    public function MyWishlist() {
+    $data['meta_title'] = 'My Wishlist';
+     $data['meta_description'] = '';
+     $data['meta_keywords'] = '';
+      return view('product.wishlist',$data);
+    }
+
     public function getProductSearch() {
             $data['meta_title'] = 'Search';
             $data['meta_description'] = '';

@@ -20,12 +20,11 @@
                         <a href="#">Links</a>
                         <ul>
                             <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-                            @if(Auth::check())
-                            <li><a href="route('MyWishlist')"><i class="icon-heart-o"></i>My Wishlist <span>(3)</span></a></li>
+                            @if(!empty(Auth::check()))
+                            <li><a href="{{route('MyWishlist')}}"><i class="icon-heart-o"></i>My Wishlist</a></li>
                              @else
-                             <li><a href="#signin-modal"><i class="icon-heart-o"></i>My Wishlist <span>(3)</span></a></li>
+                             <li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist</a></li>
                             @endif
-                            <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist <span>(3)</span></a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
                             @if (!empty(Auth::check()))

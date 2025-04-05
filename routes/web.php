@@ -167,7 +167,7 @@ Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('Ad
 
 Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
 
-Route::get('my-wishlist',[ProductController::class,'MyWishlist'])->name('MyWishlist');
+Route::get('my-wishlist',[ShowProductController::class,'MyWishlist'])->name('MyWishlist');
 
 
 });
