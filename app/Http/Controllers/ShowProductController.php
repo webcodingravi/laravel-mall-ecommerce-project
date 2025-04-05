@@ -8,16 +8,36 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShowProductController extends Controller
 {
 
-    public function MyWishlist() {
-    $data['meta_title'] = 'My Wishlist';
-     $data['meta_description'] = '';
-     $data['meta_keywords'] = '';
-      return view('product.wishlist',$data);
-    }
+    // public function MyWishlist() {
+    // $data['meta_title'] = 'My Wishlist';
+    //  $data['meta_description'] = '';
+    //  $data['meta_keywords'] = '';
+    //  $data['getProduct'] = Product::select('products.*','categories.name as category_name',
+    //  'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
+
+    //  ->join('categories','categories.id','products.category_id')
+
+    //  ->join('sub_categories','sub_categories.id','products.sub_category_id')
+
+    //  ->join('product_wishlists','product_wishlists.product_id','products.id')
+
+    //  ->where('product_wishlists.user_id',Auth::user()->id)
+
+    //  ->where('products.status',1)
+
+    // ->orderBy('products.id','desc')
+
+    // ->paginate(3);
+
+
+
+    //   return view('product.wishlist',$data);
+    // }
 
     public function getProductSearch() {
             $data['meta_title'] = 'Search';

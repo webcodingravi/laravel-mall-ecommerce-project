@@ -19,6 +19,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Wishlist</a></li>
 
             </ol>
         </div><!-- End .container -->
@@ -27,7 +28,7 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="toolbox">
                         <div class="toolbox-left">
                             <div class="toolbox-info">
@@ -37,11 +38,11 @@
 
                     </div>
                      <div id="getProductAjax">
-                        {{-- @include('product.list') --}}
+                        @include('product.list')
                      </div>
 
                     <div class="pagination">
-
+                        {{$getProduct->links('pagination::bootstrap-5')}}
                     </div>
                 </div>
 
@@ -50,6 +51,9 @@
         </div>
     </div>
 </main>
+
+@endsection
+@section('script')
 
 @endsection
 
