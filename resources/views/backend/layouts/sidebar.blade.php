@@ -75,10 +75,59 @@
         </a>
       </li>
 
+
+
       <li class="nav-item">
         <a class="nav-link text-dark {{Request::segment(2) != 'orders' ? 'collapsed' : ''}}" href="{{route('orders.list')}}">
             <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
           <span>Orders</span>
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'page' ? 'collapsed' : ''}}" href="{{route('page.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Pages</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'slider' ? 'collapsed' : ''}}" href="{{route('slider.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Slider</span>
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'partner' ? 'collapsed' : ''}}" href="{{route('partner.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Partner Logo</span>
+        </a>
+      </li>
+
+
+
+      <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'contact-us' ? 'collapsed' : ''}}" href="{{route('contact.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Contact Us</span>
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'faq' ? 'collapsed' : ''}}" href="{{route('faq.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>FAQ</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'setting' ? 'collapsed' : ''}}" href="{{route('SystemSetting')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Setting</span>
         </a>
       </li>
 

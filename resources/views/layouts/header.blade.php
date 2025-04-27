@@ -19,14 +19,14 @@
                     <li>
                         <a href="#">Links</a>
                         <ul>
-                            <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                            <li><a href="tel:{{getSystemSetting()->phone}}"><i class="icon-phone"></i>Call: {{getSystemSetting()->phone}}</a></li>
                             @if(!empty(Auth::check()))
                             <li><a href="{{route('MyWishlist')}}"><i class="icon-heart-o"></i>My Wishlist</a></li>
                              @else
                              <li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist</a></li>
                             @endif
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="{{route('about')}}">About Us</a></li>
+                            <li><a href="{{route('contact')}}">Contact Us</a></li>
                             @if (!empty(Auth::check()))
                             <li><a href="{{route('user_dashboard')}}"><i class="icon-user"></i>{{Auth::user()->name}}</a></li>
                                 @else
@@ -48,9 +48,11 @@
                     <i class="icon-bars"></i>
                 </button>
 
+                @if (!empty(getSystemSetting()->logo))
                 <a href="{{route('home')}}" class="logo">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="logo" width="105" height="25">
+                    <img src="{{asset('uploads/setting/logo/'.getSystemSetting()->logo)}}" alt="logo" width="105" height="25">
                 </a>
+                @endif
 
 
                 <nav class="main-nav">

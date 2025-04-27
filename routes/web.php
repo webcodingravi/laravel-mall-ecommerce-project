@@ -1,34 +1,28 @@
 <?php
 
-
-use App\Models\User;
+use App\Models\Slider;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\ShippingCharge;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\AddToCartController;
+use App\Http\Controllers\backend\FaqController;
 use App\Http\Controllers\ShowProductController;
+use App\Http\Controllers\backend\PageController;
 use App\Http\Controllers\backend\AdminController;
 use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\ColorController;
 use App\Http\Controllers\backend\OrdersController;
+use App\Http\Controllers\backend\SliderController;
+use App\Http\Controllers\backend\PartnerController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\DiscountCodeController;
 use App\Http\Controllers\backend\ShippingChargeController;
-
-
-
-
-
-
-
-
 
 // Backend route
 Route::prefix('/admin')->group(function() {
@@ -124,6 +118,50 @@ Route::get('/orders/details/{id}',[OrdersController::class,'details'])->name('or
 Route::get('/orders/status',[OrdersController::class,'order_status'])->name('orders.order_status');
 Route::get('/orders/delete/{id}',[OrdersController::class,'destory'])->name('orders.delete');
 
+
+// Slider route
+Route::get('/slider/list',[SliderController::class,'index'])->name('slider.list');
+Route::get('/slider/create',[SliderController::class,'create'])->name('slider.create');
+Route::post('/slider/store',[SliderController::class,'store'])->name('slider.store');
+Route::get('/slider/edit/{id}',[SliderController::class,'edit'])->name('slider.edit');
+Route::put('/slider/update/{id}',[SliderController::class,'update'])->name('slider.update');
+Route::get('/slider/delete/{id}',[SliderController::class,'destroy'])->name('slider.delete');
+
+
+// Partner logo route
+Route::get('/partner/list',[PartnerController::class,'index'])->name('partner.list');
+Route::get('/partner/create',[PartnerController::class,'create'])->name('partner.create');
+Route::post('/partner/store',[PartnerController::class,'store'])->name('partner.store');
+Route::get('/partner/edit/{id}',[PartnerController::class,'edit'])->name('partner.edit');
+Route::put('/partner/update/{id}',[PartnerController::class,'update'])->name('partner.update');
+Route::get('/partner/delete/{id}',[PartnerController::class,'destroy'])->name('partner.delete');
+
+
+// Page route
+Route::get('/page/list',[PageController::class,'index'])->name('page.list');
+Route::get('/page/edit/{id}',[PageController::class,'edit'])->name('page.edit');
+Route::put('/page/update/{id}',[PageController::class,'update'])->name('page.update');
+
+// system setting route
+Route::get('/setting',[PageController::class,'SystemSetting'])->name('SystemSetting');
+Route::post('/setting-update',[PageController::class,'UpdateSystemSetting'])->name('UpdateSystemSetting');
+
+
+// contact us route
+Route::get('/contact-us',[PageController::class,'ContactUs'])->name('contact.list');
+Route::get('/contact-us/delete/{id}',[PageController::class,'ContactDestory'])->name('contact.delete');
+
+
+
+
+// Faq route
+Route::get('/faq/list',[FaqController::class,'index'])->name('faq.list');
+Route::get('/faq/create',[FaqController::class,'create'])->name('faq.create');
+Route::post('/faq/store',[FaqController::class,'store'])->name('faq.store');
+Route::get('/faq/edit/{id}',[FaqController::class,'edit'])->name('faq.edit');
+Route::put('/faq/update/{id}',[FaqController::class,'update'])->name('faq.update');
+Route::get('/faq/delete/{id}',[FaqController::class,'destroy'])->name('faq.delete');
+
 });
 
 // logout route
@@ -160,25 +198,34 @@ Route::get('/change-password',[UserController::class,'ChangePassword'])->name('c
 Route::post('/update-password',[UserController::class,'UpdatePassword'])->name('update-password');
 
 
-});
-
 // Add to wishlisht
-Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
-
-Route::post('add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
-
+Route::post('/add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
+Route::post('/add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
+Route::post('/make-review',[UserController::class,'MakeReview'])->name('MakeReview');
+Route::get('/my-wishlist',[ShowProductController::class,'MyWishlist'])->name('MyWishlist');
 
 
 });
 
-// Route::get('my-wishlist',[ShowProductController::class,'MyWishlist'])->name('MyWishlist');
-
-
+});
 
 
 // frontend Route
 
-Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('/',[FrontController::class,'home'])->name('home');
+Route::get('/about-us',[FrontController::class,'About'])->name('about');
+Route::get('/contact-us',[FrontController::class,'Contact'])->name('contact');
+Route::post('/contact-us',[FrontController::class,'SubmitContact'])->name('SubmitContact');
+Route::get('/faq',[FrontController::class,'Faq'])->name('faq');
+Route::get('/payment-methods',[FrontController::class,'PaymentMethod'])->name('PaymentMethod');
+Route::get('/money-back',[FrontController::class,'MoneyBack'])->name('MoneyBack');
+Route::get('/returns',[FrontController::class,'Returns'])->name('Returns');
+Route::get('/shipping',[FrontController::class,'Shipping'])->name('Shipping');
+Route::get('/terms-conditions',[FrontController::class,'TermsConditions'])->name('TermsConditions');
+Route::get('/privacy-policy',[FrontController::class,'PrivacyPolicy'])->name('PrivacyPolicy');
+
+
+
 
 Route::post('/user-login',[AuthController::class,'user_login'])->name('UserLogin');
 Route::post('/user-register',[AuthController::class,'user_register'])->name('UserRegister');
@@ -203,7 +250,6 @@ Route::get('/checkout/payment',[AddToCartController::class,'checkout_payment'])-
 Route::get('/paypal/success-payment',[AddToCartController::class,'paypalSuccessPayment'])->name('paypalSuccessPayment');
 
 Route::get('/stripe/payment-success',[AddToCartController::class,'stripeSuccessPayment'])->name('stripeSuccessPayment');
-
 
 
 Route::post('/product/add-to-cart',[AddToCartController::class,'AddToCart'])->name('AddToCart');

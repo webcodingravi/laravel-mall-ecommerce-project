@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductReview;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,31 +14,31 @@ use Illuminate\Support\Facades\Auth;
 class ShowProductController extends Controller
 {
 
-    // public function MyWishlist() {
-    // $data['meta_title'] = 'My Wishlist';
-    //  $data['meta_description'] = '';
-    //  $data['meta_keywords'] = '';
-    //  $data['getProduct'] = Product::select('products.*','categories.name as category_name',
-    //  'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
+    public function MyWishlist() {
+    $data['meta_title'] = 'My Wishlist';
+     $data['meta_description'] = '';
+     $data['meta_keywords'] = '';
+     $data['getProduct'] = Product::select('products.*','categories.name as category_name',
+     'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
 
-    //  ->join('categories','categories.id','products.category_id')
+     ->join('categories','categories.id','products.category_id')
 
-    //  ->join('sub_categories','sub_categories.id','products.sub_category_id')
+     ->join('sub_categories','sub_categories.id','products.sub_category_id')
 
-    //  ->join('product_wishlists','product_wishlists.product_id','products.id')
+     ->join('product_wishlists','product_wishlists.product_id','products.id')
 
-    //  ->where('product_wishlists.user_id',Auth::user()->id)
+     ->where('product_wishlists.user_id',Auth::user()->id)
 
-    //  ->where('products.status',1)
+     ->where('products.status',1)
 
-    // ->orderBy('products.id','desc')
+    ->orderBy('products.id','desc')
 
-    // ->paginate(3);
+    ->paginate(3);
 
 
 
-    //   return view('product.wishlist',$data);
-    // }
+      return view('product.wishlist',$data);
+    }
 
     public function getProductSearch() {
             $data['meta_title'] = 'Search';
@@ -76,7 +77,9 @@ class ShowProductController extends Controller
             $data['meta_title'] = $getProductSingle->title;
             $data['meta_description'] = $getProductSingle->short_description;
             $data['meta_keywords'] = '';
+
             $data['getProductSingle'] = $getProductSingle;
+
             $data['getRelatedProduct'] = Product::select('products.*', 'categories.name as category_name',
             'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
             ->join('categories','categories.id','products.category_id')
@@ -87,6 +90,13 @@ class ShowProductController extends Controller
             ->orderBy('products.id','desc')
             ->take(10)
             ->get();
+
+            $data['getReview'] = ProductReview::select("product_reviews.*","users.name")
+             ->join('users','users.id','product_reviews.user_id')
+            ->where('product_reviews.product_id',$getProductSingle->id)
+            ->orderBy('product_reviews.id','desc')
+            ->paginate(10);
+
             return view('product.ShowProductDetail',$data);
         }
 

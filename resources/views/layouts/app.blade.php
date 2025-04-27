@@ -13,7 +13,10 @@
      @endif
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('front/assets/images/icons/favicon-32x32.png')}}">
+    @if (!empty(getSystemSetting()->favicon))
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('uploads/setting/favicon/'.getSystemSetting()->favicon)}}">
+    @endif
+
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="{{asset('front/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('front/assets/css/plugins/owl-carousel/owl.carousel.css')}}">

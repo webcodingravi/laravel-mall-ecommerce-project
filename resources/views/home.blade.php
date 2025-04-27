@@ -2,7 +2,7 @@
 @section('content')
 <main class="main">
 
-    <div class="pt-5 pb-6 intro-section bg-lighter">
+    <div class="pt-0 pb-6 intro-section bg-lighter">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -15,62 +15,32 @@
                                     }
                                 }
                             }'>
+
+                            @foreach ($getSlider as $slider)
                             <div class="intro-slide">
+                                @if (!empty($slider->image_name))
                                 <figure class="slide-image">
                                     <picture>
-                                        <source media="(max-width: 480px)" srcset="assets/images/slider/slide-1-480w.jpg">
-                                        <img src="assets/images/slider/slide-1.jpg" alt="Image Desc">
+                                        <source media="(max-width: 480px)" srcset="{{asset('uploads/slider/'.$slider->image_name)}}">
+                                        <img src="{{asset('uploads/slider/'.$slider->image_name)}}" alt="Image Desc">
                                     </picture>
                                 </figure>
+                                @endif
 
                                 <div class="intro-content">
-                                    <h3 class="intro-subtitle">Topsale Collection</h3>
-                                    <h1 class="intro-title">Living Room<br>Furniture</h1>
-
-                                    <a href="category.html" class="btn btn-outline-white">
-                                        <span>SHOP NOW</span>
+                                    <h1 class="intro-title">{!!$slider->title!!}</h1>
+                                    @if (!empty($slider->button_link) && !empty($slider->button_name))
+                                    <a href="{{$slider->button_link}}" class="btn btn-outline-white">
+                                        <span class="text-uppercase">{{$slider->button_name}}</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
+                                    @endif
                                 </div>
                             </div>
 
-                            <div class="intro-slide">
-                                <figure class="slide-image">
-                                    <picture>
-                                        <source media="(max-width: 480px)" srcset="assets/images/slider/slide-2-480w.jpg">
-                                        <img src="assets/images/slider/slide-2.jpg" alt="Image Desc">
-                                    </picture>
-                                </figure>
+                            @endforeach
 
-                                <div class="intro-content">
-                                    <h3 class="intro-subtitle">News and Inspiration</h3>
-                                    <h1 class="intro-title">New Arrivals</h1>
 
-                                    <a href="category.html" class="btn btn-outline-white">
-                                        <span>SHOP NOW</span>
-                                        <i class="icon-long-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="intro-slide">
-                                <figure class="slide-image">
-                                    <picture>
-                                        <source media="(max-width: 480px)" srcset="assets/images/slider/slide-3-480w.jpg">
-                                        <img src="assets/images/slider/slide-3.jpg" alt="Image Desc">
-                                    </picture>
-                                </figure>
-
-                                <div class="intro-content">
-                                    <h3 class="intro-subtitle">Outdoor Furniture</h3>
-                                    <h1 class="intro-title">Outdoor Dining <br>Furniture</h1>
-
-                                    <a href="category.html" class="btn btn-outline-white">
-                                        <span>SHOP NOW</span>
-                                        <i class="icon-long-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
 
                         <span class="slider-loader"></span>
@@ -106,29 +76,15 @@
                         }
                     }
                 }'>
-                <a href="#" class="brand">
-                    <img src="assets/images/brands/1.png" alt="Brand Name">
-                </a>
 
-                <a href="#" class="brand">
-                    <img src="assets/images/brands/2.png" alt="Brand Name">
+                @foreach ($getPartner as $partner)
+                @if (!empty($partner->image_name))
+                <a href="{{!empty($partner->link) ? $partner->link : ''}}" class="brand">
+                    <img src="{{asset('uploads/partner_logo/'.$partner->image_name)}}" alt="{{$partner->image_name}}">
                 </a>
+                @endif
+                @endforeach
 
-                <a href="#" class="brand">
-                    <img src="assets/images/brands/3.png" alt="Brand Name">
-                </a>
-
-                <a href="#" class="brand">
-                    <img src="assets/images/brands/4.png" alt="Brand Name">
-                </a>
-
-                <a href="#" class="brand">
-                    <img src="assets/images/brands/5.png" alt="Brand Name">
-                </a>
-
-                <a href="#" class="brand">
-                    <img src="assets/images/brands/6.png" alt="Brand Name">
-                </a>
             </div>
         </div>
     </div>
@@ -195,10 +151,10 @@
                         </figure>
 
                         <div class="product-body">
-                            <h3 class="product-title"><a href="product.html">Butler Stool Ladder</a></h3><
+                            <h3 class="product-title"><a href="product.html">Butler Stool Ladder</a></h3>
                             <div class="product-price">
                                 $251,00
-                            </div><
+                            </div>
                         </div>
                         <div class="product-action">
                             <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>

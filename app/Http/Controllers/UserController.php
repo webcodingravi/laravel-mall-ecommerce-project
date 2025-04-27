@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\ProductReview;
 use App\Models\ProductWishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -145,5 +146,17 @@ class UserController extends Controller
              'status' => true,
           ]);
 
+        }
+
+        public function MakeReview(Request $request) {
+           $review = new ProductReview();
+           $review->product_id = trim($request->product_id);
+           $review->order_id = trim($request->order_id);
+           $review->user_id = Auth::user()->id;
+           $review->rating = trim($request->rating);
+           $review->review = trim($request->review);
+           $review->save();
+
+           return redirect()->back()->with('success','Thank you for your review');
         }
 }

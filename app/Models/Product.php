@@ -92,4 +92,10 @@ class Product extends Model
     public function getSubCategory() {
         return $this->belongsTo(SubCategory::class,'sub_category_id');
      }
+
+
+     public function getTotalReview() {
+        return $this->hasMany(ProductReview::class,'product_id')
+        ->join('users','users.id','product_reviews.user_id')->count();
+     }
 }

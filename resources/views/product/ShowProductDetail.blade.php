@@ -52,9 +52,19 @@
 
                             <div class="ratings-container">
                                 <div class="ratings">
-                                    <div class="ratings-val" style="width: 80%;"></div>
+                                    <div class="ratings-val" style="width: {{getReviewRating($getProductSingle->id)}}%;"></div>
                                 </div>
-                                <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+
+                                <a class="ratings-text" href="#product-review-link" id="review-link">
+                                    @if ($getProductSingle->getTotalReview() <= 1)
+
+                                    ( {{$getProductSingle->getTotalReview()}} Review )
+
+                                    @else
+                                    ( {{$getProductSingle->getTotalReview()}} Reviews )
+                                    @endif
+
+                                </a>
                             </div>
 
                             <div class="product-price">
@@ -146,7 +156,7 @@
                         <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
+                        <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -168,58 +178,33 @@
 
                     <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
                         <div class="reviews">
-                            <h3>Reviews (2)</h3>
+                            @if ($getProductSingle->getTotalReview() <= 1)
+                            <h3>Review ({{$getProductSingle->getTotalReview()}})</h3>
+                            @else
+                            <h3>Reviews ({{$getProductSingle->getTotalReview()}})</h3>
+                            @endif
+
+                            @foreach ($getReview as $review)
                             <div class="review">
                                 <div class="row no-gutters">
                                     <div class="col-auto">
-                                        <h4><a href="#">Samanta J.</a></h4>
+                                        <h4><a href="#"></a>{{$review->name}}</h4>
                                         <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div>
+                                                <div class="ratings-val" style="width: {{$review->rating()}}%;"></div>
                                             </div>
                                         </div>
-                                        <span class="review-date">6 days ago</span>
+                                        <span class="review-date">{{Carbon\Carbon::parse($review->created_at)->diffForHumans()}}</span>
                                     </div>
                                     <div class="col">
-                                        <h4>Good, perfect size</h4>
-
-                                        <div class="review-content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
-                                        </div>
-
-                                        <div class="review-action">
-                                            <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                            <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                        </div>
+                                        <h4>{{$review->review}}</h4>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="review">
-                                <div class="row no-gutters">
-                                    <div class="col-auto">
-                                        <h4><a href="#">John Doe</a></h4>
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div>
-                                            </div>
-                                        </div>
-                                        <span class="review-date">5 days ago</span>
-                                    </div>
-                                    <div class="col">
-                                        <h4>Very good</h4>
+                            @endforeach
 
-                                        <div class="review-content">
-                                            <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                                        </div>
-
-                                        <div class="review-action">
-                                            <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                            <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{$getReview->links('pagination::bootstrap-5')}}
                         </div>
                     </div>
                 </div>
@@ -294,9 +279,20 @@
                         </div>
                         <div class="ratings-container">
                             <div class="ratings">
-                                <div class="ratings-val" style="width: 20%;"></div>
+                                <div class="ratings-val" style="width: {{getReviewRating($getProductSingle->id)}}%;"></div>
                             </div>
-                            <span class="ratings-text">( 2 Reviews )</span>
+                            @if ($getProductSingle->getTotalReview() <= 1)
+                            <span class="ratings-text">
+                                Review ({{$getProductSingle->getTotalReview()}})
+                                </span>
+                                @else
+                                <span class="ratings-text">
+                                    Reviews ({{$getProductSingle->getTotalReview()}})
+                            </span>
+                                @endif
+
+
+
                         </div>
 
 
@@ -340,6 +336,27 @@
          });
     });
 
+
+    $('body').delegate('.add_to_wishlist','click',function() {
+         var product_id = $(this).attr('id');
+         $.ajax({
+           type: 'post',
+           url: '{{route("AddToWishlist")}}',
+           data: {
+                 "_token" : "{{csrf_token()}}",
+                 product_id : product_id
+           },
+           dataType:'json',
+           success:function(data){
+               if(data.is_wishlist == 0) {
+                    $('.add_to_wishlist'+product_id).removeClass('btn-wishlist-add');
+               }else{
+                    $('.add_to_wishlist'+product_id).addClass('btn-wishlist-add');
+               }
+           }
+
+         });
+    });
 
 
 </script>

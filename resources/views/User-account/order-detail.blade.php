@@ -14,6 +14,9 @@
                     @include('User-account._sidebar')
 
                     <div class="col-md-8 col-lg-9">
+                       <div class="mb-4">
+                        @include('alertMessage.alertMessage')
+                       </div>
                     <div class="tab-content">
                        <!-- Table with stripped rows -->
               <table class="table table-striped">
@@ -104,6 +107,7 @@
                         <tr>
                     <td style="padding: 10px"><strong>Status :</strong> @if ($orders->status == 0)
                         <span class="badge bg-warning">Pending</span>
+
                         @elseif ($orders->status == 1)
                         <span class="badge bg-warning">In Progress</span>
 
@@ -154,7 +158,73 @@
                                   <img src="{{asset('uploads/product/'.$getImage->image_name)}}" class="img-fluid" style="width: 100px; padding-left:10px; cursor: pointer;">
                                   @endif
                               </td>
-                              <td><a href="{{url($item->getProduct->slug)}}" target="_blank">{{$item->getProduct->title}}</a></td>
+                              <td class="text-start ps-3">
+                                <a href="{{url($item->getProduct->slug)}}" target="_blank">{{$item->getProduct->title}}</a>
+                                <br/>
+                                @if (!empty($item->color_name))
+                                <strong>Color :</strong>  {{$item->color_name}} </br>
+                                @endif
+
+                                <strong>Size :</strong>  {{$item->size_name}}<br/>
+
+                                @if ($orders->status == 3)
+                                    @php
+                                        $getReview = getReview($item->getProduct->id, $orders->id);
+                                    @endphp
+
+                                    @if(!empty($getReview))
+                                    <strong>How Many rating :</strong> {{$getReview->rating}}
+                                    <br/>
+                                    <strong>Review :</strong> {{$getReview->review}}
+                                    @else
+                                    <a href="#" class="btn btn-primary btn-sm MakeReview" id="{{$item->getProduct->id}}"
+                                        data-orders='{{$orders->id}}' data-bs-toggle="modal" data-bs-target="#MakeReview">Make Review</a>
+                                    @endif
+                                @endif
+
+
+                                {{-- make review modal diloge box --}}
+                                <div class="modal fade" id="MakeReview" tabindex="-1" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Make Review</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <form action="{{route('MakeReview')}}" method="post">
+                                            @csrf
+                                        <input type="hidden" id="getProductId" name="product_id">
+                                        <input type="hidden" id="getOrderId" name="order_id">
+                                        <div class="p-3 modal-body text-start">
+                                        <div class="form-group">
+                                            <label for="">How Many Star *?</label>
+                                            <select class="form-control" name="rating" required>
+                                            <option value="">Please Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">Review</label>
+                                            <textarea name="review" required id="" cols="30" rows="5" class="form-control" placeholder="Review"></textarea>
+                                        </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                            </td>
                               <td>{{$item->quantity}}</td>
                               <td>${{number_format($item->price,2)}}</td>
                               <td>${{number_format($item->size_amount,2)}}</td>
@@ -173,4 +243,19 @@
 </div>
 </div>
 </main>
+@endsection
+
+@section('script')
+<script>
+    $('body').delegate(".MakeReview","click",function() {
+        var product_id = $(this).attr('id');
+        var order_id = $(this).attr('data-orders');
+        $("#getProductId").val(product_id);
+        $("#getOrderId").val(order_id);
+        $("#MakeReview").model('show');
+
+
+    });
+</script>
+
 @endsection

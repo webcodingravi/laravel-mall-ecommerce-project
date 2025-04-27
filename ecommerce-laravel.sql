@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2025 at 06:14 PM
+-- Generation Time: Apr 27, 2025 at 07:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -133,6 +133,32 @@ INSERT INTO `colors` (`id`, `name`, `code`, `user_id`, `status`, `created_at`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact_us`
+--
+
+CREATE TABLE `contact_us` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contact_us`
+--
+
+INSERT INTO `contact_us` (`id`, `user_id`, `name`, `email`, `phone`, `subject`, `message`, `created_at`, `updated_at`) VALUES
+(2, 1, 'Ravi Kumar', 'ravi@gmail.com', '09821345742', 'sfs', 'fsf', '2025-04-26 07:34:30', '2025-04-26 07:34:30'),
+(3, 1, 'krish', 'krish@gmail.com', '09821345742', 'fdf', 'dfd', '2025-04-26 07:35:37', '2025-04-26 07:35:37');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `discount_codes`
 --
 
@@ -170,6 +196,31 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faqs`
+--
+
+CREATE TABLE `faqs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `question` text DEFAULT NULL,
+  `answer` text DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `faqs`
+--
+
+INSERT INTO `faqs` (`id`, `user_id`, `question`, `answer`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'How will my parcel be delivered?', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>', 1, '2025-04-13 03:03:01', '2025-04-13 03:03:01'),
+(2, 1, 'Do I pay for delivery?', '<p>Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.</p>', 1, '2025-04-13 03:03:23', '2025-04-13 03:03:23'),
+(3, 1, 'Will I be charged customs fees?', '<p>Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.</p>', 1, '2025-04-13 03:04:20', '2025-04-13 03:04:20');
 
 -- --------------------------------------------------------
 
@@ -241,7 +292,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (32, '2025_03_18_122535_update_orders_table', 13),
 (33, '2025_03_25_070644_update_orders_table', 14),
 (34, '2025_03_31_100210_update_users_table', 15),
-(35, '2025_03_31_115039_create_product_wishlists_table', 16);
+(35, '2025_03_31_115039_create_product_wishlists_table', 16),
+(36, '2025_04_05_144232_create_product_reviews_table', 17),
+(38, '2025_04_09_082746_create_pages_table', 18),
+(42, '2025_04_09_111824_create_faqs_table', 19),
+(45, '2025_04_13_100211_create_system_settings_table', 20),
+(46, '2025_04_25_153804_create_contact_us_table', 21),
+(47, '2025_04_26_131250_create_sliders_table', 22),
+(49, '2025_04_26_150508_create_partners_table', 23);
 
 -- --------------------------------------------------------
 
@@ -289,9 +347,9 @@ INSERT INTO `orders` (`id`, `user_id`, `order_number`, `first_name`, `last_name`
 (71, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', 'new', '', '0', 1, '5', '155', 'paypal', 1, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"8WF91674U94182513\",\"cc\":\"USD\",\"amt\":\"155.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"8WF91674U94182513\",\"mc_currency\":\"USD\",\"mc_fee\":\"6.35\",\"mc_gross\":\"155.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"6.35\",\"payment_gross\":\"155.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"71\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-04-01T06:31:46Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"AgeTM8yoC8A3OA342pIQ2xmontTQAeSwaerQjkg4r57HeohbTqRup7Qg\"}', '8WF91674U94182513', NULL, '2025-04-01 01:01:50', '2025-04-01 01:58:41'),
 (73, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'paypal', 1, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"10Y55936VA5521748\",\"cc\":\"USD\",\"amt\":\"260.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"10Y55936VA5521748\",\"mc_currency\":\"USD\",\"mc_fee\":\"10.44\",\"mc_gross\":\"260.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"10.44\",\"payment_gross\":\"260.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"73\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-04-01T06:50:11Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"ALBe4QrXe2sJhpq1rIN8JxSbK4RZAgkusraAjI4Z.rN0zsRBSsLwdHtI\"}', '10Y55936VA5521748', NULL, '2025-04-01 01:20:16', '2025-04-01 01:58:42'),
 (74, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '150', 'paypal', 1, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"2WF51503V0999654L\",\"cc\":\"USD\",\"amt\":\"150.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"2WF51503V0999654L\",\"mc_currency\":\"USD\",\"mc_fee\":\"6.15\",\"mc_gross\":\"150.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"6.15\",\"payment_gross\":\"150.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"74\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-04-01T06:52:09Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"AzMNkTxgBvm9UMEVF6xwI2k3UvAsAHBpwPBdSQv6q7Qe66ldnXbrQYQ8\"}', '2WF51503V0999654L', NULL, '2025-04-01 01:22:14', '2025-04-01 01:58:43'),
-(75, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '150', 'cash', 1, '1', NULL, NULL, NULL, '2025-04-01 01:24:29', '2025-04-01 01:58:45'),
-(77, 1, '66139955', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 1, '1', NULL, NULL, NULL, '2025-04-01 01:31:52', '2025-04-01 01:58:46'),
-(78, 1, '26345633', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 0, '1', NULL, NULL, NULL, '2025-04-01 01:33:35', '2025-04-01 02:07:55');
+(75, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '150', 'cash', 2, '1', NULL, NULL, NULL, '2025-04-01 01:24:29', '2025-04-02 11:01:42'),
+(77, 1, '66139955', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 3, '1', NULL, NULL, NULL, '2025-04-01 01:31:52', '2025-04-05 08:29:57'),
+(78, 1, '26345633', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 0, '1', NULL, NULL, NULL, '2025-04-01 01:33:35', '2025-04-02 10:59:02');
 
 -- --------------------------------------------------------
 
@@ -325,6 +383,70 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `price`, `color_name`
 (105, 75, 10, '150', 'Green', NULL, '0', '1', '150', '2025-04-01 01:24:29', '2025-04-01 01:24:29'),
 (107, 77, 9, '260', 'Green', 'Small', '60', '1', '260', '2025-04-01 01:31:52', '2025-04-01 01:31:52'),
 (108, 78, 9, '260', 'Green', 'Small', '60', '1', '260', '2025-04-01 01:33:35', '2025-04-01 01:33:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE `pages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `meta_keywords` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `name`, `slug`, `title`, `image`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `created_at`, `updated_at`) VALUES
+(1, 'About Us', 'about-us', 'About Us', '1744193344.jpg', '<h2 class=\"title\">Our Vision</h2>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh.</p>\r\n<p>&nbsp;</p>\r\n<h2 class=\"title\">Our Mission</h2>\r\n<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. <br>Praesent elementum hendrerit tortor. Sed semper lorem at felis.</p>', 'about us', 'about us', 'about us', '2025-04-08 18:30:00', '2025-04-09 04:57:17'),
+(3, 'Contact Us', 'contact-us', 'Contact Us', '1744195393.jpg', '<h2 class=\"mb-1 title\">Contact Information</h2>\r\n<p class=\"mb-3\">Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'contact us', 'contact us', 'contact us', '2025-04-08 18:30:00', '2025-04-09 05:14:08'),
+(5, 'Payment Methods', 'payment-methods', 'Payment Methods', '1744195888.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Payment Methods', 'Payment Methods', 'Payment Methods', '2025-04-08 18:30:00', '2025-04-09 05:21:28'),
+(7, 'Money-back guarantee', 'money-back-guarantee', 'Money-back guarantee!', '1744196345.jpg', '<div id=\"collapse-1\" class=\"collapse show\" aria-labelledby=\"heading-1\" data-parent=\"#accordion-1\">\r\n<div class=\"card-body\">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</div>\r\n</div>', 'Money-back guarantee!', 'Money-back guarantee!', 'Money-back guarantee!', '2025-04-08 18:30:00', '2025-04-09 05:29:05'),
+(9, 'Returns', 'returns', 'Returns', '1744197204.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Returns', 'Returns', 'Returns', '2025-04-08 18:30:00', '2025-04-09 05:43:24'),
+(10, 'Shipping', 'shipping', 'Shipping', '1744197192.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Shipping', 'Shipping', 'Shipping', '2025-04-08 18:30:00', '2025-04-09 05:43:12'),
+(12, 'Terms and conditions', 'terms-conditions', 'Terms and conditions', '1744197181.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Terms and conditions', 'Terms and conditions', 'Terms and conditions', '2025-04-08 18:30:00', '2025-04-09 05:45:06'),
+(13, 'Privacy Policy', 'privacy-policy', 'Privacy Policy', '1744197168.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', '2025-04-08 18:30:00', '2025-04-09 05:42:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partners`
+--
+
+CREATE TABLE `partners` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image_name` varchar(255) DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `partners`
+--
+
+INSERT INTO `partners` (`id`, `image_name`, `link`, `status`, `created_at`, `updated_at`) VALUES
+(2, '1745683079.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:27:59', '2025-04-26 10:29:29'),
+(3, '1745683232.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:30:32', '2025-04-26 10:30:32'),
+(4, '1745683246.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:30:46', '2025-04-26 10:30:46'),
+(5, '1745683258.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:30:58', '2025-04-26 10:30:58'),
+(6, '1745683272.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:31:12', '2025-04-26 10:31:12'),
+(7, '1745683285.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:31:25', '2025-04-26 10:31:25'),
+(8, '1745683301.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:31:41', '2025-04-26 10:31:41'),
+(9, '1745683317.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:31:57', '2025-04-26 10:31:57'),
+(10, '1745683331.png', 'http://127.0.0.1:8000/', 1, '2025-04-26 10:32:11', '2025-04-26 10:32:11');
 
 -- --------------------------------------------------------
 
@@ -431,6 +553,30 @@ INSERT INTO `product_images` (`id`, `product_id`, `image_name`, `image_extension
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_reviews`
+--
+
+CREATE TABLE `product_reviews` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `rating` int(11) DEFAULT 0,
+  `review` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_reviews`
+--
+
+INSERT INTO `product_reviews` (`id`, `product_id`, `order_id`, `user_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES
+(4, 9, 77, 1, 3, 'Good', '2025-04-06 11:38:58', '2025-04-06 11:38:58');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_sizes`
 --
 
@@ -472,7 +618,9 @@ CREATE TABLE `product_wishlists` (
 
 INSERT INTO `product_wishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
 (18, 8, 10, '2025-03-31 08:06:16', '2025-03-31 08:06:16'),
-(19, 8, 9, '2025-03-31 08:06:23', '2025-03-31 08:06:23');
+(19, 8, 9, '2025-03-31 08:06:23', '2025-03-31 08:06:23'),
+(20, 1, 10, '2025-04-05 07:42:35', '2025-04-05 07:42:35'),
+(21, 1, 9, '2025-04-05 07:42:37', '2025-04-05 07:42:37');
 
 -- --------------------------------------------------------
 
@@ -515,6 +663,32 @@ INSERT INTO `shipping_charges` (`id`, `name`, `price`, `status`, `created_at`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sliders`
+--
+
+CREATE TABLE `sliders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image_name` varchar(255) DEFAULT NULL,
+  `button_name` varchar(255) DEFAULT NULL,
+  `button_link` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sliders`
+--
+
+INSERT INTO `sliders` (`id`, `title`, `image_name`, `button_name`, `button_link`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Outdoor Dining <br/> Furniture', '1745677703.jpg', 'Shop Now', 'http://127.0.0.1:8000/fashion', 1, '2025-04-26 08:22:55', '2025-04-26 09:19:58'),
+(3, 'Living Room <br/> Furniture', '1745677695.jpg', 'Shop Now', 'http://127.0.0.1:8000/fashion', 1, '2025-04-26 08:58:15', '2025-04-26 09:19:52'),
+(4, 'New Arrivals', '1745677757.jpg', 'Shop Now', 'http://127.0.0.1:8000/fashion', 1, '2025-04-26 08:59:17', '2025-04-26 09:19:46');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sub_categories`
 --
 
@@ -542,6 +716,42 @@ INSERT INTO `sub_categories` (`id`, `name`, `slug`, `category_id`, `user_id`, `m
 (5, 'Jeans', 'jeans', 10, 1, 'Jeans', 'Jeans', 'Jeans', 1, '2025-02-23 01:59:06', '2025-02-23 01:59:06'),
 (6, 'Shoes', 'shoes', 5, 1, 'Shoes', 'Shoes', 'Shoes', 1, '2025-02-23 01:59:30', '2025-02-23 01:59:30'),
 (7, 'Sportwear', 'sportwear', 4, 1, 'Sportwear', 'Sportwear', 'Sportwear', 1, '2025-02-23 02:00:25', '2025-02-23 02:00:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_settings`
+--
+
+CREATE TABLE `system_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `website_name` varchar(255) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
+  `favicon` varchar(255) DEFAULT NULL,
+  `footer_description` text DEFAULT NULL,
+  `payment_icon` varchar(255) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `phone_two` varchar(255) DEFAULT NULL,
+  `submit_email` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `email_two` varchar(255) DEFAULT NULL,
+  `working_hour` varchar(255) DEFAULT NULL,
+  `facebook_link` varchar(255) DEFAULT NULL,
+  `twitter_link` varchar(255) DEFAULT NULL,
+  `youtube_link` varchar(255) DEFAULT NULL,
+  `instagram_link` varchar(255) DEFAULT NULL,
+  `pinterest_link` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `system_settings`
+--
+
+INSERT INTO `system_settings` (`id`, `website_name`, `logo`, `favicon`, `footer_description`, `payment_icon`, `address`, `phone`, `phone_two`, `submit_email`, `email`, `email_two`, `working_hour`, `facebook_link`, `twitter_link`, `youtube_link`, `instagram_link`, `pinterest_link`, `created_at`, `updated_at`) VALUES
+(1, 'Mall', '1745592777.png', '1745589757.ico', 'Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.', '1745589786.png', '70 Washington Square South New York, NY 10012, United States', '+9242356745', '', 'info@Molla.com', 'info@Molla.com', '', 'Monday-Saturday,\r\n11am-7pm ET', 'https:\\\\facebook.com', 'https:\\\\www.twitter.com', 'https:\\\\www.youtube.com', 'https:\\\\www.instagram.com', 'https:\\\\www.pinterest.com', NULL, '2025-04-25 09:57:46');
 
 -- --------------------------------------------------------
 
@@ -577,7 +787,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `last_name`, `image`, `email`, `email_verified_at`, `phone`, `company_name`, `country`, `address_one`, `address_two`, `postcode`, `state`, `city`, `password`, `is_admin`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'ZSObGEi9c8fVZWw4hhU4okIbZJraDF', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
+(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'mS4xjefvWYolwfRD3BxeNw3OOKkBr4JPr5pCh9kJLa4YqM7IoNjG1TggkD3K', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
 (3, 'Krish', NULL, '1738932108.jpg', 'krish@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$phvGWXYCBROh03L6g7FP0u6AEQxtRi6QaFJBSRypiRIZN0/XJ2BP2', 1, 1, '7oPAAR5BOvW2LeXrhTjztOuCXq5AuEUwYjXT09lkVV3oKlKGQQ81lITce2Sl', '2025-02-07 07:08:48', '2025-02-07 07:13:22'),
 (4, 'thakur', NULL, '1738932250.jpg', 'thakur@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$JuFPgVYDaLl.x8guxe7BWOnuQ.xgdOMMtoVDbwmPI8MhKcrA2IyVi', 1, 1, 'SWZLkSD8thabxibsTuzsbt2E1vDINTVIKYe1HtMOtnuyOObAH89EmaCAoeni', '2025-02-07 07:14:10', '2025-02-07 07:14:10'),
 (6, 'pooja', NULL, NULL, 'pooja@gmail.com', '2025-03-13 05:16:44', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$dIRG2xwTg/6m0Dsw2bpz4eYZdQbh.Io./TJnxkWSmSii0YdpUtJDC', 0, 1, 'iHlq69VFE3L2CNBKAkpdixCu75mDbeEvpv7ArvdVa4wxB7yoIMkO33sJ0cFI', '2025-03-12 10:47:39', '2025-03-13 05:16:44'),
@@ -621,6 +831,13 @@ ALTER TABLE `colors`
   ADD KEY `colors_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `contact_us`
+--
+ALTER TABLE `contact_us`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contact_us_user_id_foreign` (`user_id`);
+
+--
 -- Indexes for table `discount_codes`
 --
 ALTER TABLE `discount_codes`
@@ -632,6 +849,13 @@ ALTER TABLE `discount_codes`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `faqs_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `jobs`
@@ -668,6 +892,18 @@ ALTER TABLE `order_items`
   ADD KEY `order_items_product_id_foreign` (`product_id`);
 
 --
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `partners`
+--
+ALTER TABLE `partners`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
@@ -699,6 +935,15 @@ ALTER TABLE `product_images`
   ADD KEY `product_images_product_id_foreign` (`product_id`);
 
 --
+-- Indexes for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_reviews_product_id_foreign` (`product_id`),
+  ADD KEY `product_reviews_order_id_foreign` (`order_id`),
+  ADD KEY `product_reviews_user_id_foreign` (`user_id`);
+
+--
 -- Indexes for table `product_sizes`
 --
 ALTER TABLE `product_sizes`
@@ -728,12 +973,24 @@ ALTER TABLE `shipping_charges`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sliders`
+--
+ALTER TABLE `sliders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sub_categories_category_id_foreign` (`category_id`),
   ADD KEY `sub_categories_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `system_settings`
+--
+ALTER TABLE `system_settings`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -765,6 +1022,12 @@ ALTER TABLE `colors`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `contact_us`
+--
+ALTER TABLE `contact_us`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `discount_codes`
 --
 ALTER TABLE `discount_codes`
@@ -777,6 +1040,12 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `faqs`
+--
+ALTER TABLE `faqs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -786,7 +1055,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -799,6 +1068,18 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+
+--
+-- AUTO_INCREMENT for table `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `partners`
+--
+ALTER TABLE `partners`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -819,6 +1100,12 @@ ALTER TABLE `product_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
+-- AUTO_INCREMENT for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `product_sizes`
 --
 ALTER TABLE `product_sizes`
@@ -828,7 +1115,7 @@ ALTER TABLE `product_sizes`
 -- AUTO_INCREMENT for table `product_wishlists`
 --
 ALTER TABLE `product_wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `shipping_charges`
@@ -837,10 +1124,22 @@ ALTER TABLE `shipping_charges`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `sliders`
+--
+ALTER TABLE `sliders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `system_settings`
+--
+ALTER TABLE `system_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -869,6 +1168,18 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `colors`
   ADD CONSTRAINT `colors_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `contact_us`
+--
+ALTER TABLE `contact_us`
+  ADD CONSTRAINT `contact_us_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD CONSTRAINT `faqs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`
@@ -904,6 +1215,14 @@ ALTER TABLE `product_colors`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD CONSTRAINT `product_reviews_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_reviews_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product_sizes`
