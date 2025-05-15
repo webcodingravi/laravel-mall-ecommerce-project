@@ -25,8 +25,11 @@
               <table class="table table-striped table-bordered">
                 <thead class="table-dark">
                   <tr>
+                    <th width="100">Image</th>
                     <th>Name</th>
                     <th>Slug</th>
+                    <th>Button Name</th>
+                    <th>Show Home</th>
                     <th>Created By</th>
                     <th>Status</th>
                     <th>Created Date</th>
@@ -37,8 +40,15 @@
                 @if ($categories->isNotEmpty())
                 @foreach ($categories as $category)
                   <tr>
+                    <td>
+                        @if (!empty($category->image_name))
+                           <img src="{{asset('uploads/category/'.$category->image_name)}}" class="img-fluid" style="width:200px; cursor:pointer;" alt="{{$category->image_name}}">
+                        @endif
+                    </td>
                     <td>{{$category->name}}</td>
                     <td>{{$category->slug}}</td>
+                    <td>{{$category->button_name}}</td>
+                    <td>{{!empty($category->is_home) ? 'Yes' : 'No'}}</td>
                     <td>{{$category->created_by}}</td>
                     <td>
                     @if (!empty($category->status == 1))

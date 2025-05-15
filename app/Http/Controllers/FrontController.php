@@ -6,6 +6,8 @@ use App\Models\Faq;
 use App\Models\Page;
 use App\Models\Slider;
 use App\Models\Partner;
+use App\Models\Product;
+use App\Models\Category;
 use App\Models\ContactUs;
 use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
@@ -22,8 +24,46 @@ class FrontController extends Controller
      $data['meta_keywords'] = '';
      $data['getSlider'] = Slider::where('status',1)->orderBy('id','asc')->get();
     $data['getPartner'] = Partner::where('status',1)->orderBy('created_at','asc')->get();
+    $data['getCategoryHome'] = Category::where('is_home',1)->where('status',1)->orderBy('id','asc')->get();
+    $data['getProduct'] = Product::select('products.*','categories.name as category_name',
+    'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
+    ->join('categories','categories.id','products.category_id')
+    ->join('sub_categories','sub_categories.id','products.sub_category_id')
+      ->orderBy('products.id','desc')
+      ->where('products.status',1)
+     ->take(8)
+     ->get();
       return view('home',$data);
    }
+
+
+   public function ArrivalProduct(Request $request) {
+    $getProduct = Product::select('products.*','categories.name as category_name',
+    'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
+    ->join('categories','categories.id','products.category_id')
+    ->join('sub_categories','sub_categories.id','products.sub_category_id');
+    if(!empty($request->category_id)) {
+         $getProduct = $getProduct->where('products.category_id','=',$request->category_id);
+    }
+    $getProduct = $getProduct->orderBy('products.id','desc')
+      ->where('products.status',1)
+     ->take(8)
+     ->get();
+
+
+     $getCategory = Category::findOrFail($request->category_id);
+
+     return response()->json([
+        'status' => true,
+        'success' => view('product.list_recent_arrival',[
+                'getProduct' => $getProduct,
+                'getCategory' => $getCategory
+        ])->render()
+
+        ],200);
+   }
+
+
 
 
    public function About() {

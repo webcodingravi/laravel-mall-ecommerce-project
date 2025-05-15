@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -32,12 +33,21 @@ class CategoryController extends Controller
   public function store(Request $request) {
     $request->validate([
         'name' => 'required',
-        'slug' => 'required|unique:categories,slug,'
+        'slug' => 'required|unique:categories,slug,',
+        'image_name' => 'image'
     ]);
+
+    $image = $request->image_name;
+    $ext = $image->getClientOriginalExtension();
+    $ImageName = time().'.'.$ext;
+    $image->move(public_path('uploads/category/'),$ImageName);
 
     $category = new Category();
     $category->name = trim($request->name);
     $category->slug = trim($request->slug);
+    $category->image_name = $ImageName;
+    $category->button_name = trim($request->button_name);
+    $category->is_home = !empty($request->is_home) ? 1 : 0;
     $category->status = trim($request->status);
     $category->meta_title = trim($request->meta_title);
     $category->meta_description = trim($request->meta_description);
@@ -61,18 +71,32 @@ class CategoryController extends Controller
     $request->validate([
         'name' => 'required',
         'slug' => 'required|unique:categories,slug,'.$id.',id',
+        'image_name' => 'image'
 
     ]);
 
     $category = Category::findOrFail($id);
     $category->name = trim($request->name);
     $category->slug = trim($request->slug);
+    $category->button_name = trim($request->button_name);
+    $category->is_home = !empty($request->is_home) ? 1 : 0;
     $category->status = trim($request->status);
     $category->meta_title = trim($request->meta_title);
     $category->meta_description = trim($request->meta_description);
     $category->meta_keywords = trim($request->meta_keywords);
     $category->user_id = Auth::user()->id;
     $category->save();
+
+    if(!empty($request->image_name)) {
+        // old image deleted
+        File::delete('uploads/category/'.$category->image_name);
+        $image = $request->image_name;
+        $ext = $image->getClientOriginalExtension();
+        $ImageName = time().'.'.$ext;
+        $image->move(public_path('uploads/category/'),$ImageName);
+        $category->image_name = $ImageName;
+        $category->save();
+    }
 
     return redirect()->route('category.list')->with('success','Category Successfully Updated.');
 

@@ -568,61 +568,33 @@
         </div>
     </div>
 
+    @if (!empty($getCategoryHome))
     <div class="container pt-6 categories">
         <h2 class="mb-4 text-center title-lg">Shop by Categories</h2>
-
         <div class="row">
+            @foreach ($getCategoryHome as $categoryHome)
             <div class="col-6 col-lg-4">
                 <div class="banner banner-display banner-link-anim">
-                    <a href="#">
-                        <img src="assets/images/banners/home/banner-1.jpg" alt="Banner">
+                    @if (!empty($categoryHome->image_name))
+                    <a href="{{url($categoryHome->slug)}}">
+                        <img src="{{asset('uploads/category/'.$categoryHome->image_name)}}" alt="{{$categoryHome->image_name}}">
                     </a>
-
+                    @endif
                     <div class="banner-content banner-content-center">
-                        <h3 class="text-white banner-title"><a href="#">Outdoor</a></h3>
-                        <a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                        <h3 class="text-white banner-title"><a href="{{url($categoryHome->slug)}}">{{$categoryHome->name}}</a></h3>
+                        @if (!empty($categoryHome->button_name))
+                        <a href="{{url($categoryHome->slug)}}" class="btn btn-outline-white banner-link">{{$categoryHome->button_name}}<i class="icon-long-arrow-right"></i></a>
+
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-lg-4 order-lg-last">
-                <div class="banner banner-display banner-link-anim">
-                    <a href="#">
-                        <img src="assets/images/banners/home/banner-4.jpg" alt="Banner">
-                    </a>
+            @endforeach
 
-                    <div class="banner-content banner-content-center">
-                        <h3 class="text-white banner-title"><a href="#">Lighting</a></h3>
-                        <a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-lg-4 banners-sm">
-                <div class="row">
-                    <div class="banner banner-display banner-link-anim col-lg-12 col-6">
-                        <a href="#">
-                            <img src="assets/images/banners/home/banner-2.jpg" alt="Banner">
-                        </a>
-
-                        <div class="banner-content banner-content-center">
-                            <h3 class="text-white banner-title"><a href="#">Furniture and Design</a></h3><!-- End .banner-title -->
-                            <a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="banner banner-display banner-link-anim col-lg-12 col-6">
-                        <a href="#">
-                            <img src="assets/images/banners/home/banner-3.jpg" alt="Banner">
-                        </a>
-
-                        <div class="banner-content banner-content-center">
-                            <h3 class="text-white banner-title"><a href="#">Kitchen & Utensil</a></h3><!-- End .banner-title -->
-                            <a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+
+    @endif
 
     <div class="mb-5"></div>
 
@@ -635,498 +607,44 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="top-all-link" data-toggle="tab" href="#top-all-tab" role="tab" aria-controls="top-all-tab" aria-selected="true">All</a>
                 </li>
+                @foreach ($getCategoryHome as $categoryHome)
                 <li class="nav-item">
-                    <a class="nav-link" id="top-fur-link" data-toggle="tab" href="#top-fur-tab" role="tab" aria-controls="top-fur-tab" aria-selected="false">Furniture</a>
+                    <a class="nav-link getCategoryProduct" data-val="{{$categoryHome->id}}" id="top-{{$categoryHome->slug}}-link" data-toggle="tab" href="#top-{{$categoryHome->slug}}-tab" role="tab" aria-controls="top-{{$categoryHome->slug}}-tab" aria-selected="false">{{$categoryHome->name}}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="top-decor-link" data-toggle="tab" href="#top-decor-tab" role="tab" aria-controls="top-decor-tab" aria-selected="false">Decor</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="top-light-link" data-toggle="tab" href="#top-light-tab" role="tab" aria-controls="top-light-tab" aria-selected="false">Lighting</a>
-                </li>
+                @endforeach
+
+
             </ul>
         </div>
 
         <div class="tab-content">
             <div class="p-0 tab-pane fade show active" id="top-all-tab" role="tabpanel" aria-labelledby="top-all-link">
                 <div class="products">
-                    <div class="row justify-content-center">
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-12-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-12-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
+                     @php
+                         $is_home = 1;
+                     @endphp
+                        @foreach ($getProduct as $product)
+                        @include('product.list')
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div>
-                                </figure>
+                        @endforeach
 
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Block Side Table/Trolley</a></h3>
-                                    <div class="product-price">
-                                        $229,00
-                                    </div>
+                    </div>
+                    <div class="text-center more-container">
+                        <a href="{{route('getProductSearch')}}" class="btn btn-outline-darker btn-more"><span>Load more products</span><i class="icon-long-arrow-down"></i></a>
+                    </div>
 
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #e8e8e8;"><span class="sr-only">Color name</span></a>
-                                    </div>
-                                </div>
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div>
-                            </div>
-                        </div>
+                </div>
 
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-10-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-10-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div>
-                                </figure>
 
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Carronade Suspension Lamp</a></h3>
-                                    <div class="product-price">
-                                        $892,00
-                                    </div>
+            @foreach ($getCategoryHome as $categoryHome)
+            <div class="p-0 tab-pane fade getCategoryProduct{{$categoryHome->id}}" id="top-{{$categoryHome->slug}}-tab" role="tabpanel" aria-labelledby="top-{{$categoryHome->slug}}-link">
 
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #e8e8e8;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                    </div>
+            </div>
+            @endforeach
 
-                                </div>
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <span class="product-label label-new">NEW</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-9-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-9-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div>
-                                </figure>
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Garden Armchair</a></h3>
-                                    <div class="product-price">
-                                        $94,00
-                                    </div>
-                                </div>
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-8-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-8-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Madra Log Holder</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $104,00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #927764;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-11-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-11-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Original Outdoor Beanbag</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $259,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-13-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-13-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">2-Seater</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $3.107,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-14-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-14-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Wingback Chair</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $2.486,00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #999999;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #cc9999;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <span class="product-label label-new">NEW</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-16-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-16-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Decor</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Cushion Set 3 Pieces</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $199,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .products -->
-            </div><!-- .End .tab-pane -->
-            <div class="p-0 tab-pane fade" id="top-fur-tab" role="tabpanel" aria-labelledby="top-fur-link">
-                <div class="products">
-                    <div class="row justify-content-center">
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <span class="product-label label-new">NEW</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-9-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-9-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Garden Armchair</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $94,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-12-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-12-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Block Side Table/Trolley</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $229,00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #e8e8e8;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-13-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-13-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">2-Seater</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $3.107,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .products -->
-            </div><!-- .End .tab-pane -->
-            <div class="p-0 tab-pane fade" id="top-decor-tab" role="tabpanel" aria-labelledby="top-decor-link">
-                <div class="products">
-                    <div class="row justify-content-center">
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-8-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-8-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Madra Log Holder</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $104,00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #927764;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-11-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-11-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Original Outdoor Beanbag</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $259,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-14-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-14-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Wingback Chair</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $2.486,00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #999999;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #cc9999;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .products -->
-            </div><!-- .End .tab-pane -->
-            <div class="p-0 tab-pane fade" id="top-light-tab" role="tabpanel" aria-labelledby="top-light-link">
-                <div class="products">
-                    <div class="row justify-content-center">
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-10-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-10-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Carronade Suspension Lamp</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $892,00
-                                    </div><!-- End .product-price -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #e8e8e8;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="text-center product product-11 mt-v3">
-                                <figure class="product-media">
-                                    <span class="product-label label-new">NEW</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-2/products/product-16-1.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-2/products/product-16-2.jpg" alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Decor</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Cushion Set 3 Pieces</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $199,00
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .products -->
-            </div><!-- .End .tab-pane -->
-        </div><!-- End .tab-content -->
-        <div class="text-center more-container">
-            <a href="#" class="btn btn-outline-darker btn-more"><span>Load more products</span><i class="icon-long-arrow-down"></i></a>
-        </div><!-- End .more-container -->
-    </div><!-- End .container -->
+    </div>
+</div>
 
     <div class="container">
         <hr>
@@ -1249,43 +767,47 @@
                     <div class="pb-4 text-center entry-body">
                         <div class="entry-meta">
                             <a href="#">Dec 19, 2018</a>, 2 Comments
-                        </div><!-- End .entry-meta -->
+                        </div>
 
                         <h3 class="entry-title">
                             <a href="single.html">Quisque volutpat mattis eros.</a>
-                        </h3><!-- End .entry-title -->
+                        </h3>
 
                         <div class="entry-content">
                             <p>Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. </p>
                             <a href="single.html" class="read-more">Read More</a>
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-            </div><!-- End .owl-carousel -->
-        </div><!-- container -->
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
 
         <div class="mt-3 mb-0 text-center more-container">
             <a href="blog.html" class="btn btn-outline-darker btn-more"><span>View more articles</span><i class="icon-long-arrow-right"></i></a>
-        </div><!-- End .more-container -->
+        </div>
     </div>
-    {{-- <div class="pt-4 pb-4 cta cta-display bg-image" style="background-image: url(assets/images/backgrounds/cta/bg-6.jpg);">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-9 col-xl-8">
-                    <div class="row no-gutters flex-column flex-sm-row align-items-sm-center">
-                        <div class="col">
-                            <h3 class="text-white cta-title">Sign Up & Get 10% Off</h3><!-- End .cta-title -->
-                            <p class="text-white cta-desc">Molla presents the best in interior design</p><!-- End .cta-desc -->
-                        </div><!-- End .col -->
 
-                        <div class="col-auto">
-                            <a href="login.html" class="btn btn-outline-white"><span>SIGN UP</span><i class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .col-auto -->
-                    </div><!-- End .row no-gutters -->
-                </div><!-- End .col-md-10 col-lg-9 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </div> --}}
 </main>
+
+@endsection
+
+@section('script')
+<script>
+$('body').delegate('.getCategoryProduct','click',function() {
+   var category_id = $(this).attr('data-val');
+   $.ajax({
+      url: "{{route('ArrivalProduct')}}",
+      type: "POST",
+      data: {
+        "_token" : "{{csrf_token()}}",
+        category_id:category_id,
+      },
+      dataType:"json",
+      success:function(response) {
+        $(".getCategoryProduct"+category_id).html(response.success);
+      }
+   });
+})
+</script>
 
 @endsection

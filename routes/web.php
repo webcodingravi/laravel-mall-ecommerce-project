@@ -213,6 +213,7 @@ Route::get('/my-wishlist',[ShowProductController::class,'MyWishlist'])->name('My
 // frontend Route
 
 Route::get('/',[FrontController::class,'home'])->name('home');
+Route::post('/recent-arrival-category-product',[FrontController::class,'ArrivalProduct'])->name('ArrivalProduct');
 Route::get('/about-us',[FrontController::class,'About'])->name('about');
 Route::get('/contact-us',[FrontController::class,'Contact'])->name('contact');
 Route::post('/contact-us',[FrontController::class,'SubmitContact'])->name('SubmitContact');

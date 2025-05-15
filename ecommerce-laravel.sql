@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 07:34 AM
+-- Generation Time: May 15, 2025 at 07:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,6 +82,9 @@ CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
+  `image_name` varchar(255) DEFAULT NULL,
+  `button_name` varchar(255) DEFAULT NULL,
+  `is_home` int(11) NOT NULL DEFAULT 0,
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_description` text DEFAULT NULL,
   `meta_keywords` varchar(255) DEFAULT NULL,
@@ -95,15 +98,15 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `slug`, `meta_title`, `meta_description`, `meta_keywords`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'Jewelry & Watches', 'jewelry-watches', 'Jewelry & Watches', 'Jewelry & Watches', 'Jewelry & Watches', 1, 1, '2025-02-23 01:51:27', '2025-02-23 01:51:27'),
-(5, 'Sports & Outdoors', 'sports-outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 1, 1, '2025-02-23 01:51:54', '2025-02-23 01:51:54'),
-(6, 'Toys & Games', 'toys-games', 'Toys & Games', 'Toys & Games', 'Toys & Games', 1, 1, '2025-02-23 01:52:19', '2025-02-23 01:52:19'),
-(7, 'Books, Movies & Music', 'books-movies-music', 'Books, Movies & Music', 'Books, Movies & Music', 'Books, Movies & Music', 1, 1, '2025-02-23 01:52:47', '2025-02-23 01:52:47'),
-(8, 'Beauty & Personal Care', 'beauty-personal-care', 'Beauty & Personal Care', 'Beauty & Personal Care', 'Beauty & Personal Care', 1, 1, '2025-02-23 01:53:28', '2025-02-23 01:53:28'),
-(9, 'Home & Furniture', 'home-furniture', 'Home & Furniture', 'Home & Furniture', 'Home & Furniture', 1, 1, '2025-02-23 01:54:01', '2025-02-23 01:54:01'),
-(10, 'Fashion', 'fashion', 'Fashion', 'Fashion', 'Fashion', 1, 1, '2025-02-23 01:54:20', '2025-02-23 01:54:20'),
-(11, 'Electronics', 'electronics', 'Electronics', 'Electronics', 'Electronics', 1, 1, '2025-02-23 01:55:07', '2025-02-23 01:55:07');
+INSERT INTO `categories` (`id`, `name`, `slug`, `image_name`, `button_name`, `is_home`, `meta_title`, `meta_description`, `meta_keywords`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'Jewelry & Watches', 'jewelry-watches', NULL, NULL, 0, 'Jewelry & Watches', 'Jewelry & Watches', 'Jewelry & Watches', 1, 1, '2025-02-23 01:51:27', '2025-02-23 01:51:27'),
+(5, 'Sports & Outdoors', 'sports-outdoors', NULL, NULL, 0, 'Sports & Outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 1, 1, '2025-02-23 01:51:54', '2025-02-23 01:51:54'),
+(6, 'Toys & Games', 'toys-games', NULL, NULL, 0, 'Toys & Games', 'Toys & Games', 'Toys & Games', 1, 1, '2025-02-23 01:52:19', '2025-02-23 01:52:19'),
+(7, 'Books, Movies & Music', 'books-movies-music', NULL, NULL, 0, 'Books, Movies & Music', 'Books, Movies & Music', 'Books, Movies & Music', 1, 1, '2025-02-23 01:52:47', '2025-02-23 01:52:47'),
+(8, 'Beauty & Personal Care', 'beauty-personal-care', NULL, NULL, 0, 'Beauty & Personal Care', 'Beauty & Personal Care', 'Beauty & Personal Care', 1, 1, '2025-02-23 01:53:28', '2025-02-23 01:53:28'),
+(9, 'Home & Furniture', 'home-furniture', '1745738742.jpg', 'Shop Now', 1, 'Home & Furniture', 'Home & Furniture', 'Home & Furniture', 1, 1, '2025-02-23 01:54:01', '2025-04-27 01:55:42'),
+(10, 'Fashion', 'fashion', '1745737307.jpg', 'Shop Now', 1, 'Fashion', 'Fashion', 'Fashion', 1, 1, '2025-02-23 01:54:20', '2025-04-27 01:31:47'),
+(11, 'Electronics', 'electronics', '1745736901.jpg', 'Shop Now', 1, 'Electronics', 'Electronics', 'Electronics', 1, 1, '2025-02-23 01:55:07', '2025-04-27 01:30:10');
 
 -- --------------------------------------------------------
 
@@ -299,7 +302,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (45, '2025_04_13_100211_create_system_settings_table', 20),
 (46, '2025_04_25_153804_create_contact_us_table', 21),
 (47, '2025_04_26_131250_create_sliders_table', 22),
-(49, '2025_04_26_150508_create_partners_table', 23);
+(49, '2025_04_26_150508_create_partners_table', 23),
+(50, '2025_04_27_062057_update_categories_table', 24);
 
 -- --------------------------------------------------------
 
@@ -493,7 +497,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `title`, `slug`, `sku`, `category_id`, `sub_category_id`, `brand_id`, `user_id`, `price`, `old_price`, `short_description`, `description`, `additional_information`, `shipping_returns`, `status`, `created_at`, `updated_at`) VALUES
 (9, 'Brown paperbag waist pencil', 'brown-paperbag-waist-pencil', 'BPWP', 10, 3, 1, 1, '200', 250, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-02-25 08:48:28', '2025-02-25 09:12:39'),
 (10, 'Dark yellow lace cut out swing dress', 'dark-yellow-lace-cut-out-swing-dress', 'Dark123', 10, 3, 2, 1, '150', 300, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-02-25 09:29:21', '2025-02-25 09:31:21'),
-(11, 'Khaki utility boiler jumpsuit', 'khaki-utility-boiler-jumpsuit', 'khaki2545', 10, 5, 1, 1, '800', 1000, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-03-09 11:48:01', '2025-03-09 12:13:44');
+(11, 'Khaki utility boiler jumpsuit', 'khaki-utility-boiler-jumpsuit', 'khaki2545', 9, 6, 1, 1, '800', 1000, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-03-09 11:48:01', '2025-05-11 09:20:18');
 
 -- --------------------------------------------------------
 
@@ -515,9 +519,9 @@ CREATE TABLE `product_colors` (
 
 INSERT INTO `product_colors` (`id`, `product_id`, `color_id`, `created_at`, `updated_at`) VALUES
 (21, 9, 1, '2025-02-25 09:28:09', '2025-02-25 09:28:09'),
-(27, 11, 1, '2025-03-09 12:13:44', '2025-03-09 12:13:44'),
-(28, 11, 2, '2025-03-09 12:13:44', '2025-03-09 12:13:44'),
-(31, 10, 1, '2025-03-10 04:28:56', '2025-03-10 04:28:56');
+(31, 10, 1, '2025-03-10 04:28:56', '2025-03-10 04:28:56'),
+(32, 11, 1, '2025-05-11 09:20:18', '2025-05-11 09:20:18'),
+(33, 11, 2, '2025-05-11 09:20:18', '2025-05-11 09:20:18');
 
 -- --------------------------------------------------------
 
@@ -595,8 +599,8 @@ CREATE TABLE `product_sizes` (
 
 INSERT INTO `product_sizes` (`id`, `product_id`, `size`, `price`, `created_at`, `updated_at`) VALUES
 (18, 9, 'Small', 60, '2025-02-25 09:28:09', '2025-02-25 09:28:09'),
-(23, 11, 'Small', 60, '2025-03-09 12:13:44', '2025-03-09 12:13:44'),
-(24, 11, 'large', 80, '2025-03-09 12:13:44', '2025-03-09 12:13:44');
+(25, 11, 'Small', 60, '2025-05-11 09:20:18', '2025-05-11 09:20:18'),
+(26, 11, 'large', 80, '2025-05-11 09:20:18', '2025-05-11 09:20:18');
 
 -- --------------------------------------------------------
 
@@ -714,7 +718,7 @@ INSERT INTO `sub_categories` (`id`, `name`, `slug`, `category_id`, `user_id`, `m
 (3, 'Dresses', 'dresses', 10, 1, 'Dresses', 'Dresses', 'Dresses', 1, '2025-02-23 01:57:56', '2025-02-23 01:57:56'),
 (4, 'T-shirts', 't-shirts', 10, 1, 'T-shirts', 'T-shirts', 'T-shirts', 1, '2025-02-23 01:58:36', '2025-02-23 01:58:36'),
 (5, 'Jeans', 'jeans', 10, 1, 'Jeans', 'Jeans', 'Jeans', 1, '2025-02-23 01:59:06', '2025-02-23 01:59:06'),
-(6, 'Shoes', 'shoes', 5, 1, 'Shoes', 'Shoes', 'Shoes', 1, '2025-02-23 01:59:30', '2025-02-23 01:59:30'),
+(6, 'Shoes', 'shoes', 9, 1, 'Shoes', 'Shoes', 'Shoes', 1, '2025-02-23 01:59:30', '2025-05-11 09:14:07'),
 (7, 'Sportwear', 'sportwear', 4, 1, 'Sportwear', 'Sportwear', 'Sportwear', 1, '2025-02-23 02:00:25', '2025-02-23 02:00:25');
 
 -- --------------------------------------------------------
@@ -787,11 +791,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `last_name`, `image`, `email`, `email_verified_at`, `phone`, `company_name`, `country`, `address_one`, `address_two`, `postcode`, `state`, `city`, `password`, `is_admin`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'mS4xjefvWYolwfRD3BxeNw3OOKkBr4JPr5pCh9kJLa4YqM7IoNjG1TggkD3K', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
+(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'oZRCTBPDco8Dp79jFTQQyPbKE4TXa1ciT5stYIgz7Whr7gQGH5ycuvaHxxFe', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
 (3, 'Krish', NULL, '1738932108.jpg', 'krish@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$phvGWXYCBROh03L6g7FP0u6AEQxtRi6QaFJBSRypiRIZN0/XJ2BP2', 1, 1, '7oPAAR5BOvW2LeXrhTjztOuCXq5AuEUwYjXT09lkVV3oKlKGQQ81lITce2Sl', '2025-02-07 07:08:48', '2025-02-07 07:13:22'),
-(4, 'thakur', NULL, '1738932250.jpg', 'thakur@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$JuFPgVYDaLl.x8guxe7BWOnuQ.xgdOMMtoVDbwmPI8MhKcrA2IyVi', 1, 1, 'SWZLkSD8thabxibsTuzsbt2E1vDINTVIKYe1HtMOtnuyOObAH89EmaCAoeni', '2025-02-07 07:14:10', '2025-02-07 07:14:10'),
 (6, 'pooja', NULL, NULL, 'pooja@gmail.com', '2025-03-13 05:16:44', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$dIRG2xwTg/6m0Dsw2bpz4eYZdQbh.Io./TJnxkWSmSii0YdpUtJDC', 0, 1, 'iHlq69VFE3L2CNBKAkpdixCu75mDbeEvpv7ArvdVa4wxB7yoIMkO33sJ0cFI', '2025-03-12 10:47:39', '2025-03-13 05:16:44'),
-(8, 'chandan Kumar', NULL, NULL, 'chandan@gmail.com', '2025-03-13 05:37:43', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$fcXX6NdiZ7jGivRV4WXm6eatX.332kClQnFdvN9SNDUf1St0VaENW', 0, 1, 'yog2rVkFHu84P6yQG3z1kMHFp2UO2Ww3tpNwgg9zvL62RtQrXWauJs6j925I', '2025-03-13 05:24:03', '2025-03-31 05:46:55');
+(8, 'chandan Kumar', NULL, NULL, 'chandan@gmail.com', '2025-03-13 05:37:43', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$fcXX6NdiZ7jGivRV4WXm6eatX.332kClQnFdvN9SNDUf1St0VaENW', 0, 1, 'yog2rVkFHu84P6yQG3z1kMHFp2UO2Ww3tpNwgg9zvL62RtQrXWauJs6j925I', '2025-03-13 05:24:03', '2025-03-31 05:46:55'),
+(11, 'Pankaj', NULL, '1745734656.jpg', 'pankaj@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$jHmCm/z/qwntCxa19daaO.7jHFost8nrymALXUI3Sv.6AJbeoLJ.2', 1, 1, NULL, '2025-04-27 00:47:36', '2025-04-27 00:47:36');
 
 --
 -- Indexes for dumped tables
@@ -1055,7 +1059,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1091,7 +1095,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `product_images`
@@ -1109,7 +1113,7 @@ ALTER TABLE `product_reviews`
 -- AUTO_INCREMENT for table `product_sizes`
 --
 ALTER TABLE `product_sizes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `product_wishlists`
@@ -1145,7 +1149,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

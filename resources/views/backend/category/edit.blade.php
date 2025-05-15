@@ -11,7 +11,7 @@
         <div class="col-lg-12">
           <div class="pt-4 card">
             <div class="card-body">
-              <form class="row g-3" action="{{route('category.update',$getCategory->id)}}" method="post">
+              <form class="row g-3" action="{{route('category.update',$getCategory->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="col-6">
@@ -28,6 +28,29 @@
                   <span class="invalid-feedback">{{$message}}</span>
                  @enderror
                 </div>
+
+                <div class="col-12">
+                    <label class="form-label">Image</label>
+                    <input type="file" name="image_name" class="form-control" accept="image/*">
+                    @error('image_name')
+                        <span style="color:red;">{{$message}}</span>
+                    @enderror
+                    @if (!empty($getCategory->image_name))
+                    <div class="mt-3">
+                        <img src="{{asset('uploads/category/'.$getCategory->image_name)}}" class="img-fluid" alt="{{$getCategory->image_name}}" style="width: 200px;">
+                   </div>
+                    @endif
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label">Button Name</label>
+                    <input type="text" value="{{old('button_name',$getCategory->button_name)}}" name="button_name" class="form-control" placeholder="Please Enter Button Name...">
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label">Home Screen</label><br/>
+                    <input type="checkbox" {{!empty($getCategory->is_home) ? 'checked' : ''}} name="is_home" class="form-check-input">
+                  </div>
 
                 <div class="col-6">
                   <label class="form-label">Status</label>
