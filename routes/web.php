@@ -23,6 +23,8 @@ use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\DiscountCodeController;
 use App\Http\Controllers\backend\ShippingChargeController;
+use App\Http\Controllers\backend\BlogCategoryController;
+use App\Http\Controllers\backend\BlogController;
 
 // Backend route
 Route::prefix('/admin')->group(function() {
@@ -161,6 +163,27 @@ Route::post('/faq/store',[FaqController::class,'store'])->name('faq.store');
 Route::get('/faq/edit/{id}',[FaqController::class,'edit'])->name('faq.edit');
 Route::put('/faq/update/{id}',[FaqController::class,'update'])->name('faq.update');
 Route::get('/faq/delete/{id}',[FaqController::class,'destroy'])->name('faq.delete');
+
+
+
+// Blog Category
+Route::get('/blog-category/list',[BlogCategoryController::class,'index'])->name('BlogCategory.list');
+Route::get('/blog-category/create',[BlogCategoryController::class,'create'])->name('BlogCategory.create');
+Route::post('/blog-category/store',[BlogCategoryController::class,'store'])->name('BlogCategory.store');
+Route::get('/blog-category/edit/{id}',[BlogCategoryController::class,'edit'])->name('BlogCategory.edit');
+Route::put('/blog-category/update/{id}',[BlogCategoryController::class,'update'])->name('BlogCategory.update');
+Route::get('/blog-category/delete/{id}',[BlogCategoryController::class,'destroy'])->name('BlogCategory.delete');
+
+// Blog
+Route::get('/blog/list',[BlogController::class,'index'])->name('blog.list');
+Route::get('/blog/create',[BlogController::class,'create'])->name('blog.create');
+Route::post('/blog/store',[BlogController::class,'store'])->name('blog.store');
+Route::get('/blog/edit/{id}',[BlogController::class,'edit'])->name('blog.edit');
+Route::put('/blog/update/{id}',[BlogController::class,'update'])->name('blog.update');
+Route::get('/blog/delete/{id}',[BlogController::class,'destroy'])->name('blog.delete');
+
+
+
 
 });
 

@@ -1,4 +1,4 @@
-<aside id="sidebar" class="sidebar">
+<aside id="sidebar" class="overflow-auto sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -123,6 +123,23 @@
           <span>FAQ</span>
         </a>
       </li>
+
+        <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'blog-category' ? 'collapsed' : ''}}" href="{{route('BlogCategory.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Blog Categroy</span>
+        </a>
+      </li>
+
+           <li class="nav-item">
+        <a class="nav-link text-dark {{Request::segment(2) != 'blog' ? 'collapsed' : ''}}" href="{{route('blog.list')}}">
+            <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+          <span>Blog</span>
+        </a>
+      </li>
+
+
+
 
       <li class="nav-item">
         <a class="nav-link text-dark {{Request::segment(2) != 'setting' ? 'collapsed' : ''}}" href="{{route('SystemSetting')}}">

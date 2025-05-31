@@ -63,7 +63,12 @@
                      </select>
                   </div>
 
-
+                    <div class="col-6">
+                    <label class="form-label">Trendy Product</label>
+                    <div>
+                     <input type="checkbox" {{!empty($product->is_trendy) ? 'checked' : ''}}  name="is_trendy">
+                     </div>
+                  </div>
                   <div class="col-12">
                     <label class="form-label">Color</label>
                     @if ($getColor->isNotEmpty())
@@ -87,6 +92,10 @@
                     @endif
 
                   </div>
+                  <hr>
+
+
+
 
                   <div class="col-6">
                     <label class="form-label">Price ($)</label>

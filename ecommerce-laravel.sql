@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 07:03 AM
+-- Generation Time: May 31, 2025 at 06:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecommerce-laravel`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blog_categories`
+--
+
+CREATE TABLE `blog_categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `meta_keywords` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blog_categories`
+--
+
+INSERT INTO `blog_categories` (`id`, `name`, `slug`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Graphic Designing', 'graphic-designing', 'Graphic Designing', 'Graphic Designing', 'Graphic Designing', 1, '2025-05-27 10:30:02', '2025-05-27 10:30:02'),
+(3, 'Fashion', 'fashion', 'Fashion', 'Fashion', 'Fashion', 1, '2025-05-27 10:30:18', '2025-05-27 10:30:18');
 
 -- --------------------------------------------------------
 
@@ -303,7 +329,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2025_04_25_153804_create_contact_us_table', 21),
 (47, '2025_04_26_131250_create_sliders_table', 22),
 (49, '2025_04_26_150508_create_partners_table', 23),
-(50, '2025_04_27_062057_update_categories_table', 24);
+(50, '2025_04_27_062057_update_categories_table', 24),
+(51, '2025_05_27_131518_update_products_table', 25),
+(52, '2025_05_27_141816_create_blog_categories_table', 25),
+(54, '2025_05_27_152104_create_blog_categories_table', 26);
 
 -- --------------------------------------------------------
 
@@ -486,6 +515,7 @@ CREATE TABLE `products` (
   `additional_information` text DEFAULT NULL,
   `shipping_returns` text DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
+  `is_trendy` int(11) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -494,10 +524,10 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `title`, `slug`, `sku`, `category_id`, `sub_category_id`, `brand_id`, `user_id`, `price`, `old_price`, `short_description`, `description`, `additional_information`, `shipping_returns`, `status`, `created_at`, `updated_at`) VALUES
-(9, 'Brown paperbag waist pencil', 'brown-paperbag-waist-pencil', 'BPWP', 10, 3, 1, 1, '200', 250, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-02-25 08:48:28', '2025-02-25 09:12:39'),
-(10, 'Dark yellow lace cut out swing dress', 'dark-yellow-lace-cut-out-swing-dress', 'Dark123', 10, 3, 2, 1, '150', 300, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-02-25 09:29:21', '2025-02-25 09:31:21'),
-(11, 'Khaki utility boiler jumpsuit', 'khaki-utility-boiler-jumpsuit', 'khaki2545', 9, 6, 1, 1, '800', 1000, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, '2025-03-09 11:48:01', '2025-05-11 09:20:18');
+INSERT INTO `products` (`id`, `title`, `slug`, `sku`, `category_id`, `sub_category_id`, `brand_id`, `user_id`, `price`, `old_price`, `short_description`, `description`, `additional_information`, `shipping_returns`, `status`, `is_trendy`, `created_at`, `updated_at`) VALUES
+(9, 'Brown paperbag waist pencil', 'brown-paperbag-waist-pencil', 'BPWP', 10, 3, 1, 1, '200', 250, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, 1, '2025-02-25 08:48:28', '2025-05-27 09:47:15'),
+(10, 'Dark yellow lace cut out swing dress', 'dark-yellow-lace-cut-out-swing-dress', 'Dark123', 10, 3, 2, 1, '150', 300, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, 1, '2025-02-25 09:29:21', '2025-05-27 09:46:55'),
+(11, 'Khaki utility boiler jumpsuit', 'khaki-utility-boiler-jumpsuit', 'khaki2545', 9, 6, 1, 1, '800', 1000, '<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>\r\n<ul>\r\n<li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>\r\n<li>Vivamus finibus vel mauris ut vehicula.</li>\r\n<li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>\r\n</ul>\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.</p>\r\n<h3>Fabric &amp; care</h3>\r\n<ul>\r\n<li>Faux suede fabric</li>\r\n<li>Gold tone metal hoop handles.</li>\r\n<li>RI branding</li>\r\n<li>Snake print trim interior</li>\r\n<li>Adjustable cross body strap</li>\r\n<li>Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>\r\n</ul>\r\n<h3>Size</h3>\r\n<p>one size</p>', '<p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our&nbsp;<a href=\"#\">Delivery information</a><br>We hope you&rsquo;ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our&nbsp;<a href=\"#\">Returns information</a></p>', 1, 1, '2025-03-09 11:48:01', '2025-05-27 09:46:34');
 
 -- --------------------------------------------------------
 
@@ -518,10 +548,10 @@ CREATE TABLE `product_colors` (
 --
 
 INSERT INTO `product_colors` (`id`, `product_id`, `color_id`, `created_at`, `updated_at`) VALUES
-(21, 9, 1, '2025-02-25 09:28:09', '2025-02-25 09:28:09'),
-(31, 10, 1, '2025-03-10 04:28:56', '2025-03-10 04:28:56'),
-(32, 11, 1, '2025-05-11 09:20:18', '2025-05-11 09:20:18'),
-(33, 11, 2, '2025-05-11 09:20:18', '2025-05-11 09:20:18');
+(34, 11, 1, '2025-05-27 09:46:34', '2025-05-27 09:46:34'),
+(35, 11, 2, '2025-05-27 09:46:34', '2025-05-27 09:46:34'),
+(36, 10, 1, '2025-05-27 09:46:55', '2025-05-27 09:46:55'),
+(37, 9, 1, '2025-05-27 09:47:15', '2025-05-27 09:47:15');
 
 -- --------------------------------------------------------
 
@@ -598,9 +628,9 @@ CREATE TABLE `product_sizes` (
 --
 
 INSERT INTO `product_sizes` (`id`, `product_id`, `size`, `price`, `created_at`, `updated_at`) VALUES
-(18, 9, 'Small', 60, '2025-02-25 09:28:09', '2025-02-25 09:28:09'),
-(25, 11, 'Small', 60, '2025-05-11 09:20:18', '2025-05-11 09:20:18'),
-(26, 11, 'large', 80, '2025-05-11 09:20:18', '2025-05-11 09:20:18');
+(27, 11, 'Small', 60, '2025-05-27 09:46:34', '2025-05-27 09:46:34'),
+(28, 11, 'large', 80, '2025-05-27 09:46:34', '2025-05-27 09:46:34'),
+(29, 9, 'Small', 60, '2025-05-27 09:47:15', '2025-05-27 09:47:15');
 
 -- --------------------------------------------------------
 
@@ -800,6 +830,12 @@ INSERT INTO `users` (`id`, `name`, `last_name`, `image`, `email`, `email_verifie
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `blog_categories`
+--
+ALTER TABLE `blog_categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `brands`
@@ -1008,6 +1044,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `blog_categories`
+--
+ALTER TABLE `blog_categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
@@ -1059,7 +1101,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1095,7 +1137,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `product_images`
@@ -1113,7 +1155,7 @@ ALTER TABLE `product_reviews`
 -- AUTO_INCREMENT for table `product_sizes`
 --
 ALTER TABLE `product_sizes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `product_wishlists`

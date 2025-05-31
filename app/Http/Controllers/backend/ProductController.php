@@ -84,6 +84,7 @@ class ProductController extends Controller
         $product->brand_id = trim($request->brand_id);
         $product->user_id = Auth::user()->id;
         $product->price = trim($request->price);
+        $product->is_trendy = !empty($request->is_trendy) ? 1 : 0;
         $product->old_price = trim($request->old_price);
         $product->short_description = trim($request->short_description);
         $product->description = trim($request->description);

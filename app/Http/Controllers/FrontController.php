@@ -33,6 +33,17 @@ class FrontController extends Controller
       ->where('products.status',1)
      ->take(8)
      ->get();
+
+     $data['getProductTrendy'] = Product::select('products.*','categories.name as category_name',
+    'categories.slug as category_slug', 'sub_categories.name as SubCategory_name', 'sub_categories.slug as SubCategory_slug')
+    ->join('categories','categories.id','products.category_id')
+    ->join('sub_categories','sub_categories.id','products.sub_category_id')
+      ->orderBy('products.id','desc')
+      ->where('products.is_trendy',1)
+      ->where('products.status',1)
+     ->take(20)
+     ->get();
+
       return view('home',$data);
    }
 
