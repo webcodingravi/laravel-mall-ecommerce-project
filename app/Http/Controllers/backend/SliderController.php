@@ -11,14 +11,18 @@ class SliderController extends Controller
 {
     public function index(Request $request) {
         $data['header_title'] = 'Slider List';
-        $sliders = Slider::query();
-        if(!empty($request->get('query'))) {
-         $sliders = $sliders->where('title','like','%'.$request->get('query').'%');
-        }
-        $sliders = $sliders->orderBy('created_at','desc');
-        $sliders = $sliders->paginate(10);
+        $sliders = Slider::latest()->paginate(10);
         $data['sliders'] = $sliders;
       return view('backend.slider.list',$data);
+    }
+
+    // live search
+    public function search(Request $request) {
+        if($request->ajax()) {
+            $query = $request->get('query');
+            $sliders = Slider::latest()->where('title','like','%'.$query.'%')->get();
+            return view('backend.slider.table',compact('sliders'))->render();
+        }
     }
 
 

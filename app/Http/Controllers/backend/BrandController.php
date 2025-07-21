@@ -13,10 +13,6 @@ class BrandController extends Controller
     $data['header_title'] = 'Brand List';
     $brands = Brand::select('brands.*','users.name as created_by');
     $brands = $brands->join('users','users.id','brands.user_id');
-    if(!empty($request->get('query'))) {
-        $brands = $brands->where('brands.name','like','%'.$request->get('query').'%');
-        $brands = $brands->orWhere('users.name','like','%'.$request->get('query').'%');
-    }
     $brands = $brands->orderBy('brands.id','desc');
     $brands = $brands->paginate(10);
     $data['brands'] = $brands;
@@ -24,6 +20,14 @@ class BrandController extends Controller
       return view('backend.brand.list',$data);
    }
 
+//    live search
+   public function search(Request $request) {
+      if($request->ajax()) {
+        $query = $request->get('query');
+        $brands = Brand::latest()->where('name','like','%'.$query.'%')->get();
+        return view('backend.brand.table',compact('brands'))->render();
+      }
+   }
 
    public function create() {
      $data['header_title'] = 'Create Brand';

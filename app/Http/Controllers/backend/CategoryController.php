@@ -14,16 +14,20 @@ class CategoryController extends Controller
     $data['header_title'] = 'Category List';
     $categories = Category::select('categories.*','users.name as created_by');
     $categories = $categories->join('users','users.id','categories.user_id');
-    if(!empty($request->get('query'))) {
-        $categories = $categories->where('categories.name','like','%'.$request->get('query').'%');
-        $categories = $categories->orWhere('users.name','like','%'.$request->get('query').'%');
-    }
     $categories = $categories->orderBy('categories.id','desc');
     $categories = $categories->paginate(10);
     $data['categories'] = $categories;
       return view('backend.category.list',$data);
   }
 
+//   live search category
+  public function search(Request $request) {
+    if($request->ajax()) {
+      $query = $request->get('query');
+      $categories = Category::latest()->where('name','like','%'.$query.'%')->get();
+      return view('backend.category.table',compact('categories'))->render();
+    }
+  }
 
   public function create() {
     $data['header_title'] = 'Create Category';

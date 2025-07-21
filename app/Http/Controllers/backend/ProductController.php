@@ -22,14 +22,20 @@ class ProductController extends Controller
         $data['header_title'] = 'Product List';
         $products = Product::select('products.*','users.name as created_by');
         $products = $products->join('users','users.id','products.user_id');
-        if(!empty($request->get('query'))) {
-            $products = $products->where('products.title','like','%'.$request->get('query').'%');
-        }
         $products= $products->orderBy('products.id','desc');
         $products = $products->paginate(10);
         $data['products'] = $products;
           return view('backend.product.list',$data);
 
+    }
+
+    // live search
+    public function search (Request $request) {
+      if($request->ajax()) {
+        $query = $request->get('query');
+        $products = Product::latest()->where('title','like','%'.$query.'%')->get();
+        return view('backend.product.table',compact('products'))->render();
+      }
     }
 
     public function create() {

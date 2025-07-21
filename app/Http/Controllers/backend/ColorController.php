@@ -13,11 +13,6 @@ class ColorController extends Controller
         $data['header_title'] = 'Color List';
         $colors = Color::select('colors.*','users.name as created_by');
         $colors = $colors->join('users','users.id','colors.user_id');
-        if(!empty($request->get('query'))) {
-            $colors = $colors->where('colors.name','like','%'.$request->get('query').'%');
-            $colors = $colors->orWhere('users.code','like','%'.$request->get('query').'%');
-            $colors = $colors->orWhere('users.name','like','%'.$request->get('query').'%');
-        }
         $colors = $colors->orderBy('colors.id','desc');
         $colors = $colors->paginate(10);
         $data['colors'] = $colors;

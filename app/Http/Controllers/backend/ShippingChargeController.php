@@ -8,18 +8,21 @@ use Illuminate\Http\Request;
 
 class ShippingChargeController extends Controller
 {
-    public function index(Request $request) {
+    public function index() {
         $data['header_title'] = 'Shipping Charge List';
-        $ShippingCharges = ShippingCharge::query();
-        if(!empty($request->get('query'))) {
-            $ShippingCharges = $ShippingCharges->where('name','like','%'.$request->get('query').'%');
-        }
-        $ShippingCharges = $ShippingCharges->orderBy('id','desc');
-        $ShippingCharges = $ShippingCharges->paginate(10);
+        $ShippingCharges = ShippingCharge::latest()->paginate(10);
         $data['ShippingCharges'] = $ShippingCharges;
             return view('backend.shipping-charge.list',$data);
        }
 
+    //    live search
+       public function search(Request $request) {
+          if($request->ajax()) {
+            $query = $request->get('query');
+            $ShippingCharges = ShippingCharge::latest()->where('name','like','%'.$query.'%')->get();
+            return view('backend.shipping-charge.table',compact('ShippingCharges'))->render();
+          }
+       }
 
        public function create() {
         $data['header_title'] = 'Create Shipping Charge';

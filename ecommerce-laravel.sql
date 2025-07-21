@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2025 at 06:54 PM
+-- Generation Time: Jul 21, 2025 at 09:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecommerce-laravel`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blogs`
+--
+
+CREATE TABLE `blogs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `blog_category_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `meta_keywords` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blogs`
+--
+
+INSERT INTO `blogs` (`id`, `title`, `slug`, `blog_category_id`, `user_id`, `image`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
+(3, 'sfsf', 'sfsf', 3, 1, '1752913969.jpg', '<p>sfs</p>', 'sfs', 'sf', 'sf', 1, '2025-07-19 03:02:49', '2025-07-19 03:02:49');
 
 -- --------------------------------------------------------
 
@@ -44,8 +73,8 @@ CREATE TABLE `blog_categories` (
 --
 
 INSERT INTO `blog_categories` (`id`, `name`, `slug`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'Graphic Designing', 'graphic-designing', 'Graphic Designing', 'Graphic Designing', 'Graphic Designing', 1, '2025-05-27 10:30:02', '2025-05-27 10:30:02'),
-(3, 'Fashion', 'fashion', 'Fashion', 'Fashion', 'Fashion', 1, '2025-05-27 10:30:18', '2025-05-27 10:30:18');
+(3, 'Fashion', 'fashion', 'Fashion', 'Fashion', 'Fashion', 1, '2025-05-27 10:30:18', '2025-05-27 10:30:18'),
+(4, 'Graphic Designing', 'graphic-designing', 'Graphic Designing', 'Graphic Designing', 'Graphic Designing', 1, '2025-07-19 02:52:43', '2025-07-19 02:52:43');
 
 -- --------------------------------------------------------
 
@@ -125,11 +154,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `image_name`, `button_name`, `is_home`, `meta_title`, `meta_description`, `meta_keywords`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'Jewelry & Watches', 'jewelry-watches', NULL, NULL, 0, 'Jewelry & Watches', 'Jewelry & Watches', 'Jewelry & Watches', 1, 1, '2025-02-23 01:51:27', '2025-02-23 01:51:27'),
-(5, 'Sports & Outdoors', 'sports-outdoors', NULL, NULL, 0, 'Sports & Outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 1, 1, '2025-02-23 01:51:54', '2025-02-23 01:51:54'),
-(6, 'Toys & Games', 'toys-games', NULL, NULL, 0, 'Toys & Games', 'Toys & Games', 'Toys & Games', 1, 1, '2025-02-23 01:52:19', '2025-02-23 01:52:19'),
-(7, 'Books, Movies & Music', 'books-movies-music', NULL, NULL, 0, 'Books, Movies & Music', 'Books, Movies & Music', 'Books, Movies & Music', 1, 1, '2025-02-23 01:52:47', '2025-02-23 01:52:47'),
-(8, 'Beauty & Personal Care', 'beauty-personal-care', NULL, NULL, 0, 'Beauty & Personal Care', 'Beauty & Personal Care', 'Beauty & Personal Care', 1, 1, '2025-02-23 01:53:28', '2025-02-23 01:53:28'),
+(4, 'Jewelry & Watches', 'jewelry-watches', '1752611279.jpg', '', 0, 'Jewelry & Watches', 'Jewelry & Watches', 'Jewelry & Watches', 1, 1, '2025-02-23 01:51:27', '2025-07-15 14:57:59'),
+(5, 'Sports & Outdoors', 'sports-outdoors', '1752611265.jpg', '', 0, 'Sports & Outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 1, 1, '2025-02-23 01:51:54', '2025-07-15 14:57:45'),
+(6, 'Toys & Games', 'toys-games', '1752611254.jpg', '', 0, 'Toys & Games', 'Toys & Games', 'Toys & Games', 1, 1, '2025-02-23 01:52:19', '2025-07-15 14:57:34'),
+(7, 'Books, Movies & Music', 'books-movies-music', '1752611241.jpg', '', 0, 'Books, Movies & Music', 'Books, Movies & Music', 'Books, Movies & Music', 1, 1, '2025-02-23 01:52:47', '2025-07-15 14:57:21'),
+(8, 'Beauty & Personal Care', 'beauty-personal-care', '1752611227.jpg', '', 0, 'Beauty & Personal Care', 'Beauty & Personal Care', 'Beauty & Personal Care', 1, 1, '2025-02-23 01:53:28', '2025-07-15 14:57:07'),
 (9, 'Home & Furniture', 'home-furniture', '1745738742.jpg', 'Shop Now', 1, 'Home & Furniture', 'Home & Furniture', 'Home & Furniture', 1, 1, '2025-02-23 01:54:01', '2025-04-27 01:55:42'),
 (10, 'Fashion', 'fashion', '1745737307.jpg', 'Shop Now', 1, 'Fashion', 'Fashion', 'Fashion', 1, 1, '2025-02-23 01:54:20', '2025-04-27 01:31:47'),
 (11, 'Electronics', 'electronics', '1745736901.jpg', 'Shop Now', 1, 'Electronics', 'Electronics', 'Electronics', 1, 1, '2025-02-23 01:55:07', '2025-04-27 01:30:10');
@@ -332,7 +361,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (50, '2025_04_27_062057_update_categories_table', 24),
 (51, '2025_05_27_131518_update_products_table', 25),
 (52, '2025_05_27_141816_create_blog_categories_table', 25),
-(54, '2025_05_27_152104_create_blog_categories_table', 26);
+(54, '2025_05_27_152104_create_blog_categories_table', 26),
+(59, '2025_05_27_160503_create_blogs_table', 27);
 
 -- --------------------------------------------------------
 
@@ -821,15 +851,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `last_name`, `image`, `email`, `email_verified_at`, `phone`, `company_name`, `country`, `address_one`, `address_two`, `postcode`, `state`, `city`, `password`, `is_admin`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'oZRCTBPDco8Dp79jFTQQyPbKE4TXa1ciT5stYIgz7Whr7gQGH5ycuvaHxxFe', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
+(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'c782NbNBQw8ZRnCACXDOipFdJm79xTLTZqHJKzo44cOShLazWmO2Xx0MCSvc', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
 (3, 'Krish', NULL, '1738932108.jpg', 'krish@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$phvGWXYCBROh03L6g7FP0u6AEQxtRi6QaFJBSRypiRIZN0/XJ2BP2', 1, 1, '7oPAAR5BOvW2LeXrhTjztOuCXq5AuEUwYjXT09lkVV3oKlKGQQ81lITce2Sl', '2025-02-07 07:08:48', '2025-02-07 07:13:22'),
-(6, 'pooja', NULL, NULL, 'pooja@gmail.com', '2025-03-13 05:16:44', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$dIRG2xwTg/6m0Dsw2bpz4eYZdQbh.Io./TJnxkWSmSii0YdpUtJDC', 0, 1, 'iHlq69VFE3L2CNBKAkpdixCu75mDbeEvpv7ArvdVa4wxB7yoIMkO33sJ0cFI', '2025-03-12 10:47:39', '2025-03-13 05:16:44'),
-(8, 'chandan Kumar', NULL, NULL, 'chandan@gmail.com', '2025-03-13 05:37:43', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$fcXX6NdiZ7jGivRV4WXm6eatX.332kClQnFdvN9SNDUf1St0VaENW', 0, 1, 'yog2rVkFHu84P6yQG3z1kMHFp2UO2Ww3tpNwgg9zvL62RtQrXWauJs6j925I', '2025-03-13 05:24:03', '2025-03-31 05:46:55'),
-(11, 'Pankaj', NULL, '1745734656.jpg', 'pankaj@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$jHmCm/z/qwntCxa19daaO.7jHFost8nrymALXUI3Sv.6AJbeoLJ.2', 1, 1, NULL, '2025-04-27 00:47:36', '2025-04-27 00:47:36');
+(8, 'chandan Kumar', NULL, '1752913096.jpg', 'chandan@gmail.com', '2025-03-13 05:37:43', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$fcXX6NdiZ7jGivRV4WXm6eatX.332kClQnFdvN9SNDUf1St0VaENW', 1, 1, 'yog2rVkFHu84P6yQG3z1kMHFp2UO2Ww3tpNwgg9zvL62RtQrXWauJs6j925I', '2025-03-13 05:24:03', '2025-07-19 02:48:16'),
+(11, 'Pankaj', NULL, '1752913083.jpg', 'pankaj@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$jHmCm/z/qwntCxa19daaO.7jHFost8nrymALXUI3Sv.6AJbeoLJ.2', 1, 1, NULL, '2025-04-27 00:47:36', '2025-07-19 02:48:03');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `blogs_blog_category_id_foreign` (`blog_category_id`),
+  ADD KEY `blogs_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `blog_categories`
@@ -1044,10 +1081,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `blog_categories`
 --
 ALTER TABLE `blog_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -1101,7 +1144,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1196,6 +1239,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD CONSTRAINT `blogs_blog_category_id_foreign` FOREIGN KEY (`blog_category_id`) REFERENCES `blog_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `blogs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `brands`

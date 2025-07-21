@@ -10,16 +10,21 @@ class BlogCategoryController extends Controller
 {
     public function index(Request $request) {
     $data['header_title'] = "Blog Categroy List";
-    $BlogCategories = BlogCategory::query();
-    if(!empty($request->get('query'))) {
-        $BlogCategories = $BlogCategories->where('name','like','%'.$request->get('query').'%');
-    }
-
-    $BlogCategories = $BlogCategories->orderBy('created_at','desc');
-    $BlogCategories = $BlogCategories->paginate(10);
+    $BlogCategories = BlogCategory::latest()->paginate(10);
     $data['BlogCategories'] = $BlogCategories;
      return view('backend.blog_category.list',$data);
     }
+
+        //    live search
+   public function search(Request $request) {
+      if($request->ajax()) {
+        $query = $request->get('query');
+         $BlogCategories = BlogCategory::latest()->where('name','like','%'.$query.'%')->get();
+        return view('backend.blog_category.table',compact('BlogCategories'))->render();
+      }
+   }
+
+
 
     public function create() {
         $data['header_title'] = "Create Blog Category";
@@ -32,7 +37,6 @@ class BlogCategoryController extends Controller
             'name' => 'required',
             'slug' => 'required|unique:blog_categories,slug'
        ]);
-
        $BlogCategory = new BlogCategory();
        $BlogCategory->name = trim($request->name);
        $BlogCategory->slug = trim($request->slug);

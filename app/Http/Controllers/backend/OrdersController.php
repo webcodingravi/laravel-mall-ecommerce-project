@@ -14,25 +14,11 @@ class OrdersController extends Controller
    public function index(Request $request) {
     $data['header_title'] = 'Orders List';
       $orders = Order::query();
-      if(!empty($request->get('query'))) {
-        $orders = $orders->where('first_name','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('last_name','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('email','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('phone','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('company_name','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('country','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('state','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('discount_code','like','%'.$request->get('query').'%');
-        $orders = $orders->orWhere('payment_method','like','%'.$request->get('query').'%');
-
-      }
 
       if(!empty($request->get('from')) && !empty($request->get('to'))) {
         $orders = $orders->where('created_at','>=',$request->get('from'));
         $orders = $orders->where('updated_at','<=',$request->get('to'));
       }
-
-
 
       $orders = $orders->where('is_payment',1);
       $orders = $orders->orderBy('id','desc');
@@ -43,6 +29,19 @@ class OrdersController extends Controller
       return view('backend.orders.list',$data);
 
    }
+
+//    live search
+ public function search(Request $request) {
+    if($request->ajax()) {
+      $query = $request->get('query');
+      $orders = Order::latest()->where('first_name','like','%'.$query.'%')
+      ->orWhere('last_name','like','%'.$query.'%')
+      ->orWhere('order_number','like','%'.$query.'%')
+      ->orWhere('company_name','like','%'.$query.'%')
+      ->get();
+      return view('backend.orders.table',compact('orders'))->render();
+    }
+ }
 
    public function details(string $id) {
          $data['header_title'] = 'Order Detail';

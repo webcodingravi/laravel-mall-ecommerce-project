@@ -15,14 +15,23 @@ class SubCategoryController extends Controller
         $SubCategories = SubCategory::select('sub_categories.*','users.name as created_by','categories.name as CategoryName');
         $SubCategories  = $SubCategories->join('users','users.id','sub_categories.user_id');
         $SubCategories  = $SubCategories->join('categories','categories.id','sub_categories.category_id');
-        if(!empty($request->get('query'))) {
-            $SubCategories = $SubCategories->where('sub_categories.name','like','%'.$request->get('query').'%');
-        }
+        // if(!empty($request->get('query'))) {
+        //     $SubCategories = $SubCategories->where('sub_categories.name','like','%'.$request->get('query').'%');
+        // }
         $SubCategories= $SubCategories->orderBy('sub_categories.id','desc');
         $SubCategories = $SubCategories->paginate(10);
         $data['SubCategories'] = $SubCategories;
           return view('backend.sub-category.list',$data);
 
+    }
+
+    // live search
+    public function search(Request $request) {
+      if($request->ajax()) {
+        $query = $request->get('query');
+        $SubCategories = SubCategory::latest()->where('name','like','%'.$query.'%')->get();
+        return view('backend.sub-category.table',compact('SubCategories'))->render();
+      }
     }
 
     public function create() {

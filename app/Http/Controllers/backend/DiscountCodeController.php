@@ -10,15 +10,20 @@ class DiscountCodeController extends Controller
 {
     public function index(Request $request) {
         $data['header_title'] = 'Discount Code List';
-        $discountCodes = DiscountCode::query();
-        if(!empty($request->get('query'))) {
-            $discountCodes = $discountCodes->where('name','like','%'.$request->get('query').'%');
-        }
-        $discountCodes = $discountCodes->orderBy('id','desc');
-        $discountCodes = $discountCodes->paginate(10);
+        $discountCodes = DiscountCode::latest()->paginate(10);
         $data['discountCodes'] = $discountCodes;
             return view('backend.discount-code.list',$data);
        }
+
+     //live search
+     public function search(Request $request) {
+        if($request->ajax()) {
+            $query = $request->get('query');
+            $discountCodes = DiscountCode::latest()->where('name','like','%'.$query.'%')->get();
+            return view('backend.discount-code.table',compact('discountCodes'))->render();
+
+        }
+     }
 
 
        public function create() {

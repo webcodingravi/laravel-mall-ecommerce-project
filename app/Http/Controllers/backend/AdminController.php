@@ -12,17 +12,24 @@ class AdminController extends Controller
 {
     public function index(Request $request) {
        $data['header_title'] = 'Admin List';
-       $getAdmins = User::query();
-       if(!empty($request->get('query'))) {
-        $getAdmins = $getAdmins->where('name','like','%'.$request->get('query').'%');
-        $getAdmins = $getAdmins->orWhere('email','like','%'.$request->get('query').'%');
-       }
-       $getAdmins = $getAdmins->where('is_admin',1);
-       $getAdmins = $getAdmins->orderBy('id','desc');
-       $getAdmins = $getAdmins->paginate(10);
-       $data['getAdmins'] = $getAdmins;
+
+       $getAdmins = User::latest()
+       ->where('is_admin',1)
+       ->paginate(10);
+
+     $data['getAdmins'] = $getAdmins;
        return view('backend.admin.list',$data);
     }
+
+    // live search admin
+    public function search(Request $request) {
+        if($request->ajax()) {
+        $query = $request->get('query');
+        $getAdmins = User::latest()->where('name','like','%'.$query.'%')->get();
+        return view('backend.admin.table',compact('getAdmins'))->render();
+
+        }
+}
 
     public function create() {
         return view('backend.admin.create');
@@ -112,15 +119,9 @@ class AdminController extends Controller
 
     public function customer_list(Request $request) {
         $data['header_title'] = 'Customer List';
-        $getCustomer = User::query();
-        if(!empty($request->get('query'))) {
-         $getCustomer = $getCustomer->where('name','like','%'.$request->get('query').'%');
-         $getCustomer = $getCustomer->orWhere('email','like','%'.$request->get('query').'%');
-        }
-
-        $getCustomer = $getCustomer->where('is_admin',0);
-        $getCustomer = $getCustomer->orderBy('id','desc');
-        $getCustomer = $getCustomer->paginate(10);
+        $getCustomer = User::latest()
+        ->where('is_admin',0)
+        ->paginate(10);
         $data['getCustomer'] = $getCustomer;
         return view('backend.customer.list',$data);
      }
@@ -133,5 +134,17 @@ class AdminController extends Controller
         File::delete(public_path('uploads/profile_pic/'.$customer->image));
         return redirect()->back()->with('success','Customer Successfully Deleted .');
 
+    }
+
+
+
+
+    // customer search
+    public function customer_search(Request $request) {
+        if($request->ajax()) {
+          $query = $request->get('query');
+          $getCustomer = User::where('name','like','%'.$query.'%')->get();
+          return view('backend.customer.table',compact('getCustomer'))->render();
+        }
     }
     }

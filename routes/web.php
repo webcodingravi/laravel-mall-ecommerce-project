@@ -25,6 +25,7 @@ use App\Http\Controllers\backend\DiscountCodeController;
 use App\Http\Controllers\backend\ShippingChargeController;
 use App\Http\Controllers\backend\BlogCategoryController;
 use App\Http\Controllers\backend\BlogController;
+use App\Models\BlogCategory;
 
 // Backend route
 Route::prefix('/admin')->group(function() {
@@ -42,11 +43,15 @@ Route::post('/admin/store',[AdminController::class,'store'])->name('admin.store'
 Route::get('/admin/edit/{id}',[AdminController::class,'edit'])->name('admin.edit');
 Route::put('/admin/update/{id}',[AdminController::class,'update'])->name('admin.update');
 Route::get('/admin/delete/{id}',[AdminController::class,'destroy'])->name('admin.delete');
+// live search admin user
+Route::get('/search-admin',[AdminController::class,'search'])->name('search_admin');
 
 
 // customer route
 Route::get('/customer/list',[AdminController::class,'customer_list'])->name('customer.list');
 Route::get('/customer/delete/{id}',[AdminController::class,'customer_delete'])->name('customer.delete');
+// live search customer
+Route::get('/search-customer',[AdminController::class,'search'])->name('search_customer');
 
 
 // category route
@@ -56,6 +61,8 @@ Route::post('/category/store',[CategoryController::class,'store'])->name('catego
 Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
 Route::put('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');
 Route::get('/category/delete/{id}',[CategoryController::class,'destroy'])->name('category.delete');
+// live search category
+Route::get('/search-category',[CategoryController::class,'search'])->name('search_category');
 
 
 // sub category route
@@ -65,6 +72,8 @@ Route::post('/sub-category/store',[SubCategoryController::class,'store'])->name(
 Route::get('/sub-category/edit/{id}',[SubCategoryController::class,'edit'])->name('sub-category.edit');
 Route::put('/sub-category/update/{id}',[SubCategoryController::class,'update'])->name('sub-category.update');
 Route::get('/sub-category/delete/{id}',[SubCategoryController::class,'destroy'])->name('sub-category.delete');
+// live search sub_category
+Route::get('/search-sub-category',[SubCategoryController::class,'search'])->name('search_sub_category');
 
 
 // Brand Name route
@@ -74,6 +83,8 @@ Route::post('/brand/store',[BrandController::class,'store'])->name('brand.store'
 Route::get('/brand/edit/{id}',[BrandController::class,'edit'])->name('brand.edit');
 Route::put('/brand/update/{id}',[BrandController::class,'update'])->name('brand.update');
 Route::get('/brand/delete/{id}',[BrandController::class,'destroy'])->name('brand.delete');
+// live search brands
+Route::get('/search-brand',[BrandController::class,'search'])->name('search_brand');
 
 
 // Color route
@@ -83,6 +94,7 @@ Route::post('/color/store',[ColorController::class,'store'])->name('color.store'
 Route::get('/color/edit/{id}',[ColorController::class,'edit'])->name('color.edit');
 Route::put('/color/update/{id}',[ColorController::class,'update'])->name('color.update');
 Route::get('/color/delete/{id}',[ColorController::class,'destroy'])->name('color.delete');
+
 
 
 // Product route
@@ -95,6 +107,8 @@ Route::get('product/delete/{id}',[ProductController::class,'destroy'])->name('pr
 Route::get('/product/image_delete/{id}',[ProductController::class,'ImageDelete'])->name('ImageDelete');
 Route::post('/product/product_image_sortable',[ProductController::class,'ProductImageSortable'])->name('ProductImageSortable');
 Route::post('/get_sub_category',[ProductController::class,'getSubCategory'])->name('getSubCategory');
+// live search product list
+Route::get('/search-product',[ProductController::class,'search'])->name('search_product');
 
 
 
@@ -105,6 +119,8 @@ Route::post('/discount/store',[DiscountCodeController::class,'store'])->name('di
 Route::get('/discount/edit/{id}',[DiscountCodeController::class,'edit'])->name('discount.edit');
 Route::put('/discount/update/{id}',[DiscountCodeController::class,'update'])->name('discount.update');
 Route::get('/discount/delete/{id}',[DiscountCodeController::class,'destroy'])->name('discount.delete');
+// live search discoutncode
+Route::get('/search-discountCode',[DiscountCodeController::class,'search'])->name('search_discountCode');
 
 // Shipping Charge route
 Route::get('/shipping/list',[ShippingChargeController::class,'index'])->name('shipping.list');
@@ -113,12 +129,16 @@ Route::post('/shipping/store',[ShippingChargeController::class,'store'])->name('
 Route::get('/shipping/edit/{id}',[ShippingChargeController::class,'edit'])->name('shipping.edit');
 Route::put('/shipping/update/{id}',[ShippingChargeController::class,'update'])->name('shipping.update');
 Route::get('/shipping/delete/{id}',[ShippingChargeController::class,'destroy'])->name('shipping.delete');
+// live search shipping
+Route::get('/search-shipping',[ShippingChargeController::class,'search'])->name('search_shipping');
 
 // Orders route
 Route::get('/orders/list',[OrdersController::class,'index'])->name('orders.list');
 Route::get('/orders/details/{id}',[OrdersController::class,'details'])->name('orders.details');
 Route::get('/orders/status',[OrdersController::class,'order_status'])->name('orders.order_status');
 Route::get('/orders/delete/{id}',[OrdersController::class,'destory'])->name('orders.delete');
+// live search orders
+Route::get('/search-orders',[OrdersController::class,'search'])->name('search_orders');
 
 
 // Slider route
@@ -128,6 +148,8 @@ Route::post('/slider/store',[SliderController::class,'store'])->name('slider.sto
 Route::get('/slider/edit/{id}',[SliderController::class,'edit'])->name('slider.edit');
 Route::put('/slider/update/{id}',[SliderController::class,'update'])->name('slider.update');
 Route::get('/slider/delete/{id}',[SliderController::class,'destroy'])->name('slider.delete');
+// live search slide
+Route::get('/search-slider',[SliderController::class,'search'])->name('search_slider');
 
 
 // Partner logo route
@@ -163,6 +185,9 @@ Route::post('/faq/store',[FaqController::class,'store'])->name('faq.store');
 Route::get('/faq/edit/{id}',[FaqController::class,'edit'])->name('faq.edit');
 Route::put('/faq/update/{id}',[FaqController::class,'update'])->name('faq.update');
 Route::get('/faq/delete/{id}',[FaqController::class,'destroy'])->name('faq.delete');
+// live faq
+Route::get('/search-faq',[FaqController::class,'search'])->name('search_faq');
+
 
 
 
@@ -173,6 +198,9 @@ Route::post('/blog-category/store',[BlogCategoryController::class,'store'])->nam
 Route::get('/blog-category/edit/{id}',[BlogCategoryController::class,'edit'])->name('BlogCategory.edit');
 Route::put('/blog-category/update/{id}',[BlogCategoryController::class,'update'])->name('BlogCategory.update');
 Route::get('/blog-category/delete/{id}',[BlogCategoryController::class,'destroy'])->name('BlogCategory.delete');
+// live search blog_category
+Route::get('/search-blogCategory',[BlogCategoryController::class,'search'])->name('search_blogCategory');
+
 
 // Blog
 Route::get('/blog/list',[BlogController::class,'index'])->name('blog.list');
@@ -180,10 +208,9 @@ Route::get('/blog/create',[BlogController::class,'create'])->name('blog.create')
 Route::post('/blog/store',[BlogController::class,'store'])->name('blog.store');
 Route::get('/blog/edit/{id}',[BlogController::class,'edit'])->name('blog.edit');
 Route::put('/blog/update/{id}',[BlogController::class,'update'])->name('blog.update');
-Route::get('/blog/delete/{id}',[BlogController::class,'destroy'])->name('blog.delete');
-
-
-
+Route::get('/blog/delete/{id}',[BlogController::class,'destory'])->name('blog.delete');
+//live search blog
+Route::get('/search-blog',[BlogController::class,'search'])->name('search_blog');
 
 });
 

@@ -12,9 +12,6 @@ class FaqController extends Controller
   public function index(Request $request) {
     $faqs = Faq::select('faqs.*','users.name as username');
     $faqs = $faqs->join('users','users.id','faqs.user_id');
-    if(!empty($request->get('query'))) {
-        $faqs =  $faqs->where('question','like','%'.$request->get('query').'%');
-    }
 
     $faqs = $faqs->orderBy('created_at','desc');
     $faqs = $faqs->paginate(10);
@@ -24,6 +21,15 @@ class FaqController extends Controller
     return view('backend.faq.list',$data);
 
   }
+
+//   live search
+public function search(Request $request) {
+    if($request->ajax()) {
+        $query = $request->get('query');
+        $faqs = Faq::where('question','like','%'.$query.'%')->get();
+        return view('backend.faq.table',compact('faqs'))->render();
+    }
+}
 
 
   public function create() {
