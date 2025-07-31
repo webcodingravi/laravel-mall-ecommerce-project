@@ -5,32 +5,17 @@
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'dashboard' ? 'collapsed' : '' }}"
                 href="{{ route('dashboard') }}">
-                <i class="bi bi-grid" style="color: #cc9966;"></i>
+                <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link text-dark {{ Request::segment(2) != 'admin' ? 'collapsed' : '' }}"
-                href="{{ route('admin.list') }}">
-                <i class="bi bi-person" style="color: #cc9966;"></i>
-                <span>Admin</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-dark {{ Request::segment(2) != 'customer' ? 'collapsed' : '' }}"
-                href="{{ route('customer.list') }}">
-                <i class="bi bi-person" style="color: #cc9966;"></i>
-                <span>Customer</span>
-            </a>
-        </li>
 
 
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#products" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i>
+                <i class="ri-shopping-cart-2-line"></i>
                 <span>Products</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -40,6 +25,7 @@
                 <li class="nav-item">
                     <a class="{{ Request::segment(2) != 'product' ? '' : 'active' }}"
                         href="{{ route('product.list') }}">
+
                         <i class="bi bi-circle"></i>
                         <span>Product List</span>
                     </a>
@@ -113,7 +99,7 @@
         <li class="nav-item">
             <a class="nav-link {{ Request::segment(2) != 'blog' ? 'collapsed' : '' }}" data-bs-target="#blogs2"
                 data-bs-toggle="collapse" href="#" aria-expanded="false">
-                <i class="bi bi-menu-button-wide"></i><span>Articles</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="ri-compass-discover-line"></i><span>Articles</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="blogs2" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
@@ -134,13 +120,31 @@
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link text-dark {{ Request::segment(2) != 'customer' ? 'collapsed' : '' }}"
+                href="{{ route('customer.list') }}">
+                <i class="ri-group-2-line"></i>
+                <span>Customer</span>
+            </a>
+        </li>
+
+
+
+        <li class="nav-item">
+            <a class="nav-link text-dark {{ Request::segment(2) != 'admin' ? 'collapsed' : '' }}"
+                href="{{ route('admin.list') }}">
+                <i class="ri-team-line"></i>
+                <span>Admin</span>
+            </a>
+        </li>
+
 
 
 
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'page' ? 'collapsed' : '' }}"
                 href="{{ route('page.list') }}">
-                <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+                <i class="ri-file-list-3-line"></i>
                 <span>Pages</span>
             </a>
         </li>
@@ -148,7 +152,7 @@
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'slider' ? 'collapsed' : '' }}"
                 href="{{ route('slider.list') }}">
-                <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+                <i class="ri-equalizer-line"></i>
                 <span>Slider</span>
             </a>
         </li>
@@ -157,7 +161,7 @@
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'partner' ? 'collapsed' : '' }}"
                 href="{{ route('partner.list') }}">
-                <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+                <i class="ri-slack-line"></i>
                 <span>Partner Logo</span>
             </a>
         </li>
@@ -167,7 +171,7 @@
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'contact-us' ? 'collapsed' : '' }}"
                 href="{{ route('contact.list') }}">
-                <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+                <i class="ri-compass-discover-line"></i>
                 <span>Contact Us</span>
             </a>
         </li>
@@ -176,22 +180,50 @@
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'faq' ? 'collapsed' : '' }}"
                 href="{{ route('faq.list') }}">
-                <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+                <i class="ri-question-line"></i>
                 <span>FAQ</span>
             </a>
         </li>
 
 
+        <li class="nav-item">
+            <a class="nav-link text-dark {{ Request::segment(2) != 'home-setting' ? 'collapsed' : '' }}"
+                href="{{ route('HomeSetting') }}">
+                <i class="ri-home-4-line"></i>
+                <span>Home Setting</span>
+            </a>
+        </li>
 
+
+
+        <li class="nav-item">
+            <a class="nav-link text-dark {{ Request::segment(2) != 'payment-setting' ? 'collapsed' : '' }}"
+                href="{{ route('payment_setting') }}">
+
+                <i class="ri-bank-line"></i>
+                <span>Payment Setting</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-dark {{ Request::segment(2) != 'smtp-setting' ? 'collapsed' : '' }}"
+                href="{{ route('smtp_setting') }}">
+                <i class="ri-tools-fill"></i>
+                <span>SMTP</span>
+            </a>
+        </li>
 
 
         <li class="nav-item">
             <a class="nav-link text-dark {{ Request::segment(2) != 'setting' ? 'collapsed' : '' }}"
                 href="{{ route('SystemSetting') }}">
-                <i class="bx bxs-spreadsheet" style="color: #cc9966;"></i>
+                <i class="ri-settings-3-fill"></i>
                 <span>Setting</span>
             </a>
         </li>
+
+
+
 
     </ul>
 

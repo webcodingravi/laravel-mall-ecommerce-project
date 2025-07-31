@@ -10,7 +10,10 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('front/assets/images/logo-icon.png') }}" rel="icon">
+    @if (!empty(getSystemSetting()->favicon))
+        <link rel="icon" type="image/png" sizes="32x32"
+            href="{{ asset('uploads/setting/favicon/' . getSystemSetting()->favicon) }}">
+    @endif
 
 
     <!-- Google Fonts -->
@@ -81,7 +84,7 @@
 
 
 
-    <!-- Template Main JS File -->
+
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
 

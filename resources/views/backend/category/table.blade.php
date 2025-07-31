@@ -11,6 +11,7 @@
                <td>{{ $category->slug }}</td>
                <td>{{ $category->button_name }}</td>
                <td>{{ !empty($category->is_home) ? 'Yes' : 'No' }}</td>
+               <td>{{ !empty($category->is_menu) ? 'Yes' : 'No' }}</td>
                <td>{{ $category->created_by }}</td>
                <td>
                    @if (!empty($category->status == 1))

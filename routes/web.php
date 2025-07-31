@@ -46,12 +46,19 @@ Route::get('/admin/delete/{id}',[AdminController::class,'destroy'])->name('admin
 // live search admin user
 Route::get('/search-admin',[AdminController::class,'search'])->name('search_admin');
 
+// account setting route
+Route::get('account/setting',[AdminController::class,'AdminAccountSetting'])->name('AccountSetting');
+Route::post('account/setting',[AdminController::class,'AdminAccountSettingProcess'])->name('AdminAccountSettingProcess');
+
 
 // customer route
 Route::get('/customer/list',[AdminController::class,'customer_list'])->name('customer.list');
 Route::get('/customer/delete/{id}',[AdminController::class,'customer_delete'])->name('customer.delete');
 // live search customer
 Route::get('/search-customer',[AdminController::class,'search'])->name('search_customer');
+
+// export customer
+Route::get('/export-customer',[AdminController::class,'export'])->name('export_customer');
 
 
 // category route
@@ -110,6 +117,8 @@ Route::post('/get_sub_category',[ProductController::class,'getSubCategory'])->na
 // live search product list
 Route::get('/search-product',[ProductController::class,'search'])->name('search_product');
 
+// export product
+Route::get('/export-product',[ProductController::class,'export'])->name('export_product');
 
 
 // Discount code route
@@ -139,6 +148,9 @@ Route::get('/orders/status',[OrdersController::class,'order_status'])->name('ord
 Route::get('/orders/delete/{id}',[OrdersController::class,'destory'])->name('orders.delete');
 // live search orders
 Route::get('/search-orders',[OrdersController::class,'search'])->name('search_orders');
+
+// export order
+Route::get('/export-order',[OrdersController::class,'export'])->name('export_orders');
 
 
 // Slider route
@@ -170,11 +182,27 @@ Route::put('/page/update/{id}',[PageController::class,'update'])->name('page.upd
 Route::get('/setting',[PageController::class,'SystemSetting'])->name('SystemSetting');
 Route::post('/setting-update',[PageController::class,'UpdateSystemSetting'])->name('UpdateSystemSetting');
 
+// Home setting route
+Route::get('/home-setting',[PageController::class,'HomeSetting'])->name('HomeSetting');
+Route::post('/home-setting-update',[PageController::class,'UpdateHomeSetting'])->name('UpdateHomeSetting');
+
+
 
 // contact us route
 Route::get('/contact-us',[PageController::class,'ContactUs'])->name('contact.list');
 Route::get('/contact-us/delete/{id}',[PageController::class,'ContactDestory'])->name('contact.delete');
 
+// notification
+Route::get('/notification',[PageController::class,'notification'])->name('notification');
+
+// smtp setting route
+Route::get('/smtp-setting',[PageController::class,'smtp_setting'])->name('smtp_setting');
+Route::post('/smtp-setting',[PageController::class,'update_smtp_setting'])->name('update_smtp_setting');
+
+
+// payment setting route
+Route::get('/payment-setting',[PageController::class,'payment_setting'])->name('payment_setting');
+Route::post('/payment-setting',[PageController::class,'update_payment_setting'])->name('update_payment_setting');
 
 
 
@@ -198,6 +226,7 @@ Route::post('/blog-category/store',[BlogCategoryController::class,'store'])->nam
 Route::get('/blog-category/edit/{id}',[BlogCategoryController::class,'edit'])->name('BlogCategory.edit');
 Route::put('/blog-category/update/{id}',[BlogCategoryController::class,'update'])->name('BlogCategory.update');
 Route::get('/blog-category/delete/{id}',[BlogCategoryController::class,'destroy'])->name('BlogCategory.delete');
+
 // live search blog_category
 Route::get('/search-blogCategory',[BlogCategoryController::class,'search'])->name('search_blogCategory');
 
@@ -211,6 +240,9 @@ Route::put('/blog/update/{id}',[BlogController::class,'update'])->name('blog.upd
 Route::get('/blog/delete/{id}',[BlogController::class,'destory'])->name('blog.delete');
 //live search blog
 Route::get('/search-blog',[BlogController::class,'search'])->name('search_blog');
+
+
+
 
 });
 
@@ -252,7 +284,18 @@ Route::post('/update-password',[UserController::class,'UpdatePassword'])->name('
 Route::post('/add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
 Route::post('/add-to-wishlist',[UserController::class,'AddToWishlist'])->name('AddToWishlist');
 Route::post('/make-review',[UserController::class,'MakeReview'])->name('MakeReview');
+
+// user Notification
+Route::get('/notificatons',[UserController::class,'notificatons'])->name('user_notificatons');
+
+
 Route::get('/my-wishlist',[ShowProductController::class,'MyWishlist'])->name('MyWishlist');
+
+// comment
+Route::post('blog/submit_comment',[FrontController::class,'submit_comment'])->name('submit_comment');
+
+
+
 
 
 });
@@ -274,6 +317,10 @@ Route::get('/returns',[FrontController::class,'Returns'])->name('Returns');
 Route::get('/shipping',[FrontController::class,'Shipping'])->name('Shipping');
 Route::get('/terms-conditions',[FrontController::class,'TermsConditions'])->name('TermsConditions');
 Route::get('/privacy-policy',[FrontController::class,'PrivacyPolicy'])->name('PrivacyPolicy');
+Route::get('/blog',[FrontController::class,'Blog'])->name('blog');
+Route::get('/blog/category/{slug}',[FrontController::class,'BlogCategory'])->name('blog_category');
+
+Route::get('/blog/{slug}',[FrontController::class,'blog_detail'])->name('blog_detail');
 
 
 

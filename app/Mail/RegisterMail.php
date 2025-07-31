@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
 class RegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -25,7 +26,7 @@ class RegisterMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'E-Commerce Validation Email',
+            subject: 'Verify Email',
         );
     }
 

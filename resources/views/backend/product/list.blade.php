@@ -18,7 +18,13 @@
                     <div class="card">
                         <div class="overflow-auto card-body">
                             <div class="d-flex align-items-center justify-content-between">
-                                <div></div>
+                                <div>
+                                    <a href="{{ route('export_product') }}" class="bg-success d-flex"
+                                        style="padding:2px 20px;">
+                                        <i class="ri-file-excel-2-line" style="font-size: 24px; color:white;"></i>
+                                    </a>
+
+                                </div>
                                 <a class="p-2 my-2 btn btn-primary btn-sm" href="{{ route('product.create') }}"
                                     style="background: #cc9966; border:none">+ Add Product</a>
                             </div>

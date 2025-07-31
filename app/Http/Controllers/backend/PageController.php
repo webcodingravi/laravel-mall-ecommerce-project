@@ -6,11 +6,25 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUs;
+use App\Models\HomeSetting;
+use App\Models\Notification;
+use App\Models\PaymentSetting;
+use App\Models\Smtp;
 use App\Models\SystemSetting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class PageController extends Controller
 {
+
+    // notification
+    public function notification() {
+        $data['header_title'] = 'Notifications';
+        $data['getRecord'] = Notification::where('user_id',1)->orderBy('id','desc')->paginate(40);
+        return view('backend.notification.list',$data);
+    }
+
+
     public function index() {
         $data['header_title'] = 'Pages';
         $data['pages'] = Page::get();
@@ -154,4 +168,128 @@ class PageController extends Controller
       $contact->delete();
       return redirect()->back()->with('success','Contact us Successfully Deleted');
     }
+
+
+    public function HomeSetting() {
+        $data['header_title'] = 'Home Setting';
+        $data['getRecord'] = HomeSetting::findOrFail(1);
+        return view('backend.setting.home-setting',$data);
+    }
+
+
+         public function UpdateHomeSetting(Request $request) {
+
+           $HomeSetting = HomeSetting::findOrFail(1);
+           $HomeSetting->trendy_product_title = trim($request->trendy_product_title);
+           $HomeSetting->shop_category_title = trim($request->shop_category_title);
+           $HomeSetting->recent_arrival_title = trim($request->recent_arrival_title);
+           $HomeSetting->blog_title = trim($request->blog_title);
+           $HomeSetting->payment_delivery_title = trim($request->payment_delivery_title);
+           $HomeSetting->payment_delivery_description = trim($request->payment_delivery_description);
+           $HomeSetting->refund_title = trim($request->refund_title);
+           $HomeSetting->refund_description = trim($request->refund_description);
+           $HomeSetting->support_title = trim($request->support_title);
+           $HomeSetting->support_description = trim($request->support_description);
+           $HomeSetting->signup_title = trim($request->signup_title);
+           $HomeSetting->signup_description = trim($request->signup_description);
+           $HomeSetting->save();
+
+           if(!empty($request->payment_delivery_image)) {
+               // old image delete
+               File::delete('uploads/home-setting/'.$HomeSetting->payment_delivery_image);
+
+              $image = $request->payment_delivery_image;
+              $ext = $image->getClientOriginalExtension();
+              $ImageName = time().'.'.$ext;
+              $image->move(public_path('uploads/home-setting/'),$ImageName);
+              $HomeSetting->payment_delivery_image = $ImageName;
+              $HomeSetting->save();
+           }
+
+           if(!empty($request->refund_image)) {
+               // old image delete
+            File::delete('uploads/setting/favicon/'.$HomeSetting->refund_image);
+            $image = $request->refund_image;
+            $ext = $image->getClientOriginalExtension();
+            $ImageName = time().'.'.$ext;
+            $image->move(public_path('uploads/home-setting/'),$ImageName);
+            $HomeSetting->refund_image = $ImageName;
+            $HomeSetting->save();
+         }
+
+
+            if(!empty($request->support_image)) {
+                // old image delete
+            File::delete('uploads/home-setting/'.$HomeSetting->payment_icon);
+            $image = $request->support_image;
+            $ext = $image->getClientOriginalExtension();
+            $ImageName = time().'.'.$ext;
+            $image->move(public_path('uploads/home-setting/'),$ImageName);
+            $HomeSetting->support_image = $ImageName;
+            $HomeSetting->save();
+        }
+
+            if(!empty($request->signup_image)) {
+                // old image delete
+            File::delete('uploads/home-setting/'.$HomeSetting->signup_image);
+            $image = $request->signup_image;
+            $ext = $image->getClientOriginalExtension();
+            $ImageName = time().'.'.$ext;
+            $image->move(public_path('uploads/home-setting/'),$ImageName);
+            $HomeSetting->signup_image = $ImageName;
+            $HomeSetting->save();
+        }
+
+
+
+
+           return redirect()->back()->with('success','Home Setting Successfully Updated');
+
+     }
+
+
+     public function smtp_setting() {
+        $data['getRecord'] = Smtp::findOrFail(1);
+        $data['header_title'] = 'SMTP setting';
+        return view('backend.setting.smtp-setting',$data);
+     }
+
+
+     public function update_smtp_setting(Request $request) {
+        $smtp = Smtp::findOrFail(1);
+        $smtp->name = trim($request->name);
+        $smtp->mail_mailer = trim($request->mail_mailer);
+        $smtp->mail_host = trim($request->mail_host);
+        $smtp->mail_port = trim($request->mail_port);
+        $smtp->mail_username = trim($request->mail_username);
+        $smtp->mail_password = trim($request->mail_password);
+        $smtp->mail_encryption = trim($request->mail_encryption);
+        $smtp->mail_from_address = trim($request->mail_from_address);
+        $smtp->save();
+
+        return redirect()->back()->with('success','SMTP successfully Updated');
+
+     }
+
+
+     public function payment_setting() {
+          $data['getRecord'] = PaymentSetting::findOrFail(1);
+        $data['header_title'] = 'Payment setting';
+        return view('backend.setting.payment-setting',$data);
+     }
+
+
+     public function update_payment_setting(Request $request) {
+          $paymentSetting = PaymentSetting::findOrFail(1);
+          $paymentSetting->paypal_id = trim($request->paypal_id);
+          $paymentSetting->paypal_status = trim($request->paypal_status);
+          $paymentSetting->stripe_public_key = trim($request->stripe_public_key);
+          $paymentSetting->stripe_secret_key = trim($request->stripe_secret_key);
+          $paymentSetting->is_cash_delivery = !empty($request->is_cash_delivery) ? 1 : 0;
+          $paymentSetting->is_paypal = !empty($request->is_paypal) ? 1 : 0;
+          $paymentSetting->is_stripe = !empty($request->is_stripe) ? 1 : 0;
+          $paymentSetting->save();
+
+          return redirect()->back()->with('success','Payment Setting Successfully Updated');
+     }
 }

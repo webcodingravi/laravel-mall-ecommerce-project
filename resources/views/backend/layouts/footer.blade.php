@@ -1,5 +1,7 @@
 <footer id="footer" class="footer" style="margin-top: 1000px;">
     <div class="copyright">
-      &copy; Copyright <strong><span>Ecommerce.com</span></strong>. All Rights Reserved
+        <p class="footer-copyright">Copyright © {{ date('Y') }} {{ getSystemSetting()->website_name }}. All
+            Rights Reserved.</p>
+
     </div>
-  </footer>
+</footer>

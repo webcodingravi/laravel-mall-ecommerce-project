@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Exports\UserExport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -113,11 +117,44 @@ class AdminController extends Controller
 
     }
 
+    public function AdminAccountSetting() {
+       $id = Auth::user()->id;
+      $admin = User::findOrFail($id);
+      return view('backend.admin.AccountSetting',compact('admin'));
+    }
+   public function AdminAccountSettingProcess(Request $request) {
+      $id = Auth::user()->id;
+      $admin = User::findOrFail($id);
+       $admin->name = trim($request->name);
+       $admin->last_name = trim($request->last_name);
+       if(!empty($request->password)) {
+         $admin->password = Hash::make($request->password);
+       }
+
+       if($request->image) {
+        //  old Image Deleted
+        File::delete(public_path('uploads/profile_pic/'.$admin->image));
+          $image = $request->image;
+          $ext = $image->getClientOriginalExtension();
+          $ImageName = time().'.'.$ext;
+          $image->move(public_path('uploads/profile_pic'),$ImageName);
+          $admin->image = $ImageName;
+          $admin->save();
+       }
+
+       return redirect()->back()->with('success','Account Successfully Updated !');
+   }
+
+
 
 
     // customer list controller
 
     public function customer_list(Request $request) {
+          if(!empty($request->noti_id)) {
+            Notification::updateReadNoti($request->noti_id);
+         }
+
         $data['header_title'] = 'Customer List';
         $getCustomer = User::latest()
         ->where('is_admin',0)
@@ -146,5 +183,12 @@ class AdminController extends Controller
           $getCustomer = User::where('name','like','%'.$query.'%')->get();
           return view('backend.customer.table',compact('getCustomer'))->render();
         }
+    }
+
+
+
+        public function export()
+    {
+        return Excel::download(new UserExport, 'customer.xlsx');
     }
     }

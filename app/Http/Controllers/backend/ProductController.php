@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Exports\ProductExport;
 use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Product;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -215,4 +217,9 @@ class ProductController extends Controller
         ]);
     }
 
+
+      public function export()
+    {
+        return Excel::download(new ProductExport, 'product.xlsx');
+    }
 }

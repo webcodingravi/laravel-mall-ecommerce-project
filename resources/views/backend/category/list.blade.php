@@ -30,6 +30,7 @@
                                         <th>Slug</th>
                                         <th>Button Name</th>
                                         <th>Show Home</th>
+                                        <th>Show Menu</th>
                                         <th>Created By</th>
                                         <th>Status</th>
                                         <th>Created Date</th>

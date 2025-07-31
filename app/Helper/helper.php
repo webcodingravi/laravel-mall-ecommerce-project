@@ -2,11 +2,14 @@
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\SubCategory;
 use App\Models\ProductImage;
 use App\Models\ProductReview;
 use App\Models\ProductWishlist;
 use App\Models\SystemSetting;
+use App\Models\Notification;
+use App\Models\ProductSize;
 use Illuminate\Support\Facades\Auth;
 
 function getCategoryHeader() {
@@ -23,6 +26,15 @@ function getProductImageSingle($product_id) {
 function getCartProduct($id) {
     return Product::findOrFail($id);
 }
+
+function getSize(string $id) {
+    return ProductSize::findOrFail($id);
+}
+
+function getColor(string $id) {
+    return Color::findOrFail($id);
+}
+
 
 function CheckWishlist($product_id) {
     return ProductWishlist::where('product_id',$product_id)->where('user_id',Auth::user()->id)->count();
@@ -61,4 +73,28 @@ function getReviewRating($product_id) {
 function getSystemSetting() {
    return SystemSetting::findOrFail(1);
 }
+
+
+function getCategoryHeaderMenu() {
+    return Category::where('status',1)
+    ->where('is_menu',1)
+    ->orderBy('id','desc')
+    ->get();
+}
+
+
+function getUnreadNotification () {
+return Notification::where('is_read','=',0)
+->where('user_id','=',1)
+->orderBy('id','desc')
+->get();
+}
+
+function getUnreadNotificationCount (string $id) {
+return Notification::where('is_read','=',0)
+->where('user_id','=',$id)
+->orderBy('id','desc')
+->count();
+}
+
 ?>

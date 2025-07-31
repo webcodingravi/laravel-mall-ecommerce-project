@@ -19,17 +19,20 @@
                     <li>
                         <a href="#">Links</a>
                         <ul>
-                            <li><a href="tel:{{getSystemSetting()->phone}}"><i class="icon-phone"></i>Call: {{getSystemSetting()->phone}}</a></li>
-                            @if(!empty(Auth::check()))
-                            <li><a href="{{route('MyWishlist')}}"><i class="icon-heart-o"></i>My Wishlist</a></li>
-                             @else
-                             <li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist</a></li>
-                            @endif
-                            <li><a href="{{route('about')}}">About Us</a></li>
-                            <li><a href="{{route('contact')}}">Contact Us</a></li>
+                            <li><a href="tel:{{ getSystemSetting()->phone }}"><i class="icon-phone"></i>Call:
+                                    {{ getSystemSetting()->phone }}</a></li>
                             @if (!empty(Auth::check()))
-                            <li><a href="{{route('user_dashboard')}}"><i class="icon-user"></i>{{Auth::user()->name}}</a></li>
-                                @else
+                                <li><a href="{{ route('MyWishlist') }}"><i class="icon-heart-o"></i>My Wishlist</a></li>
+                            @else
+                                <li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My
+                                        Wishlist</a></li>
+                            @endif
+                            <li><a href="{{ route('about') }}">About Us</a></li>
+                            <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                            @if (!empty(Auth::check()))
+                                <li><a href="{{ route('user_dashboard') }}"><i
+                                            class="icon-user"></i>{{ Auth::user()->name }}</a></li>
+                            @else
                                 <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
                             @endif
 
@@ -49,16 +52,17 @@
                 </button>
 
                 @if (!empty(getSystemSetting()->logo))
-                <a href="{{route('home')}}" class="logo">
-                    <img src="{{asset('uploads/setting/logo/'.getSystemSetting()->logo)}}" alt="logo" width="105" height="25">
-                </a>
+                    <a href="{{ route('home') }}" class="logo">
+                        <img src="{{ asset('uploads/setting/logo/' . getSystemSetting()->logo) }}" alt="logo"
+                            width="105" height="25">
+                    </a>
                 @endif
 
 
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
-                        <li class="megamenu-container active">
-                            <a href="{{route('home')}}" class="">Home</a>
+                        <li class="megamenu-container {{ Request::segment(1) == '' ? 'active' : '' }}">
+                            <a href="{{ route('home') }}" class="">Home</a>
                         </li>
                         <li>
                             <a href="javascript:;" class="sf-with-ul">Shop</a>
@@ -67,21 +71,23 @@
                                     <div class="col-md-12">
                                         <div class="menu-col">
                                             <div class="row">
-                                               @foreach (getCategoryHeader() as $category)
-                                               @if (!empty($category->getHeaderSubCategory->count()))
-                                                <div class="mb-2 col-md-4">
-                                                    <a href="{{route('ShowProduct',$category->slug)}}" class="menu-title">{{$category->name}}</a>
-                                                    <ul>
-                                                        @foreach ($category->getHeaderSubCategory as $SubCategory)
-                                                        <li>
-                                                            <a href="{{route('ShowProduct',$category->slug.'/'.$SubCategory->slug)}}">{{$SubCategory->name}}</a>
-                                                        </li>
-                                                        @endforeach
+                                                @foreach (getCategoryHeader() as $category)
+                                                    @if (!empty($category->getHeaderSubCategory->count()))
+                                                        <div class="mb-2 col-md-4">
+                                                            <a href="{{ route('ShowProduct', $category->slug) }}"
+                                                                class="menu-title">{{ $category->name }}</a>
+                                                            <ul>
+                                                                @foreach ($category->getHeaderSubCategory as $SubCategory)
+                                                                    <li>
+                                                                        <a
+                                                                            href="{{ route('ShowProduct', $category->slug . '/' . $SubCategory->slug) }}">{{ $SubCategory->name }}</a>
+                                                                    </li>
+                                                                @endforeach
 
-                                                    </ul>
-                                            </div>
-                                            @endif
-                                            @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
 
                                             </div>
                                         </div>
@@ -90,68 +96,85 @@
                             </div>
                         </li>
 
+                        @foreach (getCategoryHeaderMenu() as $menu)
+                            <li class="{{ Request::segment(1) == $menu->slug ? 'active' : '' }}">
+                                <a href="{{ url($menu->slug) }}"> {{ $menu->name }}</a>
+
+                            </li>
+                        @endforeach
+
                     </ul>
                 </nav>
             </div>
 
             <div class="header-right">
                 <div class="header-search">
-                    <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                    <form action="{{route('getProductSearch')}}" method="get">
+                    <a href="#" class="search-toggle" role="button" title="Search"><i
+                            class="icon-search"></i></a>
+
+                    <form action="{{ route('getProductSearch') }}" method="get">
                         <div class="header-search-wrapper">
                             <label for="q" class="sr-only">Search</label>
-                            <input type="search" class="form-control" name="q" id="q"  value="{{!empty(Request::get('q')) ? Request::get('q') : ''}}" placeholder="Search in..." required>
+                            <input type="text" class="form-control" name="q" id="q"
+                                value="{{ !empty(Request::get('q')) ? Request::get('q') : '' }}"
+                                placeholder="Search in..." required>
                         </div>
                     </form>
                 </div>
 
                 <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" data-display="static">
                         <i class="icon-shopping-cart"></i>
-                        <span class="cart-count">{{Cart::content()->count()}}</span>
+                        <span class="cart-count">{{ Cart::content()->count() }}</span>
                     </a>
-                     @if (!empty(Cart::content()->count()))
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-cart-products">
-                            @foreach (Cart::content() as $item)
-                            @php
-                                $getCartProduct = getCartProduct($item->id);
+                    @if (!empty(Cart::content()->count()))
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-cart-products">
+                                @foreach (Cart::content() as $item)
+                                    @php
+                                        $getCartProduct = getCartProduct($item->id);
 
-                                $getProductImage = getProductImageSingle($item->id);
-                            @endphp
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="{{url($getCartProduct->slug)}}">{{$getCartProduct->title}}</a>
-                                    </h4>
+                                        $getProductImage = getProductImageSingle($item->id);
+                                    @endphp
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a
+                                                    href="{{ url($getCartProduct->slug) }}">{{ $getCartProduct->title }}</a>
+                                            </h4>
 
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">{{$item->qty}}</span>
-                                        x ${{number_format($item->price,2)}}
-                                    </span>
-                                </div>
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">{{ $item->qty }}</span>
+                                                x ${{ number_format($item->price, 2) }}
+                                            </span>
+                                        </div>
 
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="{{asset('uploads/product/'.$getProductImage->image_name)}}" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="{{route('CartDelete',$item->rowId)}}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        <figure class="product-image-container">
+                                            <a href="product.html" class="product-image">
+                                                <img src="{{ asset('uploads/product/' . $getProductImage->image_name) }}"
+                                                    alt="product">
+                                            </a>
+                                        </figure>
+                                        <a href="{{ route('CartDelete', $item->rowId) }}" class="btn-remove"
+                                            title="Remove Product"><i class="icon-close"></i></a>
+                                    </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
 
-                        <div class="dropdown-cart-total">
-                            <span>Total</span>
+                            <div class="dropdown-cart-total">
+                                <span>Total</span>
 
-                            <span class="cart-total-price">${{Cart::subtotal()}}</span>
-                        </div>
+                                <span class="cart-total-price">${{ Cart::subtotal() }}</span>
+                            </div>
 
-                        <div class="dropdown-cart-action">
-                            <a href="{{route('cart')}}" class="btn btn-primary">View Cart</a>
-                            <a href="{{route('checkout')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                            <div class="dropdown-cart-action">
+                                <a href="{{ route('cart') }}" class="btn btn-primary">View Cart</a>
+                                <a href="{{ route('checkout') }}"
+                                    class="btn btn-outline-primary-2"><span>Checkout</span><i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
                         </div>
-                    </div>
                     @endif
                 </div>
             </div>

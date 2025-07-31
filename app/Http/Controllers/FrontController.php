@@ -10,6 +10,10 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\ContactUs;
 use App\Mail\ContactUsMail;
+use App\Models\Blog;
+use App\Models\BlogCategory;
+use App\Models\BlogComment;
+use App\Models\HomeSetting;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +48,14 @@ class FrontController extends Controller
      ->take(20)
      ->get();
 
-      return view('home',$data);
+     $data['getBlog'] = Blog::where('status',1)
+     ->limit(3)->orderBy('created_at','desc')
+     ->get();
+
+     $data['getHomeSetting'] = HomeSetting::findOrFail(1);
+
+
+      return view('index',$data);
    }
 
 
@@ -252,4 +263,114 @@ class FrontController extends Controller
     }
 
    }
+
+
+   public function Blog(Request $request) {
+    $blog = Page::where('slug','blog')->first();
+
+    if(!empty($blog)) {
+         $data['meta_title'] = $blog->meta_title;
+         $data['meta_description'] = $blog->meta_description;
+         $data['meta_keywords'] = $blog->meta_keywords;
+         $data['blog'] = $blog;
+         $getBlog = Blog::where('status',1);
+         if(!empty($request->get('search'))) {
+            $getBlog =  $getBlog->where('title','like','%'.$request->get('search').'%');
+          }
+         $getBlog = $getBlog->orderBy('created_at','desc')->paginate(20);
+         $data['getBlog'] = $getBlog;
+
+         $data['getBlogCategory'] = BlogCategory::where('status',1)
+        ->orderBy('created_at','asc')
+        ->get();
+
+          $data['getPopular'] = Blog::where('status',1)
+         ->orderBy('total_views','desc')->limit(6)->get();
+
+         return view('pages.blog.blog',$data);
+
+    }else{
+        abort(404);
+    }
+
+   }
+
+
+
+   public function blog_detail(string $slug) {
+        $getBlog = Blog::where('slug',$slug)->where('status',1)->first();
+        if(!empty($getBlog)) {
+        $total_views = $getBlog->total_views;
+        $getBlog->total_views = $total_views + 1;
+        $getBlog->save();
+
+        $data['getBlog'] = $getBlog;
+
+        $data['meta_title'] = $getBlog->meta_title;
+        $data['meta_description'] = $getBlog->meta_description;
+        $data['meta_keywords'] = $getBlog->meta_keywords;
+
+
+        $data['getBlogCategory'] = BlogCategory::where('status',1)
+        ->orderBy('created_at','asc')->get();
+
+         $data['getPopular'] = Blog::where('status',1)
+         ->orderBy('total_views','desc')->limit(6)->get();
+
+         $data['getRelatedPost'] = Blog::where('blog_category_id', '=',$getBlog->blog_category_id)
+         ->where('id','!=',$getBlog->id)
+         ->where('status',1)
+         ->orderBy('total_views','desc')
+         ->limit(6)
+         ->get();
+
+         return view('pages.blog.blog-detail',$data);
+         }else{
+            abort(404);
+         }
+   }
+
+   public function BlogCategory(string $slug) {
+       $getCategory = BlogCategory::where('slug',$slug)->where('status',1)->first();
+        if(!empty($getCategory)) {
+        $data['getCategory'] = $getCategory;
+
+        $data['meta_title'] = $getCategory->meta_title;
+        $data['meta_description'] = $getCategory->meta_description;
+        $data['meta_keywords'] = $getCategory->meta_keywords;
+
+
+        $data['getBlogCategory'] = BlogCategory::where('status',1)
+        ->orderBy('created_at','asc')->get();
+
+         $data['getPopular'] = Blog::where('status',1)
+         ->orderBy('total_views','desc')->limit(6)->get();
+
+          $getBlog = Blog::query();
+          if(!empty($getCategory->id)) {
+            $getBlog = $getBlog->where('blog_category_id',$getCategory->id);
+          }
+           $getBlog = $getBlog->where('status',1)->paginate(2);
+           $data['getBlog'] = $getBlog;
+
+         return view('pages.blog.category',$data);
+         }else{
+            abort(404);
+         }
+   }
+
+
+   public function submit_comment(Request $request) {
+     $comment = new BlogComment();
+     $comment->user_id = Auth::user()->id;
+     $comment->blog_id = $request->blog_id;
+     $comment->comment = trim($request->comment);
+     $comment->save();
+
+     return redirect()->back()->with('success',"Your comment successfully created.");
+   }
+
+
+
+
 }

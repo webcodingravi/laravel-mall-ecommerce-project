@@ -7,6 +7,7 @@ use App\Mail\RegisterMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\ForgotPasswordMail;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -68,7 +69,18 @@ class AuthController extends Controller
                    $user->password = Hash::make($request->password);
                    $user->save();
 
-                   Mail::to($user->email)->send(new RegisterMail($user));
+                   try{
+                       Mail::to($user->email)->send(new RegisterMail($user));
+                   }catch(\Exception $e) {
+
+                   }
+
+
+                $user_id = 1;
+                $url = route('customer.list');
+                $message = "New Customer Register #".$request->name;
+                Notification::insertRecord($user_id,$url,$message);
+
                    return response()->json([
                     'status' => true,
                     'message' => "Your Account Successfully Created, Please Verify your email address."
@@ -109,7 +121,12 @@ class AuthController extends Controller
         }else{
               $user_id = Auth::user()->id;
               $user = User::findOrFail($user_id);
-            Mail::to($user->email)->send(new RegisterMail($user));
+              try{
+                 Mail::to($user->email)->send(new RegisterMail($user));
+              }catch(\Exception $e) {
+
+              }
+
             Auth::logout();
             return response()->json([
                 'status' => false,
@@ -139,7 +156,12 @@ class AuthController extends Controller
        if(!empty($user)) {
           $user->remember_token = Str::random(30);
            $user->save();
+           try{
            Mail::to($user->email)->send(new ForgotPasswordMail($user));
+           }catch(\Exception $e) {
+
+           }
+
            return redirect()->back()->with('success','Please check your email and reset your password.');
        }else{
         return redirect()->back()->with('error','Email Not Found in the system');

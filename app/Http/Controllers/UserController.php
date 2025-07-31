@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\ProductReview;
@@ -52,6 +53,8 @@ class UserController extends Controller
 
 
     public function orders() {
+
+
         $data['meta_title'] = 'Orders';
         $data['meta_description'] = '';
         $data['meta_keywords'] = '';
@@ -61,7 +64,10 @@ class UserController extends Controller
         return view('User-account.orders',$data);
     }
 
-    public function user_order_details(string $id) {
+    public function user_order_details(string $id, Request $request) {
+             if(!empty($request->noti_id)) {
+            Notification::updateReadNoti($request->noti_id);
+         }
         $data['meta_title'] = 'Orders Detail';
         $data['meta_description'] = '';
         $data['meta_keywords'] = '';
@@ -98,6 +104,17 @@ class UserController extends Controller
 
         return redirect()->back()->with('success','Profile Successfully Updated.');
 
+    }
+
+    // notification
+    public function notificatons(Request $request) {
+       $data['meta_title'] = 'Notifications';
+        $data['meta_description'] = '';
+        $data['meta_keywords'] = '';
+        $id = Auth::user()->id;
+        $data['getRecord'] = Notification::where('user_id',$id)
+        ->orderBy('created_at','desc')->paginate(40);
+       return view('User-account.notification',$data);
     }
 
 

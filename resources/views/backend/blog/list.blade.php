@@ -9,7 +9,7 @@
                     style="border-radius:0">
             </div>
         </div>
-        <!-- End Page Title -->
+
         <section class="section">
             <div class="row">
                 @include('alertMessage.alertMessage')
@@ -17,7 +17,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
-                                <div></div>
+                                <div>
+
+
+                                </div>
                                 <a class="p-2 my-2 btn btn-primary btn-sm" href="{{ route('blog.create') }}"
                                     style="background: #cc9966; border:none">+ Add Blog</a>
                             </div>

@@ -13,31 +13,47 @@
 
 
         <div class="mb-3 section">
-            <div class="row">
-                <form action="" method="get">
-                    <div class="gap-3 px-3 py-3 bg-white col-md-12 d-flex align-items-center">
-                        <div class="form-group">
-                            <label for="" class="mb-1">From Date</label>
-                            <input type="date" value="{{ Request::get('from') }}" name="from" class="form-control"
-                                style="border-radius: 0">
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="mb-1">To Date</label>
-                            <input type="date" value="{{ Request::get('to') }}" name="to" class="form-control"
-                                style="border-radius: 0">
+            <div class="row bg-white ">
+                <div class="col-md-6">
+
+                    <form action="" method="get">
+                        <div class="gap-3 px-3 py-3 col-md-12 d-flex align-items-center">
+                            <div class="form-group">
+                                <label for="" class="mb-1">From Date</label>
+                                <input type="date" value="{{ Request::get('from') }}" name="from" class="form-control"
+                                    style="border-radius: 0">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="mb-1">To Date</label>
+                                <input type="date" value="{{ Request::get('to') }}" name="to" class="form-control"
+                                    style="border-radius: 0">
+
+                            </div>
+                            <button type="submit" class="mt-4 btn btn-primary"
+                                style="border-radius: 0; background: #cc9966; border:none">Search</button>
 
                         </div>
-                        <button type="submit" class="mt-4 btn btn-primary"
-                            style="border-radius: 0; background: #cc9966; border:none">Search</button>
 
-                    </div>
-                </form>
+
+
+                    </form>
+                </div>
+
+                <div class="col-md-6 justify-content-end d-flex align-items-center mt-4">
+                    <a href="{{ route('export_orders') }}" class="bg-success" style="padding:2px 20px;">
+                        <i class="ri-file-excel-2-line" style="font-size: 24px; color:white;"></i>
+                    </a>
+
+                </div>
+
 
             </div>
+
+
         </div>
 
 
-        <!-- End Page Title -->
+
         <section class="section">
             <div class="row">
                 @include('alertMessage.alertMessage')
@@ -46,7 +62,7 @@
 
                         <div class="card-body" style="overflow: auto">
 
-                            <!-- Table with stripped rows -->
+
                             <table class="table table-striped table-bordered">
                                 <thead class="table-dark">
                                     <tr>

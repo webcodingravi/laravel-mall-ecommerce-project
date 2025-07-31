@@ -52,6 +52,7 @@ class CategoryController extends Controller
     $category->image_name = $ImageName;
     $category->button_name = trim($request->button_name);
     $category->is_home = !empty($request->is_home) ? 1 : 0;
+    $category->is_menu = !empty($request->is_menu) ? 1 : 0;
     $category->status = trim($request->status);
     $category->meta_title = trim($request->meta_title);
     $category->meta_description = trim($request->meta_description);
@@ -84,6 +85,7 @@ class CategoryController extends Controller
     $category->slug = trim($request->slug);
     $category->button_name = trim($request->button_name);
     $category->is_home = !empty($request->is_home) ? 1 : 0;
+    $category->is_menu = !empty($request->is_menu) ? 1 : 0;
     $category->status = trim($request->status);
     $category->meta_title = trim($request->meta_title);
     $category->meta_description = trim($request->meta_description);

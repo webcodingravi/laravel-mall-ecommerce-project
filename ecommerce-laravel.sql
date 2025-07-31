@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2025 at 09:10 PM
+-- Generation Time: Aug 01, 2025 at 12:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,8 @@ CREATE TABLE `blogs` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
+  `short_description` text DEFAULT NULL,
+  `total_views` int(11) DEFAULT 0,
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_description` text DEFAULT NULL,
   `meta_keywords` varchar(255) DEFAULT NULL,
@@ -47,8 +49,10 @@ CREATE TABLE `blogs` (
 -- Dumping data for table `blogs`
 --
 
-INSERT INTO `blogs` (`id`, `title`, `slug`, `blog_category_id`, `user_id`, `image`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
-(3, 'sfsf', 'sfsf', 3, 1, '1752913969.jpg', '<p>sfs</p>', 'sfs', 'sf', 'sf', 1, '2025-07-19 03:02:49', '2025-07-19 03:02:49');
+INSERT INTO `blogs` (`id`, `title`, `slug`, `blog_category_id`, `user_id`, `image`, `description`, `short_description`, `total_views`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
+(3, 'sfsf', 'sfsf', 3, 1, '1752913969.jpg', '<p>ed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas vulputate</p>', 'ed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas vulputate', 5, 'sfs', 'sf', 'sf', 1, '2025-07-19 03:02:49', '2025-07-30 05:47:54'),
+(4, 'Dummy Title', 'dummy-title', 4, 1, '1753863991.jpg', '<p>ed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas vulputate</p>', 'ed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas vulputate', 36, 'Dummy Title', 'Dummy Title', 'Dummy Title', 1, '2025-07-30 02:55:59', '2025-07-30 05:46:34'),
+(5, 'Fasshion', 'fasshion', 3, 1, '1753864045.jpg', '<div>\r\n<div>ed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit&nbsp;nunc tortor eu nibh. Suspendisse potenti. Sed egestas vulputate</div>\r\n</div>', 'ed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas vulputate', 16, 'Fasshion', 'Fasshion', 'Fasshion', 1, '2025-07-30 02:57:25', '2025-07-30 05:14:51');
 
 -- --------------------------------------------------------
 
@@ -75,6 +79,28 @@ CREATE TABLE `blog_categories` (
 INSERT INTO `blog_categories` (`id`, `name`, `slug`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
 (3, 'Fashion', 'fashion', 'Fashion', 'Fashion', 'Fashion', 1, '2025-05-27 10:30:18', '2025-05-27 10:30:18'),
 (4, 'Graphic Designing', 'graphic-designing', 'Graphic Designing', 'Graphic Designing', 'Graphic Designing', 1, '2025-07-19 02:52:43', '2025-07-19 02:52:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blog_comments`
+--
+
+CREATE TABLE `blog_comments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `blog_id` bigint(20) UNSIGNED NOT NULL,
+  `comment` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blog_comments`
+--
+
+INSERT INTO `blog_comments` (`id`, `user_id`, `blog_id`, `comment`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, 'sfsfsfsfs', '2025-07-30 04:05:54', '2025-07-30 04:05:54');
 
 -- --------------------------------------------------------
 
@@ -140,6 +166,7 @@ CREATE TABLE `categories` (
   `image_name` varchar(255) DEFAULT NULL,
   `button_name` varchar(255) DEFAULT NULL,
   `is_home` int(11) NOT NULL DEFAULT 0,
+  `is_menu` int(11) DEFAULT 0,
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_description` text DEFAULT NULL,
   `meta_keywords` varchar(255) DEFAULT NULL,
@@ -153,15 +180,15 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `slug`, `image_name`, `button_name`, `is_home`, `meta_title`, `meta_description`, `meta_keywords`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'Jewelry & Watches', 'jewelry-watches', '1752611279.jpg', '', 0, 'Jewelry & Watches', 'Jewelry & Watches', 'Jewelry & Watches', 1, 1, '2025-02-23 01:51:27', '2025-07-15 14:57:59'),
-(5, 'Sports & Outdoors', 'sports-outdoors', '1752611265.jpg', '', 0, 'Sports & Outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 1, 1, '2025-02-23 01:51:54', '2025-07-15 14:57:45'),
-(6, 'Toys & Games', 'toys-games', '1752611254.jpg', '', 0, 'Toys & Games', 'Toys & Games', 'Toys & Games', 1, 1, '2025-02-23 01:52:19', '2025-07-15 14:57:34'),
-(7, 'Books, Movies & Music', 'books-movies-music', '1752611241.jpg', '', 0, 'Books, Movies & Music', 'Books, Movies & Music', 'Books, Movies & Music', 1, 1, '2025-02-23 01:52:47', '2025-07-15 14:57:21'),
-(8, 'Beauty & Personal Care', 'beauty-personal-care', '1752611227.jpg', '', 0, 'Beauty & Personal Care', 'Beauty & Personal Care', 'Beauty & Personal Care', 1, 1, '2025-02-23 01:53:28', '2025-07-15 14:57:07'),
-(9, 'Home & Furniture', 'home-furniture', '1745738742.jpg', 'Shop Now', 1, 'Home & Furniture', 'Home & Furniture', 'Home & Furniture', 1, 1, '2025-02-23 01:54:01', '2025-04-27 01:55:42'),
-(10, 'Fashion', 'fashion', '1745737307.jpg', 'Shop Now', 1, 'Fashion', 'Fashion', 'Fashion', 1, 1, '2025-02-23 01:54:20', '2025-04-27 01:31:47'),
-(11, 'Electronics', 'electronics', '1745736901.jpg', 'Shop Now', 1, 'Electronics', 'Electronics', 'Electronics', 1, 1, '2025-02-23 01:55:07', '2025-04-27 01:30:10');
+INSERT INTO `categories` (`id`, `name`, `slug`, `image_name`, `button_name`, `is_home`, `is_menu`, `meta_title`, `meta_description`, `meta_keywords`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'Jewelry & Watches', 'jewelry-watches', '1752611279.jpg', '', 0, 0, 'Jewelry & Watches', 'Jewelry & Watches', 'Jewelry & Watches', 1, 1, '2025-02-23 01:51:27', '2025-07-15 14:57:59'),
+(5, 'Sports & Outdoors', 'sports-outdoors', '1752611265.jpg', '', 0, 0, 'Sports & Outdoors', 'Sports & Outdoors', 'Sports & Outdoors', 1, 1, '2025-02-23 01:51:54', '2025-07-15 14:57:45'),
+(6, 'Toys & Games', 'toys-games', '1752611254.jpg', '', 0, 0, 'Toys & Games', 'Toys & Games', 'Toys & Games', 1, 1, '2025-02-23 01:52:19', '2025-07-15 14:57:34'),
+(7, 'Books, Movies & Music', 'books-movies-music', '1752611241.jpg', '', 0, 0, 'Books, Movies & Music', 'Books, Movies & Music', 'Books, Movies & Music', 1, 1, '2025-02-23 01:52:47', '2025-07-15 14:57:21'),
+(8, 'Beauty & Personal Care', 'beauty-personal-care', '1752611227.jpg', '', 0, 0, 'Beauty & Personal Care', 'Beauty & Personal Care', 'Beauty & Personal Care', 1, 1, '2025-02-23 01:53:28', '2025-07-15 14:57:07'),
+(9, 'Home & Furniture', 'home-furniture', '1745738742.jpg', 'Shop Now', 1, 0, 'Home & Furniture', 'Home & Furniture', 'Home & Furniture', 1, 1, '2025-02-23 01:54:01', '2025-04-27 01:55:42'),
+(10, 'Fashion', 'fashion', '1745737307.jpg', 'Shop Now', 1, 1, 'Fashion', 'Fashion', 'Fashion', 1, 1, '2025-02-23 01:54:20', '2025-07-30 08:49:53'),
+(11, 'Electronics', 'electronics', '1745736901.jpg', 'Shop Now', 1, 1, 'Electronics', 'Electronics', 'Electronics', 1, 1, '2025-02-23 01:55:07', '2025-07-30 08:49:33');
 
 -- --------------------------------------------------------
 
@@ -283,6 +310,41 @@ INSERT INTO `faqs` (`id`, `user_id`, `question`, `answer`, `status`, `created_at
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `home_settings`
+--
+
+CREATE TABLE `home_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `trendy_product_title` varchar(255) DEFAULT NULL,
+  `shop_category_title` varchar(255) DEFAULT NULL,
+  `recent_arrival_title` varchar(255) DEFAULT NULL,
+  `blog_title` varchar(255) DEFAULT NULL,
+  `payment_delivery_title` varchar(255) DEFAULT NULL,
+  `payment_delivery_description` varchar(255) DEFAULT NULL,
+  `payment_delivery_image` varchar(255) DEFAULT NULL,
+  `refund_title` varchar(255) DEFAULT NULL,
+  `refund_description` varchar(255) DEFAULT NULL,
+  `refund_image` varchar(255) DEFAULT NULL,
+  `support_title` varchar(255) DEFAULT NULL,
+  `support_description` varchar(255) DEFAULT NULL,
+  `support_image` varchar(255) DEFAULT NULL,
+  `signup_title` varchar(255) DEFAULT NULL,
+  `signup_description` varchar(255) DEFAULT NULL,
+  `signup_image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `home_settings`
+--
+
+INSERT INTO `home_settings` (`id`, `trendy_product_title`, `shop_category_title`, `recent_arrival_title`, `blog_title`, `payment_delivery_title`, `payment_delivery_description`, `payment_delivery_image`, `refund_title`, `refund_description`, `refund_image`, `support_title`, `support_description`, `support_image`, `signup_title`, `signup_description`, `signup_image`, `created_at`, `updated_at`) VALUES
+(1, 'Trendy Products', 'Shop by Categories', 'Recent Arrivals', 'Our Blog', 'Payment & Delivery', 'Free shipping for orders over $50', '1753881516.jpg', 'Return & Refund', 'Free 100% money back guarantee', '1753884322.jpg', 'Sign Up & Get 10% Off', 'Molla presents the best in interior design', '1753884322.jpg', 'Sign Up & Get 10% Off', 'Molla presents the best in interior design', '1753881239.jpg', NULL, '2025-07-30 08:35:22');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -362,7 +424,38 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (51, '2025_05_27_131518_update_products_table', 25),
 (52, '2025_05_27_141816_create_blog_categories_table', 25),
 (54, '2025_05_27_152104_create_blog_categories_table', 26),
-(59, '2025_05_27_160503_create_blogs_table', 27);
+(59, '2025_05_27_160503_create_blogs_table', 27),
+(61, '2025_07_30_073046_update_blogs_table', 28),
+(62, '2025_07_30_092527_create_blog_comments_table', 29),
+(64, '2025_07_30_114255_create_home_settings_table', 30),
+(65, '2025_07_30_141133_update_categories_table', 31),
+(66, '2025_07_30_155758_create_notifications_table', 32),
+(67, '2025_07_31_110328_create_smtps_table', 33),
+(70, '2025_07_31_120607_create_payment_settings_table', 34);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `is_read` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `url`, `message`, `is_read`, `created_at`, `updated_at`) VALUES
+(1, 1, 'http://127.0.0.1:8000/user/orders/83', 'New Order Placed #13420114', 1, '2025-07-31 14:46:03', '2025-07-31 15:19:57'),
+(2, 1, 'http://127.0.0.1:8000/user/orders/87', 'New Order Placed #21950455', 1, '2025-07-31 15:10:55', '2025-07-31 15:19:51');
 
 -- --------------------------------------------------------
 
@@ -412,7 +505,13 @@ INSERT INTO `orders` (`id`, `user_id`, `order_number`, `first_name`, `last_name`
 (74, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '150', 'paypal', 1, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"2WF51503V0999654L\",\"cc\":\"USD\",\"amt\":\"150.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"2WF51503V0999654L\",\"mc_currency\":\"USD\",\"mc_fee\":\"6.15\",\"mc_gross\":\"150.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"6.15\",\"payment_gross\":\"150.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"74\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-04-01T06:52:09Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"AzMNkTxgBvm9UMEVF6xwI2k3UvAsAHBpwPBdSQv6q7Qe66ldnXbrQYQ8\"}', '2WF51503V0999654L', NULL, '2025-04-01 01:22:14', '2025-04-01 01:58:43'),
 (75, 1, '99999999', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '150', 'cash', 2, '1', NULL, NULL, NULL, '2025-04-01 01:24:29', '2025-04-02 11:01:42'),
 (77, 1, '66139955', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 3, '1', NULL, NULL, NULL, '2025-04-01 01:31:52', '2025-04-05 08:29:57'),
-(78, 1, '26345633', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 0, '1', NULL, NULL, NULL, '2025-04-01 01:33:35', '2025-04-02 10:59:02');
+(78, 1, '26345633', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '260', 'cash', 0, '1', NULL, NULL, NULL, '2025-04-01 01:33:35', '2025-04-02 10:59:02'),
+(82, 1, '17389904', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '150', 'paypal', 0, '0', NULL, NULL, NULL, '2025-07-31 12:29:16', '2025-07-31 12:29:16'),
+(83, 1, '13420114', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 2, '0', '670', 'cash', 0, '1', NULL, NULL, NULL, '2025-07-31 14:45:49', '2025-07-31 14:45:49'),
+(84, 1, '41856676', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 1, '5', '155', 'paypal', 0, '0', NULL, NULL, NULL, '2025-07-31 15:07:54', '2025-07-31 15:07:54'),
+(85, 1, '82229490', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 1, '5', '155', 'paypal', 0, '0', NULL, NULL, NULL, '2025-07-31 15:08:18', '2025-07-31 15:08:18'),
+(86, 1, '1794803', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 1, '5', '155', 'paypal', 0, '0', NULL, NULL, NULL, '2025-07-31 15:08:21', '2025-07-31 15:08:21'),
+(87, 1, '21950455', 'Ravi', 'Kumar', 'rkdesinger', 'India', 'd/265', 'test', 'Delhi', 'Delhi', '110043', '09821345742', 'ravi@gmail.com', '', '', '0', 1, '5', '155', 'paypal', 0, '1', '{\"PayerID\":\"CP32GASGMWDHE\",\"st\":\"Completed\",\"tx\":\"28Y85999UP708632J\",\"cc\":\"USD\",\"amt\":\"155.00\",\"payer_email\":\"rkconsultancy34@gmail.com\",\"payer_id\":\"CP32GASGMWDHE\",\"payer_status\":\"VERIFIED\",\"first_name\":\"John\",\"last_name\":\"Doe\",\"txn_id\":\"28Y85999UP708632J\",\"mc_currency\":\"USD\",\"mc_fee\":\"6.35\",\"mc_gross\":\"155.00\",\"protection_eligibility\":\"ELIGIBLE\",\"payment_fee\":\"6.35\",\"payment_gross\":\"155.00\",\"payment_status\":\"Completed\",\"payment_type\":\"instant\",\"handling_amount\":\"0.00\",\"shipping\":\"0.00\",\"item_name\":\"E-commerce\",\"item_number\":\"87\",\"quantity\":\"1\",\"txn_type\":\"web_accept\",\"payment_date\":\"2025-07-31T20:39:42Z\",\"receiver_id\":\"85UBVEVAEQXA2\",\"notify_version\":\"UNVERSIONED\",\"verify_sign\":\"Aa7FVRvNH66I.jZV7gEoaU8AVrl-Aa1.Hw9IhlJE6ySvJRsoZw-xn.Dr\"}', '28Y85999UP708632J', NULL, '2025-07-31 15:09:36', '2025-07-31 15:10:50');
 
 -- --------------------------------------------------------
 
@@ -445,7 +544,14 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `price`, `color_name`
 (104, 74, 10, '150', 'Green', NULL, '0', '1', '150', '2025-04-01 01:22:14', '2025-04-01 01:22:14'),
 (105, 75, 10, '150', 'Green', NULL, '0', '1', '150', '2025-04-01 01:24:29', '2025-04-01 01:24:29'),
 (107, 77, 9, '260', 'Green', 'Small', '60', '1', '260', '2025-04-01 01:31:52', '2025-04-01 01:31:52'),
-(108, 78, 9, '260', 'Green', 'Small', '60', '1', '260', '2025-04-01 01:33:35', '2025-04-01 01:33:35');
+(108, 78, 9, '260', 'Green', 'Small', '60', '1', '260', '2025-04-01 01:33:35', '2025-04-01 01:33:35'),
+(112, 82, 10, '150', NULL, NULL, '0', '1', '150', '2025-07-31 12:29:16', '2025-07-31 12:29:16'),
+(113, 83, 10, '150', NULL, NULL, '0', '1', '150', '2025-07-31 14:45:49', '2025-07-31 14:45:49'),
+(114, 83, 9, '260', 'Green', 'Small', '60', '2', '520', '2025-07-31 14:45:49', '2025-07-31 14:45:49'),
+(115, 84, 10, '150', 'Green', NULL, '0', '1', '150', '2025-07-31 15:07:54', '2025-07-31 15:07:54'),
+(116, 85, 10, '150', 'Green', NULL, '0', '1', '150', '2025-07-31 15:08:18', '2025-07-31 15:08:18'),
+(117, 86, 10, '150', 'Green', NULL, '0', '1', '150', '2025-07-31 15:08:21', '2025-07-31 15:08:21'),
+(118, 87, 10, '150', 'Green', NULL, '0', '1', '150', '2025-07-31 15:09:36', '2025-07-31 15:09:36');
 
 -- --------------------------------------------------------
 
@@ -479,7 +585,8 @@ INSERT INTO `pages` (`id`, `name`, `slug`, `title`, `image`, `description`, `met
 (9, 'Returns', 'returns', 'Returns', '1744197204.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Returns', 'Returns', 'Returns', '2025-04-08 18:30:00', '2025-04-09 05:43:24'),
 (10, 'Shipping', 'shipping', 'Shipping', '1744197192.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Shipping', 'Shipping', 'Shipping', '2025-04-08 18:30:00', '2025-04-09 05:43:12'),
 (12, 'Terms and conditions', 'terms-conditions', 'Terms and conditions', '1744197181.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Terms and conditions', 'Terms and conditions', 'Terms and conditions', '2025-04-08 18:30:00', '2025-04-09 05:45:06'),
-(13, 'Privacy Policy', 'privacy-policy', 'Privacy Policy', '1744197168.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', '2025-04-08 18:30:00', '2025-04-09 05:42:48');
+(13, 'Privacy Policy', 'privacy-policy', 'Privacy Policy', '1744197168.jpg', '<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>\r\n<p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', '2025-04-08 18:30:00', '2025-04-09 05:42:48'),
+(15, 'Blog', 'blog', 'Our Blog', '1753447827.jpg', '', 'blog', 'blog', 'blog', '2025-04-08 18:30:00', '2025-07-30 03:32:00');
 
 -- --------------------------------------------------------
 
@@ -522,6 +629,32 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_settings`
+--
+
+CREATE TABLE `payment_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `paypal_id` varchar(255) DEFAULT NULL,
+  `paypal_status` varchar(255) DEFAULT 'sendbox',
+  `stripe_public_key` text DEFAULT NULL,
+  `stripe_secret_key` text DEFAULT NULL,
+  `is_cash_delivery` int(11) NOT NULL DEFAULT 1,
+  `is_paypal` int(11) NOT NULL DEFAULT 1,
+  `is_stripe` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payment_settings`
+--
+
+INSERT INTO `payment_settings` (`id`, `paypal_id`, `paypal_status`, `stripe_public_key`, `stripe_secret_key`, `is_cash_delivery`, `is_paypal`, `is_stripe`, `created_at`, `updated_at`) VALUES
+(1, 'vipulbusiness1@gmail.com', 'sandbox', 'pk_test_51QC7bjGpCfSeQGNiIqz3mWgethQwWLLjkfsn2xxXx5ycAlP2pRvBqr1mdlznZbQ9DLNWejd9MJKGsngt0CXv1Pkr00tMkXJ7wS', 'sk_test_51QC7bjGpCfSeQGNixHaLYA42LKsntZwKxx50qR2TrxuBodk0rPt15hdg6ZXFLIzazlsOSL3EhfpY3LScLXfI8lPM003zHJOPd6', 1, 1, 1, NULL, '2025-07-31 12:13:02');
 
 -- --------------------------------------------------------
 
@@ -753,6 +886,33 @@ INSERT INTO `sliders` (`id`, `title`, `image_name`, `button_name`, `button_link`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `smtps`
+--
+
+CREATE TABLE `smtps` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `mail_mailer` varchar(255) DEFAULT NULL,
+  `mail_host` varchar(255) DEFAULT NULL,
+  `mail_port` varchar(255) DEFAULT NULL,
+  `mail_username` varchar(255) DEFAULT NULL,
+  `mail_password` varchar(255) DEFAULT NULL,
+  `mail_encryption` varchar(255) DEFAULT NULL,
+  `mail_from_address` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `smtps`
+--
+
+INSERT INTO `smtps` (`id`, `name`, `mail_mailer`, `mail_host`, `mail_port`, `mail_username`, `mail_password`, `mail_encryption`, `mail_from_address`, `created_at`, `updated_at`) VALUES
+(1, 'Ecommerce', 'smtp', 'sandbox.smtp.mailtrap.io', '2525', 'e4e5f591a98113', 'e94b59362cc681', 'tls', 'hello@example.com', '2025-07-31 05:46:18', '2025-07-31 06:19:45');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sub_categories`
 --
 
@@ -851,7 +1011,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `last_name`, `image`, `email`, `email_verified_at`, `phone`, `company_name`, `country`, `address_one`, `address_two`, `postcode`, `state`, `city`, `password`, `is_admin`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Ravi', 'Kumar', '1738932093.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'c782NbNBQw8ZRnCACXDOipFdJm79xTLTZqHJKzo44cOShLazWmO2Xx0MCSvc', '2025-02-07 04:50:25', '2025-04-01 01:01:08'),
+(1, 'Ravi', 'Kumar', '1753889450.jpg', 'ravi@gmail.com', '2025-04-01 01:01:08', '09821345742', 'rkdesinger', 'India', 'd/265', 'test', '110043', 'Delhi', 'Delhi', '$2y$12$sJo0z0wcnevVn1UegA5Deumu5qtoj8hfokNQ9xk62hiU1B8.arqWu', 1, 1, 'qr84P9QFxlKAVoJVDwlp2jC0TDWXMSJHfyeOzFyy7A8iKtWlGKkk8x3hGWq3', '2025-02-07 04:50:25', '2025-07-30 10:00:50'),
 (3, 'Krish', NULL, '1738932108.jpg', 'krish@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$phvGWXYCBROh03L6g7FP0u6AEQxtRi6QaFJBSRypiRIZN0/XJ2BP2', 1, 1, '7oPAAR5BOvW2LeXrhTjztOuCXq5AuEUwYjXT09lkVV3oKlKGQQ81lITce2Sl', '2025-02-07 07:08:48', '2025-02-07 07:13:22'),
 (8, 'chandan Kumar', NULL, '1752913096.jpg', 'chandan@gmail.com', '2025-03-13 05:37:43', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$fcXX6NdiZ7jGivRV4WXm6eatX.332kClQnFdvN9SNDUf1St0VaENW', 1, 1, 'yog2rVkFHu84P6yQG3z1kMHFp2UO2Ww3tpNwgg9zvL62RtQrXWauJs6j925I', '2025-03-13 05:24:03', '2025-07-19 02:48:16'),
 (11, 'Pankaj', NULL, '1752913083.jpg', 'pankaj@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$jHmCm/z/qwntCxa19daaO.7jHFost8nrymALXUI3Sv.6AJbeoLJ.2', 1, 1, NULL, '2025-04-27 00:47:36', '2025-07-19 02:48:03');
@@ -873,6 +1033,14 @@ ALTER TABLE `blogs`
 --
 ALTER TABLE `blog_categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blog_comments`
+--
+ALTER TABLE `blog_comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `blog_comments_user_id_foreign` (`user_id`),
+  ADD KEY `blog_comments_blog_id_foreign` (`blog_id`);
 
 --
 -- Indexes for table `brands`
@@ -935,6 +1103,12 @@ ALTER TABLE `faqs`
   ADD KEY `faqs_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `home_settings`
+--
+ALTER TABLE `home_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -952,6 +1126,13 @@ ALTER TABLE `job_batches`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `orders`
@@ -985,6 +1166,12 @@ ALTER TABLE `partners`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `payment_settings`
+--
+ALTER TABLE `payment_settings`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `products`
@@ -1056,6 +1243,12 @@ ALTER TABLE `sliders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `smtps`
+--
+ALTER TABLE `smtps`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
@@ -1084,13 +1277,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `blog_categories`
 --
 ALTER TABLE `blog_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `blog_comments`
+--
+ALTER TABLE `blog_comments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `brands`
@@ -1135,6 +1334,12 @@ ALTER TABLE `faqs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `home_settings`
+--
+ALTER TABLE `home_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -1144,31 +1349,43 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `partners`
 --
 ALTER TABLE `partners`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `payment_settings`
+--
+ALTER TABLE `payment_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1219,6 +1436,12 @@ ALTER TABLE `sliders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `smtps`
+--
+ALTER TABLE `smtps`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
@@ -1246,6 +1469,13 @@ ALTER TABLE `users`
 ALTER TABLE `blogs`
   ADD CONSTRAINT `blogs_blog_category_id_foreign` FOREIGN KEY (`blog_category_id`) REFERENCES `blog_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `blogs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `blog_comments`
+--
+ALTER TABLE `blog_comments`
+  ADD CONSTRAINT `blog_comments_blog_id_foreign` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `blog_comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `brands`
@@ -1276,6 +1506,12 @@ ALTER TABLE `contact_us`
 --
 ALTER TABLE `faqs`
   ADD CONSTRAINT `faqs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`

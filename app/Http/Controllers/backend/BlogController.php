@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\backend;
+
+use App\Exports\BlogExport;
+use App\Exports\OrderExport;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BlogController extends Controller
 {
@@ -52,6 +56,7 @@ class BlogController extends Controller
      $blog->slug = trim($request->slug);
      $blog->blog_category_id = trim($request->blog_category_id);
      $blog->user_id = (!empty(Auth::user()->id));
+     $blog->short_description = trim($request->short_description);
      $blog->description = trim($request->description);
      $blog->status = trim($request->status);
      $blog->meta_title = trim($request->meta_title);
@@ -91,6 +96,7 @@ class BlogController extends Controller
      $blog->slug = trim($request->slug);
      $blog->blog_category_id = trim($request->blog_category_id);
      $blog->user_id = (!empty(Auth::user()->id));
+    $blog->short_description = trim($request->short_description);
      $blog->description = trim($request->description);
      $blog->status = trim($request->status);
      $blog->meta_title = trim($request->meta_title);
@@ -122,4 +128,7 @@ class BlogController extends Controller
         return redirect()->back()->with('success','Blog Deleted successfully');
 
     }
+
+
+
 }

@@ -60,6 +60,13 @@
                                 </div>
 
                                 <div class="col-12">
+                                    <label class="form-lable">Short Description</label>
+                                    <textarea rows="5" name="short_description" class="form-control" placeholder="Short Description.."
+                                        class="form-control">{{ $blog->short_description }}</textarea>
+
+                                </div>
+
+                                <div class="col-12">
                                     <label class="form-lable">Description</label>
                                     <textarea name="description" class="tinymce-editor" class="form-control">{{ $blog->description }}</textarea>
                                 </div>

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\SystemSetting;
 
 class OrderInvoiceMail extends Mailable
 {
@@ -17,9 +18,12 @@ class OrderInvoiceMail extends Mailable
      * Create a new message instance.
      */
     public $order;
+     public $setting;
+
     public function __construct($order)
     {
         $this->order = $order;
+        $this->setting = SystemSetting::findOrFail(1);
     }
 
     /**
@@ -28,7 +32,7 @@ class OrderInvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'E-Commerce Order Invoice',
+            subject: $this->setting->website_name.'Order Invoice',
         );
     }
 

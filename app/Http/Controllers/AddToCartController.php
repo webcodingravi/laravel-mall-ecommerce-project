@@ -11,6 +11,8 @@ use App\Models\Product;
 use App\Models\OrderItem;
 use App\Models\ProductSize;
 use App\Models\DiscountCode;
+use App\Models\Notification;
+use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
 use App\Models\ShippingCharge;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +85,7 @@ class AddToCartController extends Controller
             $data['meta_description'] = '';
             $data['meta_keywords'] = '';
             $data['getShipping'] = ShippingCharge::where('status',1)->orderBy('id','desc')->get();
+            $data['getPaymentSetting'] = PaymentSetting::findOrFail(1);
             return view('add_to_cart.checkout',$data);
          }
 
@@ -264,18 +267,30 @@ class AddToCartController extends Controller
                 $order_id = base64_decode($request->order_id);
                 $getOrder = Order::findOrfail($order_id);
                 if(!empty($getOrder)) {
+                    $getPaymentSetting = PaymentSetting::findOrFail(1);
                    if($getOrder->payment_method == 'cash') {
                         $getOrder->is_payment = 1;
                         $getOrder->save();
 
-                        Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
+                        try{
+                         Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
+                        }catch(\Exception $e) {
+
+                        }
+
+
+                        $user_id = 1;
+                        $url = route('user_order_details',$getOrder->id);
+                        $message = "New Order Placed #".$getOrder->order_number;
+                        Notification::insertRecord($user_id,$url,$message);
 
                         Cart::destroy();
                         return redirect()->route('cart')->with('success','Order Successfully placed');
 
                    }else if($getOrder->payment_method == 'paypal'){
+
                           $quary                  = array();
-                          $quary['business']      = "vipulbusiness1@gmail.com";
+                          $quary['business']      = $getPaymentSetting->paypal_id;
                           $quary['cmd']           = '_xclick';
                           $quary['item_name']     = "E-commerce";
                           $quary['no_shipping']   = '1';
@@ -286,14 +301,20 @@ class AddToCartController extends Controller
                           $quary['return']        = url('/paypal/success-payment');
 
                           $quary_string = http_build_query($quary);
+                          if($getPaymentSetting->paypal_status == 'live')
+                          {
+                            header('Location: https://www.paypal.com/cgi-bin/webscr?'.$quary_string);
+
+                          }else{
+                                 header('Location: https://www.sandbox.paypal.com?'.$quary_string);
+                          }
 
 
-                          header('Location: https://www.sandbox.paypal.com?'.$quary_string);
 
                           exit();
 
                    }else if($getOrder->payment_method == 'stripe') {
-                        Stripe::setApiKey(env('STRIPE_SECRET'));
+                        Stripe::setApiKey($getPaymentSetting->stripe_secret_key);
                         $finalprice = $getOrder->total_amount * 100;
                         $session = \Stripe\Checkout\Session::create([
                              'customer_email' => $getOrder->email,
@@ -318,7 +339,7 @@ class AddToCartController extends Controller
 
                         $data['session_id'] = $session['id'];
                         Session::put('stripe_session_id',$session['id']);
-                        $data['setPublicKey'] =  env('STRIPE_KEY');
+                        $data['setPublicKey'] = $getPaymentSetting->stripe_public_key;
 
                         return view('add_to_cart.stripe_charge',$data);
 
@@ -340,7 +361,19 @@ class AddToCartController extends Controller
                     $getOrder->payment_data = json_encode($request->all());
                     $getOrder->transaction_id = $request->tx;
                         $getOrder->save();
-                        Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
+
+                        try{
+                             Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
+                        }catch(\Exception $e) {
+
+                        }
+
+
+                         $user_id = 1;
+                        $url = route('user_order_details',$getOrder->id);
+                        $message = "New Order Placed #".$getOrder->order_number;
+                        Notification::insertRecord($user_id,$url,$message);
+
                         Cart::destroy();
                         return redirect()->route('cart')->with('success','Order Successfully placed');
                 }else{
@@ -353,8 +386,9 @@ class AddToCartController extends Controller
 
 
          public function stripeSuccessPayment() {
+             $getPaymentSetting = PaymentSetting::findOrFail(1);
               $trans_id = Session::get('stripe_session_id');
-              \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+              \Stripe\Stripe::setApiKey($getPaymentSetting->stripe_secret_key);
               $getdata = \Stripe\checkout\Session::retrieve($trans_id);
 
               $getOrder = Order::where('stripe_session_id',$getdata->id)->first();
@@ -364,6 +398,16 @@ class AddToCartController extends Controller
                 $getOrder->payment_data = json_encode($getdata);
                 $getOrder->transaction_id = $getdata->id;
                     $getOrder->save();
+                        try{
+                          Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
+                        }catch(\Exception $e) {
+
+                        }
+                        $user_id = 1;
+                        $url = route('user_order_details',$getOrder->id);
+                        $message = "New Order Placed #".$getOrder->order_number;
+                        Notification::insertRecord($user_id,$url,$message);
+
                     Cart::destroy();
                     return redirect()->route('cart')->with('success','Order Successfully placed');
               }else{
