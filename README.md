@@ -108,7 +108,7 @@ Blade – Templating engine
 
 MySQL – Database
 
-Tailwind CSS / Bootstrap (if used) – UI styling
+Bootstrap-5 – UI styling
 
 PHPMailer (or Laravel built-in mail) – Email handling
 
