@@ -64,3 +64,109 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+
+
+
+
+
+
+
+
+
+Laravel Mall E-Commerce Project
+
+An online e-commerce web application built with Laravel.
+This project provides user shopping, product browsing, cart & checkout functionality, admin panel management, and secure authentication using modern Laravel practices.
+
+🛒 Features
+
+User Registration & Login
+
+Product Catalog & Categories
+
+Shopping Cart & Checkout
+
+Order Management
+
+Admin Dashboard with CRUD for Products/Categories/Orders/Users
+
+Secure Authentication & Password Reset
+
+Email notifications for transactions and password actions
+
+(Add your project’s exact features here if different.)
+
+🧱 Tech Stack
+
+Laravel – PHP framework
+
+Blade – Templating engine
+
+MySQL – Database
+
+Tailwind CSS / Bootstrap (if used) – UI styling
+
+PHPMailer (or Laravel built-in mail) – Email handling
+
+Composer – Dependency management
+
+💡 Getting Started
+1. Clone the repository
+git clone https://github.com/webcodingravi/laravel-mall-ecommerce-project
+cd laravel-mall-ecommerce-project
+
+2. Install dependencies
+composer install
+
+3. Setup environment
+cp .env.example .env
+php artisan key:generate
+
+
+Update .env with your database credentials and mail settings.
+
+🗄️ Database Setup
+
+Run migrations:
+
+php artisan migrate
+
+
+If you have seeders:
+
+php artisan db:seed
+
+📧 Email Configuration
+
+Configure mail settings in .env:
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=…
+MAIL_PASSWORD=…
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=…
+MAIL_FROM_NAME="Mall E-Commerce"
+
+
+This ensures features like forgot password work correctly.
+
+🚀 Run the project
+
+Start the development server:
+
+php artisan serve
+
+
+Open your browser:
+
+http://localhost:8000
+
+🧪 Testing
+
+If your project has auto
